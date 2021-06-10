@@ -1,15 +1,15 @@
 package packager.macOs.dmg
 
+import packager.BuildOptions
 import packager.macOs.MacOsNativePackager
 
-case class DmgPackage( sourceAppPath: os.Path, packageName: String)
+case class DmgPackage( sourceAppPath: os.Path, buildOptions: BuildOptions)
   extends MacOsNativePackager {
 
   private val tmpPackageName = s"$packageName-tmp"
   private val mountpointPath = basePath / "mountpoint"
 
   override def run(): Unit = {
-
     os.proc("hdiutil", "create", "-megabytes", "100",  "-fs", "HFS+", "-volname", tmpPackageName,  tmpPackageName)
       .call(cwd = basePath)
 

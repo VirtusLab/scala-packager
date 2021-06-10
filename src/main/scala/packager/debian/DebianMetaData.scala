@@ -12,7 +12,7 @@ case class DebianMetaData(
     |Maintainer: ${debianInfo.maintainer}
     |Description: ${debianInfo.description}
     |Homepage: ${debianInfo.homepage}
-    |Architecture: ${architecture}
+    |Architecture: $architecture
     |""".stripMargin
   }
 

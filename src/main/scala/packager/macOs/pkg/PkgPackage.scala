@@ -1,10 +1,10 @@
 package packager.macOs.pkg
 
 import os.PermSet
-
+import packager.BuildOptions
 import packager.macOs.MacOsNativePackager
 
-case class PkgPackage (sourceAppPath: os.Path, packageName: String)
+case class PkgPackage (sourceAppPath: os.Path, buildOptions: BuildOptions)
   extends MacOsNativePackager {
 
   private val scriptsPath = basePath / "scripts"

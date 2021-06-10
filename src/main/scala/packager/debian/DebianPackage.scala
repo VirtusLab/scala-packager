@@ -1,10 +1,9 @@
 package packager.debian
 
 import os.PermSet
+import packager.{BuildOptions, NativePackager}
 
-import packager.NativePackager
-
-case class DebianPackage(sourceAppPath: os.Path, packageName: String)
+case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildOptions)
     extends NativePackager {
 
   private val debianBasePath = basePath / packageName
