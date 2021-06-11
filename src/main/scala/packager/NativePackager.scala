@@ -7,7 +7,8 @@ trait NativePackager {
   implicit val options = buildOptions
 
   protected val packageName: String = buildOptions.packageName
-  protected val basePath: os.Path = buildOptions.workingDirPath.getOrElse(os.temp.dir(prefix = packageName))
+  protected val basePath: os.Path =
+    buildOptions.workingDirPath.getOrElse(os.temp.dir(prefix = packageName))
   protected val outputPath: os.Path = buildOptions.outputPath.getOrElse(os.pwd)
 
   def build(): Unit

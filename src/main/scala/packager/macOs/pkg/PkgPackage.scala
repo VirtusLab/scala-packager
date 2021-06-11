@@ -4,8 +4,8 @@ import packager.BuildOptions
 import packager.PackagerUtils.{executablePerms, osWrite}
 import packager.macOs.MacOsNativePackager
 
-case class PkgPackage (sourceAppPath: os.Path, buildOptions: BuildOptions)
-  extends MacOsNativePackager {
+case class PkgPackage(sourceAppPath: os.Path, buildOptions: BuildOptions)
+    extends MacOsNativePackager {
 
   private val scriptsPath = basePath / "scripts"
 
@@ -36,5 +36,3 @@ case class PkgPackage (sourceAppPath: os.Path, buildOptions: BuildOptions)
   }
 
 }
-
-

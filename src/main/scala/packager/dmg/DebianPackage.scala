@@ -53,8 +53,8 @@ case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildOptions)
     osCopy(sourceAppPath, scalaDirectory / packageName)
   }
 
-  private def createConfFile(): Unit  = {
-    osWrite(mainDebianDirectory / "control",metaData.generateContent())
+  private def createConfFile(): Unit = {
+    osWrite(mainDebianDirectory / "control", metaData.generateContent())
   }
 
   private def createScriptFile(): Unit = {
