@@ -14,12 +14,12 @@ trait MacOsNativePackager extends NativePackager {
      os.makeDir.all(macOsPath)
 
      val appPath = macOsPath / packageName
-     osCopy(sourceAppPath, appPath, buildOptions)
+     osCopy(sourceAppPath, appPath)
   }
 
   protected def createInfoPlist(): Unit = {
     val infoPlistPath = contentPath / "Info.plist"
 
-    osWrite(infoPlistPath, infoPlist.generateContent, buildOptions = buildOptions)
+    osWrite(infoPlistPath, infoPlist.generateContent)
   }
 }

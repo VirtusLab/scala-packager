@@ -16,7 +16,7 @@ case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildOptions)
     createDebianDir()
 
     os.proc("dpkg", "-b", debianBasePath).call(cwd = basePath)
-    osMove(basePath / s"$packageName-deb.deb", outputPath / s"$packageName.deb", buildOptions = buildOptions)
+    osMove(basePath / s"$packageName-deb.deb", outputPath / s"$packageName.deb")
 
     postInstallClean()
   }
@@ -50,11 +50,11 @@ case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildOptions)
   private def copyExecutableFile(): Unit = {
     val scalaDirectory = usrDirectory / "share" / "scala"
     os.makeDir.all(scalaDirectory)
-    osCopy(sourceAppPath, scalaDirectory / packageName, buildOptions)
+    osCopy(sourceAppPath, scalaDirectory / packageName)
   }
 
   private def createConfFile(): Unit  = {
-    osWrite(mainDebianDirectory / "control",metaData.generateContent(), buildOptions = buildOptions)
+    osWrite(mainDebianDirectory / "control",metaData.generateContent())
   }
 
   private def createScriptFile(): Unit = {
@@ -64,6 +64,6 @@ case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildOptions)
     val content = s"""#!/bin/bash
                       |/usr/share/scala/$packageName
                       |""".stripMargin
-    osWrite(launchScriptFile, content, executablePerms, buildOptions)
+    osWrite(launchScriptFile, content, executablePerms)
   }
 }

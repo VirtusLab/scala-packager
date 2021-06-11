@@ -32,7 +32,7 @@ case class PkgPackage (sourceAppPath: os.Path, buildOptions: BuildOptions)
                     |ln -s /Applications/$packageName.app/Contents/MacOS/$packageName /usr/local/bin/$packageName""".stripMargin
     os.makeDir.all(scriptsPath)
     val postInstallPath = scriptsPath / "postinstall"
-    osWrite(postInstallPath, content, executablePerms, buildOptions)
+    osWrite(postInstallPath, content, executablePerms)
   }
 
 }
