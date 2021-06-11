@@ -1,4 +1,4 @@
-package packager.debian
+package packager.dmg
 
 case class DebianPackageInfo(
     packageName: String,

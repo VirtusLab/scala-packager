@@ -1,21 +1,25 @@
 package packager.macOs
 
 import packager.NativePackager
+import packager.PackagerUtils.{osCopy, osWrite}
 
 trait MacOsNativePackager extends NativePackager {
 
-  val macOsAppPath  = basePath / s"$packageName.app"
-  val contentPath = macOsAppPath / "Contents"
-  val macOsPath = contentPath / "MacOS"
-  val infoPlist = MacOsInfoPlist(packageName, s"com.example.$packageName")
+  protected val macOsAppPath: os.Path  = basePath / s"$packageName.app"
+  protected val contentPath: os.Path = macOsAppPath / "Contents"
+  protected val macOsPath: os.Path = contentPath / "MacOS"
+  protected val infoPlist: MacOsInfoPlist = MacOsInfoPlist(packageName, s"com.example.$packageName")
 
-   def createAppDirectory() = {
-    os.makeDir.all(macOsPath)
-    if ( buildOptions.force) os.copy.over(sourceAppPath, macOsPath / packageName)
-    else os.copy(sourceAppPath, macOsPath / packageName)
+   def createAppDirectory(): Unit = {
+     os.makeDir.all(macOsPath)
+
+     val appPath = macOsPath / packageName
+     osCopy(sourceAppPath, appPath, buildOptions)
   }
 
-  protected def createInfoPlist() = {
-    os.write(contentPath / "Info.plist", infoPlist.generateContent)
+  protected def createInfoPlist(): Unit = {
+    val infoPlistPath = contentPath / "Info.plist"
+
+    osWrite(infoPlistPath, infoPlist.generateContent, buildOptions = buildOptions)
   }
 }

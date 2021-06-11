@@ -9,7 +9,7 @@ case class DmgPackage( sourceAppPath: os.Path, buildOptions: BuildOptions)
   private val tmpPackageName = s"$packageName-tmp"
   private val mountpointPath = basePath / "mountpoint"
 
-  override def run(): Unit = {
+  override def build(): Unit = {
     os.proc("hdiutil", "create", "-megabytes", "100",  "-fs", "HFS+", "-volname", tmpPackageName,  tmpPackageName)
       .call(cwd = basePath)
 
@@ -22,17 +22,17 @@ case class DmgPackage( sourceAppPath: os.Path, buildOptions: BuildOptions)
     copyAppDirectory()
 
     os.proc("hdiutil", "detach", "mountpoint/").call(cwd = basePath)
-    os.proc("hdiutil", "convert", s"$tmpPackageName.dmg", "-format", "UDZO", "-o", s"$packageName.dmg").call(cwd = basePath)
+    os.proc("hdiutil", "convert", s"$tmpPackageName.dmg", "-format", "UDZO", "-o", outputPath / s"$packageName.dmg").call(cwd = basePath)
 
     postInstallClean()
   }
 
-  private def postInstallClean() = {
+  private def postInstallClean(): Unit = {
     os.remove(basePath / s"$tmpPackageName.dmg")
     os.remove.all(macOsAppPath)
   }
 
-  private def copyAppDirectory() = {
+  private def copyAppDirectory(): Unit  = {
     os.copy(macOsAppPath, mountpointPath / s"$packageName.app")
     os.symlink(mountpointPath / "Applications", os.root / "Applications" )
   }

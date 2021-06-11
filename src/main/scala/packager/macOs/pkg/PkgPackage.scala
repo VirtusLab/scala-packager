@@ -1,7 +1,7 @@
 package packager.macOs.pkg
 
-import os.PermSet
 import packager.BuildOptions
+import packager.PackagerUtils.{executablePerms, osWrite}
 import packager.macOs.MacOsNativePackager
 
 case class PkgPackage (sourceAppPath: os.Path, buildOptions: BuildOptions)
@@ -9,29 +9,30 @@ case class PkgPackage (sourceAppPath: os.Path, buildOptions: BuildOptions)
 
   private val scriptsPath = basePath / "scripts"
 
-  override def run(): Unit = {
+  override def build(): Unit = {
 
     createAppDirectory()
     createInfoPlist()
     createScriptFile()
 
-    os.proc("pkgbuild", "--install-location", "/Applications", "--component", s"$packageName.app",  s"$packageName.pkg", "--scripts", scriptsPath)
+    os.proc("pkgbuild", "--install-location", "/Applications", "--component", s"$packageName.app",  outputPath / s"$packageName.pkg", "--scripts", scriptsPath)
       .call(cwd = basePath)
 
     postInstallClean()
   }
 
-  private def postInstallClean() = {
+  private def postInstallClean(): Unit = {
     os.remove.all(macOsAppPath)
     os.remove.all(scriptsPath)
   }
 
-    private def createScriptFile()= {
+  private def createScriptFile(): Unit = {
     val content = s"""#!/bin/bash
                     |rm -f /usr/local/bin/$packageName
                     |ln -s /Applications/$packageName.app/Contents/MacOS/$packageName /usr/local/bin/$packageName""".stripMargin
     os.makeDir.all(scriptsPath)
-    os.write(scriptsPath / "postinstall", content, PermSet.fromString("rwxrwxr-x"))
+    val postInstallPath = scriptsPath / "postinstall"
+    osWrite(postInstallPath, content, executablePerms, buildOptions)
   }
 
 }
