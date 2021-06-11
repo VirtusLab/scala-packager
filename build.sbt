@@ -15,6 +15,7 @@ inThisBuild(List(
 
 scalaVersion := ScalaVersions.scala213
 crossScalaVersions := ScalaVersions.all
+scalacOptions := Seq("-unchecked", "-deprecation")
 
 libraryDependencies ++= Seq(
   Deps.osLib,
