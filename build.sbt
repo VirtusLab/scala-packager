@@ -1,6 +1,6 @@
 
 inThisBuild(List(
-  organization := "com.virtuslab",
+  organization := "org.virtuslab",
   homepage := Some(url("https://github.com/VirtuslabRnD/scala-packager")),
   licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
   developers := List(
