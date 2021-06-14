@@ -35,4 +35,5 @@ class DmgPackageTests extends munit.FunSuite with PackageHelper {
     }
   }
 
+  override def extension: String = "dmg"
 }

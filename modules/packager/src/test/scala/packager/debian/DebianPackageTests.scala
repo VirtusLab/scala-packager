@@ -46,4 +46,5 @@ class DebianPackageTests extends munit.FunSuite with PackageHelper {
     }
   }
 
+  override def extension: String = "deb"
 }

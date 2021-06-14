@@ -1,10 +1,10 @@
 package packager.macOs.pkg
 
-import packager.BuildOptions
+import packager.BuildSettings
 import packager.PackagerUtils.{executablePerms, osWrite}
 import packager.macOs.MacOsNativePackager
 
-case class PkgPackage(sourceAppPath: os.Path, buildOptions: BuildOptions)
+case class PkgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     extends MacOsNativePackager {
 
   private val scriptsPath = basePath / "scripts"
@@ -15,7 +15,16 @@ case class PkgPackage(sourceAppPath: os.Path, buildOptions: BuildOptions)
     createInfoPlist()
     createScriptFile()
 
-    os.proc("pkgbuild", "--install-location", "/Applications", "--component", s"$packageName.app",  outputPath / s"$packageName.pkg", "--scripts", scriptsPath)
+    os.proc(
+        "pkgbuild",
+        "--install-location",
+        "/Applications",
+        "--component",
+        s"$packageName.app",
+        outputPath,
+        "--scripts",
+        scriptsPath
+      )
       .call(cwd = basePath)
 
     postInstallClean()
@@ -35,4 +44,5 @@ case class PkgPackage(sourceAppPath: os.Path, buildOptions: BuildOptions)
     osWrite(postInstallPath, content, executablePerms)
   }
 
+  override def extension: String = "pkg"
 }

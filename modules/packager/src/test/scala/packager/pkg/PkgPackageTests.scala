@@ -70,4 +70,6 @@ class PkgPackageTests extends munit.FunSuite with PackageHelper {
       expect(os.isFile(postInstallScriptPath))
     }
   }
+
+  override def extension: String = "pkg"
 }

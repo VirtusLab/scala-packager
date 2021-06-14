@@ -1,16 +1,14 @@
-package packager.dmg
+package packager.rpm
 
-import packager.PackagerUtils.{executablePerms, osCopy, osWrite, osMove}
 import packager.{BuildSettings, NativePackager}
+import packager.PackagerUtils.{executablePerms, osCopy, osMove, osWrite}
+import packager.dmg.{DebianMetaData, DebianPackageInfo}
 
-case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
+case class RpmPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     extends NativePackager {
 
-  private val debianBasePath = basePath / s"$packageName-deb"
-  private val usrDirectory = debianBasePath / "usr"
-  private val packageInfo = buildDebianInfo()
-  private val metaData = buildDebianMetaData(packageInfo)
-  private val mainDebianDirectory = debianBasePath / "DEBIAN"
+  private val debianBasePath = basePath / s"$packageName-rpm"
+  private val buildDirectory = debianBasePath / "BUILD"
 
   override def build(): Unit = {
     createDebianDir()
@@ -62,10 +60,10 @@ case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     os.makeDir.all(binDirectory)
     val launchScriptFile = binDirectory / packageName
     val content = s"""#!/bin/bash
-                      |/usr/share/scala/$packageName
-                      |""".stripMargin
+                     |/usr/share/scala/$packageName
+                     |""".stripMargin
     osWrite(launchScriptFile, content, executablePerms)
   }
 
-  override def extension: String = "deb"
+  override def extension: String = "rpm"
 }
