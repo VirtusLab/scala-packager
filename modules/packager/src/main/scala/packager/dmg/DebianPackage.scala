@@ -62,7 +62,7 @@ case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     os.makeDir.all(binDirectory)
     val launchScriptFile = binDirectory / packageName
     val content = s"""#!/bin/bash
-                      |/usr/share/scala/$packageName
+                      |/usr/share/scala/$packageName \"$$@\"
                       |""".stripMargin
     osWrite(launchScriptFile, content, executablePerms)
   }

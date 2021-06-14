@@ -19,7 +19,7 @@ case class RedHatPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     os.proc("rpmbuild", "-bb", "--build-in-place",  "--define", s"_topdir $redHatBasePath", s"$specsDirectory/$packageName.spec").call(cwd = basePath)
     osMove(rpmsDirectory / s"$packageName.rpm", outputPath)
 
-//    postInstallClean()
+    postInstallClean()
   }
 
   private def postInstallClean(): Unit = {
