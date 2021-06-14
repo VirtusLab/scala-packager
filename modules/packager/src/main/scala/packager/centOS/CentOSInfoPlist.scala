@@ -1,6 +1,6 @@
-package packager.macOs
+package packager.centOS
 
-case class MacOsInfoPlist(executableName: String, identifier: String) {
+case class CentOSInfoPlist(executableName: String, identifier: String) {
 
   def generateContent: String = {
     val content = s"""<?xml version="1.0" encoding="UTF-8"?>

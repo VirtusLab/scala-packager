@@ -3,6 +3,7 @@ package packager.debian
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
 import packager.dmg.DebianPackage
+import packager.rpm.RedHatSpecPackage
 
 import scala.util.Properties
 
@@ -10,7 +11,6 @@ class DebianPackageTests extends munit.FunSuite with PackageHelper {
 
   if (Properties.isLinux) {
     test("should create DEBIAN directory ") {
-
       val dmgPackage = DebianPackage(echoLauncherPath, buildOptions)
 
       // create app directory

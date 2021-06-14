@@ -1,11 +1,11 @@
-package packager.macOs.pkg
+package packager.centOS.pkg
 
 import packager.BuildSettings
 import packager.PackagerUtils.{executablePerms, osWrite}
-import packager.macOs.MacOsNativePackager
+import packager.centOS.CentOSNativePackager
 
 case class PkgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
-    extends MacOsNativePackager {
+    extends CentOSNativePackager {
 
   private val scriptsPath = basePath / "scripts"
 
@@ -31,7 +31,7 @@ case class PkgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
   }
 
   private def postInstallClean(): Unit = {
-    os.remove.all(macOsAppPath)
+    os.remove.all(centOSAppPath)
     os.remove.all(scriptsPath)
   }
 

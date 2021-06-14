@@ -2,7 +2,7 @@ package packager.dmg
 
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
-import packager.macOs.dmg.DmgPackage
+import packager.centOS.dmg.DmgPackage
 
 import scala.util.Properties
 
