@@ -30,9 +30,17 @@ class RedHatPackageTests extends munit.FunSuite with PackageHelper {
       // create dmg package
       rpmPackage.build()
 
-      println(s"$tmpDir rpm")
-      val expectedDepPath = tmpDir / s"$packageName.rpm"
-      expect(os.exists(expectedDepPath))
+      val expectedRpmPath = tmpDir / s"$packageName.rpm"
+      expect(os.exists(expectedRpmPath))
+
+      println(s"rpm $expectedRpmPath")
+      // list files which will be installed
+      val payloadFiles =
+        os.proc("rpm", "-qpl",  expectedRpmPath).call().out.text().trim
+      val expectedEchoLauncherPath =
+        os.RelPath("usr") / "bin" / packageName
+
+      expect(payloadFiles contains s"/$expectedEchoLauncherPath")
     }
   }
 
