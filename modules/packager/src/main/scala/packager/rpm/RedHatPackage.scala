@@ -51,7 +51,7 @@ case class RedHatPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
   private def buildRedHatSpec(): RedHatSpecPackage =
     RedHatSpecPackage(
       packageName = packageName,
-      version = "1.0.0"
+      version = options.version
     )
 
   private def copyExecutableFile(): Unit = {

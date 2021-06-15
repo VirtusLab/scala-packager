@@ -23,7 +23,17 @@ final case class BuildOptions(
     debian: Boolean = false,
     msi: Boolean = false,
     dmg: Boolean = false,
-    pkg: Boolean = false
+    pkg: Boolean = false,
+    @Group("Build")
+    @HelpMessage("The version is set to 1.0.0 by default")
+    @Name("v")
+    version: String = "1.0.0",
+    @Group("Build")
+    @HelpMessage(
+      "The maintainer is set to scala-packager by default, it should contains names and email addresses of co-maintainers of the package"
+    )
+    @Name("v")
+    maintainer: String = "scala-packager"
 ) {
 
   import BuildOptions.NativePackagerType

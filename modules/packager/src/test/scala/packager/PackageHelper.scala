@@ -9,6 +9,8 @@ trait PackageHelper {
   val buildOptions: BuildSettings = BuildSettings(
     force = true,
     workingDirectoryPath = Some(tmpDir),
-    outputPath = outputPackagePath
+    outputPath = outputPackagePath,
+    version = "1.0.0",
+    maintainer = "test-scala-packager"
   )
 }

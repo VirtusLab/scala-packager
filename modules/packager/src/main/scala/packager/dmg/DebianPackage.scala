@@ -41,10 +41,8 @@ case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
   private def buildDebianInfo(): DebianPackageInfo =
     DebianPackageInfo(
       packageName = packageName,
-      version = "1.0.0",
-      maintainer = "test@gmail.com",
-      description = "My test package",
-      homepage = "https://github.com/lwronski/projectname"
+      version = buildOptions.version,
+      maintainer = buildOptions.maintainer
     )
 
   private def copyExecutableFile(): Unit = {

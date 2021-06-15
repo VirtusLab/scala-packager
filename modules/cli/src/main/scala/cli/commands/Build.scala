@@ -24,7 +24,9 @@ object Build extends Command[BuildOptions] {
     val buildSettings: BuildSettings = BuildSettings(
       force = options.force,
       workingDirectoryPath = workingDirectoryPath,
-      outputPath = destinationPath
+      outputPath = destinationPath,
+      version = options.version,
+      maintainer = options.maintainer
     )
 
     def alreadyExistsCheck(): Unit =

@@ -10,8 +10,6 @@ case class DebianMetaData(
     s"""Package: ${debianInfo.packageName}
     |Version: ${debianInfo.version}
     |Maintainer: ${debianInfo.maintainer}
-    |Description: ${debianInfo.description}
-    |Homepage: ${debianInfo.homepage}
     |Architecture: $architecture
     |""".stripMargin
   }

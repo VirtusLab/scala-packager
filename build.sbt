@@ -39,13 +39,15 @@ lazy val cliMainClass = Seq(
 
 lazy val packagerName = Seq(
   name := "scala-packager",
-  scalaVersion := ScalaVersions.scala213,
+  scalaVersion := ScalaVersions.scala212,
+  version := "0.1.3",
   crossScalaVersions := ScalaVersions.all
 )
 
 lazy val cliName = Seq(
   name := "scala-packager-cli",
-  scalaVersion := ScalaVersions.scala213,
+  scalaVersion := ScalaVersions.scala212,
+  version := "0.1.3",
   crossScalaVersions := ScalaVersions.all
 )
 
