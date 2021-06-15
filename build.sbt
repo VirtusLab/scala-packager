@@ -56,9 +56,7 @@ lazy val cli = project("cli")
   .settings(testFramework)
   .settings(cliMainClass)
 
-
 lazy val packager = project("packager")
   .settings(packagerName)
   .settings(coreDependencies)
   .settings(testFramework)
-

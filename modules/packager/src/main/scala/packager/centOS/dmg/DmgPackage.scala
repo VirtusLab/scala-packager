@@ -8,13 +8,14 @@ case class DmgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
 
   private val tmpPackageName = s"$packageName-tmp"
   private val mountpointPath = basePath / "mountpoint"
+  private val appSize: Double = os.size(sourceAppPath) / 1024L * 1024L
 
   override def build(): Unit = {
     os.proc(
         "hdiutil",
         "create",
         "-megabytes",
-        "100",
+        appSize,
         "-fs",
         "HFS+",
         "-volname",

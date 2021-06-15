@@ -30,12 +30,11 @@ class PkgPackageTests extends munit.FunSuite with PackageHelper {
       // create pkg package
       pkgPackage.build()
 
-      val expectedPkgPath = tmpDir / s"$packageName.pkg"
-      expect(os.isFile(expectedPkgPath))
+      expect(os.isFile(outputPackagePath))
 
       // list files which will be installed
       val payloadFiles = os
-        .proc("pkgutil", "--payload-files", expectedPkgPath)
+        .proc("pkgutil", "--payload-files", outputPackagePath)
         .call()
         .out
         .text()
@@ -56,12 +55,9 @@ class PkgPackageTests extends munit.FunSuite with PackageHelper {
       // create deb package
       pkgPackage.build()
 
-      val expectedDebPath = tmpDir / s"$packageName.pkg"
-      expect(os.isFile(expectedDebPath))
-
       // expand the flat package pkg to directory
       val outPath = tmpDir / "out"
-      os.proc("pkgutil", "--expand", expectedDebPath, outPath).call()
+      os.proc("pkgutil", "--expand", outputPackagePath, outPath).call()
 
       val scriptsPath = outPath / "Scripts"
       val postInstallScriptPath = scriptsPath / "postinstall"

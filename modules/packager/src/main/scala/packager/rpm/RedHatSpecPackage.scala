@@ -2,7 +2,6 @@ package packager.rpm
 
 case class RedHatSpecPackage(packageName: String, version: String) {
 
-
   def generateContent: String =
     s"""Name:           $packageName
        |Version:        $version

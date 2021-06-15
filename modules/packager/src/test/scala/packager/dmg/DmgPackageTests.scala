@@ -30,8 +30,7 @@ class DmgPackageTests extends munit.FunSuite with PackageHelper {
       // create dmg package
       dmgPackage.build()
 
-      val expectedDmgPath = tmpDir / s"$packageName.dmg"
-      expect(os.exists(expectedDmgPath))
+      expect(os.exists(outputPackagePath))
     }
   }
 

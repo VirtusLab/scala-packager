@@ -16,7 +16,15 @@ case class RedHatPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
   override def build(): Unit = {
     createRedHatDir()
 
-    os.proc("rpmbuild", "-bb", "--build-in-place",  "--define", s"_topdir $redHatBasePath", s"$specsDirectory/$packageName.spec").call(cwd = basePath)
+    os.proc(
+        "rpmbuild",
+        "-bb",
+        "--build-in-place",
+        "--define",
+        s"_topdir $redHatBasePath",
+        s"$specsDirectory/$packageName.spec"
+      )
+      .call(cwd = basePath)
     osMove(rpmsDirectory / s"$packageName.rpm", outputPath)
 
     postInstallClean()
@@ -39,7 +47,6 @@ case class RedHatPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     val specFilePath = specsDirectory / s"$packageName.spec"
     osWrite(specFilePath, content)
   }
-
 
   private def buildRedHatSpec(): RedHatSpecPackage =
     RedHatSpecPackage(

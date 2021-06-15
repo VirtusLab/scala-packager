@@ -3,7 +3,6 @@ package packager.debian
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
 import packager.dmg.DebianPackage
-import packager.rpm.RedHatSpecPackage
 
 import scala.util.Properties
 
@@ -31,12 +30,11 @@ class DebianPackageTests extends munit.FunSuite with PackageHelper {
       // create dmg package
       depPackage.build()
 
-      val expectedDepPath = tmpDir / s"$packageName.deb"
-      expect(os.exists(expectedDepPath))
+      expect(os.exists(outputPackagePath))
 
       // list files which will be installed
       val payloadFiles =
-        os.proc("dpkg", "--contents", expectedDepPath).call().out.text().trim
+        os.proc("dpkg", "--contents", outputPackagePath).call().out.text().trim
       val expectedScriptPath = os.RelPath("usr") / "bin" / packageName
       val expectedEchoLauncherPath =
         os.RelPath("usr") / "share" / "scala" / packageName
