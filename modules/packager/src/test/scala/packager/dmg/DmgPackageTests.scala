@@ -32,6 +32,20 @@ class DmgPackageTests extends munit.FunSuite with PackageHelper {
 
       expect(os.exists(outputPackagePath))
     }
+    test("size dmg package should be similar to the app") {
+
+      val dmgPackage = DmgPackage(echoLauncherPath, buildOptions)
+      val echoLauncherSize = os.size(echoLauncherPath)
+
+      // create dmg package
+      dmgPackage.build()
+
+      expect(os.exists(outputPackagePath))
+
+      val dmgPackageSize = os.size(outputPackagePath)
+      // dmgPackageSize < echoLauncherSize +  1Mb
+      expect(dmgPackageSize < echoLauncherSize + (1024 * 1024))
+    }
   }
 
   override def extension: String = "dmg"
