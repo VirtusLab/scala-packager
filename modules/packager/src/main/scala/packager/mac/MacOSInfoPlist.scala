@@ -1,4 +1,4 @@
-package packager.macOS
+package packager.mac
 
 case class MacOSInfoPlist(executableName: String, identifier: String) {
 

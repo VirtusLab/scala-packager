@@ -1,8 +1,8 @@
-package packager.macOS.pkg
+package packager.mac.pkg
 
 import packager.BuildSettings
 import packager.PackagerUtils.{executablePerms, osWrite}
-import packager.macOS.MacOSNativePackager
+import packager.mac.MacOSNativePackager
 
 case class PkgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     extends MacOSNativePackager {

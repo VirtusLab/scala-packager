@@ -1,4 +1,4 @@
-package packager.macOS
+package packager.mac
 
 import packager.NativePackager
 import packager.PackagerUtils.{osCopy, osWrite}

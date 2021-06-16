@@ -1,7 +1,7 @@
-package packager.macOS.dmg
+package packager.mac.dmg
 
 import packager.BuildSettings
-import packager.macOS.MacOSNativePackager
+import packager.mac.MacOSNativePackager
 
 case class DmgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     extends MacOSNativePackager {

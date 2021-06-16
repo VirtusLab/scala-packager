@@ -5,8 +5,8 @@ import caseapp.core.app.Command
 import BuildOptions.NativePackagerType._
 import packager.BuildSettings
 import packager.deb.DebianPackage
-import packager.macOS.dmg.DmgPackage
-import packager.macOS.pkg.PkgPackage
+import packager.mac.dmg.DmgPackage
+import packager.mac.pkg.PkgPackage
 
 object Build extends Command[BuildOptions] {
   override def run(
