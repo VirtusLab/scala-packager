@@ -1,7 +1,8 @@
-package packager.dmg
+package packager.deb
 
 case class DebianPackageInfo(
     packageName: String,
     version: String,
-    maintainer: String
+    maintainer: String,
+    description: String
 )

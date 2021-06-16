@@ -1,8 +1,7 @@
-package packager.debian
+package packager.deb
 
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
-import packager.dmg.DebianPackage
 
 import scala.util.Properties
 

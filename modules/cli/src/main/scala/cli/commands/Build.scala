@@ -4,9 +4,9 @@ import caseapp.core.RemainingArgs
 import caseapp.core.app.Command
 import BuildOptions.NativePackagerType._
 import packager.BuildSettings
-import packager.dmg.DebianPackage
-import packager.centOS.dmg.DmgPackage
-import packager.centOS.pkg.PkgPackage
+import packager.deb.DebianPackage
+import packager.macOS.dmg.DmgPackage
+import packager.macOS.pkg.PkgPackage
 
 object Build extends Command[BuildOptions] {
   override def run(
@@ -26,7 +26,8 @@ object Build extends Command[BuildOptions] {
       workingDirectoryPath = workingDirectoryPath,
       outputPath = destinationPath,
       version = options.version,
-      maintainer = options.maintainer
+      maintainer = options.maintainer,
+      description = options.description
     )
 
     def alreadyExistsCheck(): Unit =

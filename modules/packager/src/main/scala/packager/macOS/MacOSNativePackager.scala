@@ -1,15 +1,15 @@
-package packager.centOS
+package packager.macOS
 
 import packager.NativePackager
 import packager.PackagerUtils.{osCopy, osWrite}
 
-trait CentOSNativePackager extends NativePackager {
+trait MacOSNativePackager extends NativePackager {
 
-  protected val centOSAppPath: os.Path = basePath / s"$packageName.app"
-  protected val contentPath: os.Path = centOSAppPath / "Contents"
+  protected val macOSAppPath: os.Path = basePath / s"$packageName.app"
+  protected val contentPath: os.Path = macOSAppPath / "Contents"
   protected val macOsPath: os.Path = contentPath / "MacOS"
-  protected val infoPlist: CentOSInfoPlist =
-    CentOSInfoPlist(packageName, s"com.example.$packageName")
+  protected val infoPlist: MacOSInfoPlist =
+    MacOSInfoPlist(packageName, s"com.example.$packageName")
 
   def createAppDirectory(): Unit = {
     os.makeDir.all(macOsPath)

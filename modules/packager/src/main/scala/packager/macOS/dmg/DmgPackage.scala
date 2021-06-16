@@ -1,10 +1,10 @@
-package packager.centOS.dmg
+package packager.macOS.dmg
 
 import packager.BuildSettings
-import packager.centOS.CentOSNativePackager
+import packager.macOS.MacOSNativePackager
 
 case class DmgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
-    extends CentOSNativePackager {
+    extends MacOSNativePackager {
 
   private val tmpPackageName = s"$packageName-tmp"
   private val mountpointPath = basePath / "mountpoint"
@@ -56,11 +56,11 @@ case class DmgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
 
   private def postInstallClean(): Unit = {
     os.remove(basePath / s"$tmpPackageName.dmg")
-    os.remove.all(centOSAppPath)
+    os.remove.all(macOSAppPath)
   }
 
   private def copyAppDirectory(): Unit = {
-    os.copy(centOSAppPath, mountpointPath / s"$packageName.app")
+    os.copy(macOSAppPath, mountpointPath / s"$packageName.app")
     os.symlink(mountpointPath / "Applications", os.root / "Applications")
   }
 

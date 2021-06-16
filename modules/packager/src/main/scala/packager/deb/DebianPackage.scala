@@ -1,6 +1,6 @@
-package packager.dmg
+package packager.deb
 
-import packager.PackagerUtils.{executablePerms, osCopy, osWrite, osMove}
+import packager.PackagerUtils.{executablePerms, osCopy, osMove, osWrite}
 import packager.{BuildSettings, NativePackager}
 
 case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
@@ -42,7 +42,8 @@ case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     DebianPackageInfo(
       packageName = packageName,
       version = buildOptions.version,
-      maintainer = buildOptions.maintainer
+      maintainer = buildOptions.maintainer,
+      description = buildOptions.description
     )
 
   private def copyExecutableFile(): Unit = {

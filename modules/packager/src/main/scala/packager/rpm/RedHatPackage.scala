@@ -1,8 +1,7 @@
 package packager.rpm
 
 import packager.{BuildSettings, NativePackager}
-import packager.PackagerUtils.{executablePerms, osCopy, osMove, osWrite}
-import packager.dmg.{DebianMetaData, DebianPackageInfo}
+import packager.PackagerUtils.{osCopy, osMove, osWrite}
 
 case class RedHatPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     extends NativePackager {

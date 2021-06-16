@@ -1,4 +1,4 @@
-package packager.dmg
+package packager.deb
 
 case class DebianMetaData(
     debianInfo: DebianPackageInfo,
@@ -10,6 +10,7 @@ case class DebianMetaData(
     s"""Package: ${debianInfo.packageName}
     |Version: ${debianInfo.version}
     |Maintainer: ${debianInfo.maintainer}
+    |Description: ${debianInfo.description}
     |Architecture: $architecture
     |""".stripMargin
   }

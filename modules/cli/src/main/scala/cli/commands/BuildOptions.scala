@@ -20,7 +20,7 @@ final case class BuildOptions(
     @HelpMessage("Source app path")
     @Name("a")
     sourceAppPath: String,
-    debian: Boolean = false,
+    deb: Boolean = false,
     msi: Boolean = false,
     dmg: Boolean = false,
     pkg: Boolean = false,
@@ -33,12 +33,14 @@ final case class BuildOptions(
       "The maintainer is set to scala-packager by default, it should contains names and email addresses of co-maintainers of the package"
     )
     @Name("v")
-    maintainer: String = "scala-packager"
+    maintainer: String = "scala-packager",
+    @Name("d")
+    description: String = "Native package building by scala-packager"
 ) {
 
   import BuildOptions.NativePackagerType
   def nativePackager: Option[NativePackagerType] = {
-    if (debian) Some(NativePackagerType.Debian)
+    if (deb) Some(NativePackagerType.Debian)
     else if (msi) Some(NativePackagerType.Windows)
     else if (dmg) Some(NativePackagerType.Dmg)
     else if (pkg) Some(NativePackagerType.Pkg)
@@ -46,7 +48,7 @@ final case class BuildOptions(
   }
 
   def defaultName: String = {
-    if (debian) "app.deb"
+    if (deb) "app.deb"
     else if (msi) "app.msi"
     else if (dmg) "app.dmg"
     else if (pkg) "app.pkg"

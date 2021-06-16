@@ -2,7 +2,7 @@ package packager.pkg
 
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
-import packager.centOS.pkg.PkgPackage
+import packager.macOS.pkg.PkgPackage
 
 import scala.util.Properties
 
