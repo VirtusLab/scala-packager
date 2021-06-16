@@ -4,16 +4,16 @@ trait NativePackager {
 
   def sourceAppPath: os.Path
   def buildOptions: BuildSettings
-  implicit val options = buildOptions
+  implicit def options = buildOptions
   def extension: String
 
-  protected val packageName: String =
+  protected lazy val packageName: String =
     buildOptions.outputPath.last.stripSuffix(s".$extension")
-  protected val basePath: os.Path =
+  protected lazy val basePath: os.Path =
     buildOptions.workingDirectoryPath.getOrElse(
       os.temp.dir(prefix = packageName)
     )
-  protected val outputPath: os.Path = buildOptions.outputPath
+  protected lazy val outputPath: os.Path = buildOptions.outputPath
 
   def build(): Unit
 }

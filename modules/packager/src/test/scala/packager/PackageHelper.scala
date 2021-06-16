@@ -1,16 +1,14 @@
 package packager
 
 trait PackageHelper {
-  val packageName = "echo"
+  lazy val packageName = "echo"
   def extension: String
-  val tmpDir: os.Path = TestUtils.tmpUtilDir
-  val echoLauncherPath: os.Path = TestUtils.echoLauncher(tmpDir)
-  val outputPackagePath: os.Path = tmpDir / s"echo.$extension"
-  val buildOptions: BuildSettings = BuildSettings(
+  lazy val tmpDir: os.Path = TestUtils.tmpUtilDir
+  lazy val echoLauncherPath: os.Path = TestUtils.echoLauncher(tmpDir)
+  lazy val outputPackagePath: os.Path = tmpDir / s"echo.$extension"
+  lazy val buildOptions: BuildSettings = BuildSettings(
     force = true,
     workingDirectoryPath = Some(tmpDir),
-    outputPath = outputPackagePath,
-    version = "1.0.0",
-    maintainer = "test-scala-packager"
+    outputPath = outputPackagePath
   )
 }

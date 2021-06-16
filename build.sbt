@@ -19,13 +19,13 @@ inThisBuild(
 )
 
 scalacOptions := Seq("-unchecked", "-deprecation")
+scalaVersion := ScalaVersions.scala213
+crossScalaVersions := ScalaVersions.all
 
 lazy val coreDependencies = Seq(
   libraryDependencies ++= Seq(
     Deps.osLib,
-    Deps.caseApp,
-    Deps.munit % Test,
-    Deps.expecty % Test
+    Deps.caseApp
   )
 )
 
@@ -37,26 +37,30 @@ lazy val cliMainClass = Seq(
   Compile / mainClass := Some("cli.PackagerCli")
 )
 
-lazy val packagerName = Seq(
-  name := "scala-packager",
-  scalaVersion := ScalaVersions.scala213,
-  crossScalaVersions := ScalaVersions.all
+lazy val packagerProjectName = Seq(
+  name := "scala-packager"
 )
 
-lazy val cliName = Seq(
-  name := "scala-packager-cli",
-  scalaVersion := ScalaVersions.scala213,
-  crossScalaVersions := ScalaVersions.all
+lazy val cliProjectName = Seq(
+  name := "scala-packager-cli"
+)
+
+lazy val utest: Seq[Setting[_]] = Seq(
+  libraryDependencies ++= Seq(Deps.munit % Test, Deps.expecty % Test),
+  testFrameworks += new TestFramework("munit.Framework")
 )
 
 lazy val cli = project("cli")
   .dependsOn(packager)
-  .settings(cliName)
-  .settings(coreDependencies)
-  .settings(testFramework)
-  .settings(cliMainClass)
+  .settings(
+    cliProjectName,
+    cliMainClass,
+    utest
+  )
 
 lazy val packager = project("packager")
-  .settings(packagerName)
-  .settings(coreDependencies)
-  .settings(testFramework)
+  .settings(
+    packagerProjectName,
+    coreDependencies,
+    utest
+  )
