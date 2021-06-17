@@ -7,6 +7,7 @@ import packager.BuildSettings
 import packager.deb.DebianPackage
 import packager.mac.dmg.DmgPackage
 import packager.mac.pkg.PkgPackage
+import packager.rpm.RedHatPackage
 
 object Build extends Command[BuildOptions] {
   override def run(
@@ -48,6 +49,8 @@ object Build extends Command[BuildOptions] {
         DmgPackage(sourceAppPath, buildSettings).build()
       case Some(Pkg) =>
         PkgPackage(sourceAppPath, buildSettings).build()
+      case Some(Rpm) =>
+        RedHatPackage(sourceAppPath, buildSettings).build()
       case None => ()
     }
   }

@@ -19,6 +19,8 @@ case class RedHatSpecPackage(packageName: String, version: String) {
        |%description
        |RedHat package
        |
+       |%define _binaries_in_noarch_packages_terminate_build 0
+       |
        |%install
        |rm -rf $$RPM_BUILD_ROOT
        |mkdir -p $$RPM_BUILD_ROOT/%{_bindir}

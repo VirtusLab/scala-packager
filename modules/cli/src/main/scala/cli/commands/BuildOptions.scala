@@ -21,6 +21,7 @@ final case class BuildOptions(
     @Name("a")
     sourceAppPath: String,
     deb: Boolean = false,
+    rpm: Boolean = false,
     msi: Boolean = false,
     dmg: Boolean = false,
     pkg: Boolean = false,
@@ -41,6 +42,7 @@ final case class BuildOptions(
   import BuildOptions.NativePackagerType
   def nativePackager: Option[NativePackagerType] = {
     if (deb) Some(NativePackagerType.Debian)
+    else if (rpm) Some(NativePackagerType.Rpm)
     else if (msi) Some(NativePackagerType.Windows)
     else if (dmg) Some(NativePackagerType.Dmg)
     else if (pkg) Some(NativePackagerType.Pkg)
@@ -65,6 +67,7 @@ object BuildOptions {
     case object Windows extends NativePackagerType
     case object Dmg extends NativePackagerType
     case object Pkg extends NativePackagerType
+    case object Rpm extends NativePackagerType
   }
 
   implicit val parser = Parser[BuildOptions]

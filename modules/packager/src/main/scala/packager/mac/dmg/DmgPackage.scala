@@ -19,7 +19,7 @@ case class DmgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
         "-fs",
         "HFS+",
         "-volname",
-        tmpPackageName,
+        packageName,
         tmpPackageName
       )
       .call(cwd = basePath)
