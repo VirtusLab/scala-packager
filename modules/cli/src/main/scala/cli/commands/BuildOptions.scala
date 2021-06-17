@@ -43,7 +43,7 @@ final case class BuildOptions(
   def nativePackager: Option[NativePackagerType] = {
     if (deb) Some(NativePackagerType.Debian)
     else if (rpm) Some(NativePackagerType.Rpm)
-    else if (msi) Some(NativePackagerType.Windows)
+    else if (msi) Some(NativePackagerType.Msi)
     else if (dmg) Some(NativePackagerType.Dmg)
     else if (pkg) Some(NativePackagerType.Pkg)
     else None
@@ -64,7 +64,7 @@ object BuildOptions {
   sealed abstract class NativePackagerType extends Product with Serializable
   case object NativePackagerType {
     case object Debian extends NativePackagerType
-    case object Windows extends NativePackagerType
+    case object Msi extends NativePackagerType
     case object Dmg extends NativePackagerType
     case object Pkg extends NativePackagerType
     case object Rpm extends NativePackagerType

@@ -8,6 +8,7 @@ import packager.deb.DebianPackage
 import packager.mac.dmg.DmgPackage
 import packager.mac.pkg.PkgPackage
 import packager.rpm.RedHatPackage
+import packager.windows.WindowsPackage
 
 object Build extends Command[BuildOptions] {
   override def run(
@@ -44,7 +45,8 @@ object Build extends Command[BuildOptions] {
     options.nativePackager match {
       case Some(Debian) =>
         DebianPackage(sourceAppPath, buildSettings).build()
-      case Some(Windows) => ???
+      case Some(Msi) =>
+        WindowsPackage(sourceAppPath, buildSettings).build()
       case Some(Dmg) =>
         DmgPackage(sourceAppPath, buildSettings).build()
       case Some(Pkg) =>

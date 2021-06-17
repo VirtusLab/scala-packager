@@ -6,5 +6,6 @@ case class BuildSettings(
     outputPath: os.Path,
     version: String = "1.0.0",
     maintainer: String = "scala-packager",
-    description: String = "Native package building by scala-packager"
+    description: String = "Native package building by scala-packager",
+    productName: String = "Scala packager product"
 ) {}

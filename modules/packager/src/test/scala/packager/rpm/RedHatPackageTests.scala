@@ -31,9 +31,8 @@ class RedHatPackageTests extends munit.FunSuite with PackageHelper {
       rpmPackage.build()
 
       val expectedRpmPath = tmpDir / s"$packageName.rpm"
-      expect(os.exists(outputPackagePath))
+      expect(os.exists(expectedRpmPath))
 
-      println(s"rpm $expectedRpmPath")
       // list files which will be installed
       val payloadFiles =
         os.proc("rpm", "-qpl", expectedRpmPath).call().out.text().trim
