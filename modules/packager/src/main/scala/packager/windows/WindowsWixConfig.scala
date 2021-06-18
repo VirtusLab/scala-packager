@@ -23,7 +23,7 @@ case class WindowsWixConfig(
         <Directory Id="ProgramFilesFolder">
           <Directory Id="INSTALLDIR" Name="$packageName">
             <Component Id="ApplicationFiles" Guid="$randomGuid">
-              <File Id="ApplicationFile1" Source="$sourcePath"/>
+              <File Id="ApplicationFile1" Source="$sourcePath" Name="$packageName.bat"/>
             </Component>
           </Directory>
         </Directory>
