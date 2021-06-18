@@ -19,8 +19,6 @@ inThisBuild(
 )
 
 scalacOptions := Seq("-unchecked", "-deprecation")
-scalaVersion := ScalaVersions.scala213
-crossScalaVersions := ScalaVersions.all
 
 lazy val coreDependencies = Seq(
   libraryDependencies ++= Seq(
@@ -38,11 +36,15 @@ lazy val cliMainClass = Seq(
 )
 
 lazy val packagerProjectName = Seq(
-  name := "scala-packager"
+  name := "scala-packager",
+  scalaVersion := ScalaVersions.scala213,
+  crossScalaVersions := ScalaVersions.all
 )
 
 lazy val cliProjectName = Seq(
-  name := "scala-packager-cli"
+  name := "scala-packager-cli",
+  scalaVersion := ScalaVersions.scala213,
+  crossScalaVersions := ScalaVersions.all
 )
 
 lazy val utest: Seq[Setting[_]] = Seq(

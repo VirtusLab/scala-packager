@@ -42,5 +42,5 @@ case class WindowsPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     osWrite(wixConfigPath, wixConfig.generateContent())
   }
 
-  override def extension: String = ".msi"
+  override def extension: String = "msi"
 }
