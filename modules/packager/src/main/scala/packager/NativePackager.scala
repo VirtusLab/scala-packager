@@ -1,5 +1,7 @@
 package packager
 
+import packager.config.BuildSettings
+
 trait NativePackager {
 
   def sourceAppPath: os.Path

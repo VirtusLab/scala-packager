@@ -5,7 +5,8 @@ case class WindowsWixConfig(
     version: String,
     manufacturer: String,
     productName: String,
-    sourcePath: os.Path
+    sourcePath: os.Path,
+    licencePath: os.Path
 ) {
 
   def randomGuid: String = java.util.UUID.randomUUID.toString
@@ -23,7 +24,7 @@ case class WindowsWixConfig(
         <Directory Id="ProgramFilesFolder">
           <Directory Id="INSTALLDIR" Name="$packageName">
             <Component Id="ApplicationFiles" Guid="$randomGuid">
-              <File Id="ApplicationFile1" Source="$sourcePath" Name="$packageName.bat"/>
+              <File Id="ApplicationFile1" Source="$sourcePath" Name="${sourcePath.last}"/>
             </Component>
           </Directory>
         </Directory>
@@ -48,10 +49,19 @@ case class WindowsWixConfig(
         <WriteEnvironmentStrings/>
       </InstallExecuteSequence>
 
-      <Feature Id="DefaultFeature" Level="1">
+      <Feature Id='Complete' Title='Foobar 1.0' Description='The complete package.'
+        Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'>
+        <Feature Id='MainProgram' Title='Program' Description='The main executable.' Level='1'>
         <ComponentRef Id="ApplicationFiles"/>
         <ComponentRef Id="setEnviroment"/>
+        </Feature>
       </Feature>
+      
+      <WixVariable Id="WixUILicenseRtf" Value="$licencePath" />
+      <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+
+      <UIRef Id="WixUI_InstallDir" />
+      
     </Product>
     </Wix>
    """

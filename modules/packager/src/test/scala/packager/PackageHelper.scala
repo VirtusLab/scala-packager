@@ -1,5 +1,8 @@
 package packager
 
+import packager.config.BuildSettings
+import packager.config.BuildSettings.MacOsSettings
+
 trait PackageHelper {
   lazy val packageName = "echo"
   def extension: String
@@ -9,6 +12,9 @@ trait PackageHelper {
   lazy val buildOptions: BuildSettings = BuildSettings(
     force = true,
     workingDirectoryPath = Some(tmpDir),
-    outputPath = outputPackagePath
+    outputPath = outputPackagePath,
+    macOS = MacOsSettings(
+      identifier = s"org.scala.$packageName"
+    )
   )
 }

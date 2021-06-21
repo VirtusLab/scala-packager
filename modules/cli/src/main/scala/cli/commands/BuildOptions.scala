@@ -1,6 +1,6 @@
 package cli.commands
 
-import caseapp.{Group, HelpMessage, Name, Parser}
+import caseapp.{Group, HelpMessage, Name, Parser, Recurse}
 import caseapp.core.help.Help
 
 final case class BuildOptions(
@@ -8,6 +8,14 @@ final case class BuildOptions(
     @HelpMessage("Set destination path")
     @Name("o")
     output: Option[String] = None,
+    @Recurse
+    sharedOptions: SharedOptions = SharedOptions(),
+    @Recurse
+    debian: DebianOptions = DebianOptions(),
+    @Recurse
+    redHat: RedHatOptions = RedHatOptions(),
+    @Recurse
+    macOS: MacOSOptions = MacOSOptions(),
     @Group("Build")
     @HelpMessage("Overwrite destination file if it exists")
     @Name("f")
@@ -24,19 +32,7 @@ final case class BuildOptions(
     rpm: Boolean = false,
     msi: Boolean = false,
     dmg: Boolean = false,
-    pkg: Boolean = false,
-    @Group("Build")
-    @HelpMessage("The version is set to 1.0.0 by default")
-    @Name("v")
-    version: String = "1.0.0",
-    @Group("Build")
-    @HelpMessage(
-      "The maintainer is set to scala-packager by default, it should contains names and email addresses of co-maintainers of the package"
-    )
-    @Name("v")
-    maintainer: String = "scala-packager",
-    @Name("d")
-    description: String = "Native package building by scala-packager"
+    pkg: Boolean = false
 ) {
 
   import BuildOptions.NativePackagerType

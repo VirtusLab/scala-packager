@@ -1,7 +1,8 @@
 package packager.windows
 
 import packager.PackagerUtils.osWrite
-import packager.{BuildSettings, NativePackager}
+import packager.NativePackager
+import packager.config.BuildSettings
 
 case class WindowsPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     extends NativePackager {
@@ -10,8 +11,9 @@ case class WindowsPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     packageName = packageName,
     version = options.version,
     manufacturer = options.maintainer,
-    productName = options.productName,
-    sourcePath = sourceAppPath
+    productName = options.packageName,
+    sourcePath = sourceAppPath,
+    licencePath = options.windows.licencePath
   )
 
   private val wixConfigPath: os.Path = basePath / s"$packageName.wxs"
@@ -25,7 +27,9 @@ case class WindowsPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
 
     os.proc(
         candleBinPath,
-        wixConfigPath
+        wixConfigPath,
+        "-ext",
+        "WixUIExtension"
       )
       .call(cwd = basePath)
 
@@ -33,7 +37,9 @@ case class WindowsPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
         lightBinPath,
         s"$packageName.wixobj",
         "-o",
-        outputPath
+        outputPath,
+        "-ext",
+        "WixUIExtension"
       )
       .call(cwd = basePath)
   }

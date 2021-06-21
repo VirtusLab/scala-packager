@@ -1,7 +1,8 @@
 package packager.rpm
 
-import packager.{BuildSettings, NativePackager}
+import packager.NativePackager
 import packager.PackagerUtils.{osCopy, osMove, osWrite}
+import packager.config.BuildSettings
 
 case class RedHatPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     extends NativePackager {
@@ -26,7 +27,7 @@ case class RedHatPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
       .call(cwd = basePath)
     osMove(rpmsDirectory / s"$packageName.rpm", outputPath)
 
-    postInstallClean()
+//    postInstallClean()
   }
 
   private def postInstallClean(): Unit = {
@@ -50,7 +51,11 @@ case class RedHatPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
   private def buildRedHatSpec(): RedHatSpecPackage =
     RedHatSpecPackage(
       packageName = packageName,
-      version = options.version
+      version = options.version,
+      description = options.description,
+      buildArch = options.redHat.rpmArchitecture,
+      license = options.redHat.license,
+      release = options.redHat.release
     )
 
   private def copyExecutableFile(): Unit = {

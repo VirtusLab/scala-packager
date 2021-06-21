@@ -1,15 +1,22 @@
 package packager.rpm
 
-case class RedHatSpecPackage(packageName: String, version: String) {
+case class RedHatSpecPackage(
+    packageName: String,
+    version: String,
+    description: String,
+    buildArch: String,
+    license: String,
+    release: Long
+) {
 
   def generateContent: String =
     s"""Name:           $packageName
        |Version:        $version
-       |Release:        0
-       |Summary:        RedHat package
-       |BuildArch:      noarch
+       |Release:        $release
+       |Summary:        $description
+       |BuildArch:      $buildArch
        |
-       |License:        GPL
+       |License:        $license
        |
        |#BuildRequires:
        |Requires:       bash

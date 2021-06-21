@@ -9,7 +9,7 @@ trait MacOSNativePackager extends NativePackager {
   protected val contentPath: os.Path = macOSAppPath / "Contents"
   protected val macOsPath: os.Path = contentPath / "MacOS"
   protected val infoPlist: MacOSInfoPlist =
-    MacOSInfoPlist(packageName, s"com.example.$packageName")
+    MacOSInfoPlist(packageName, buildOptions.macOS.identifier)
 
   def createAppDirectory(): Unit = {
     os.makeDir.all(macOsPath)

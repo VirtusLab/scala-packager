@@ -1,7 +1,8 @@
 package packager.deb
 
 import packager.PackagerUtils.{executablePerms, osCopy, osMove, osWrite}
-import packager.{BuildSettings, NativePackager}
+import packager.NativePackager
+import packager.config.BuildSettings
 
 case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     extends NativePackager {
@@ -35,7 +36,10 @@ case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
 
   private def buildDebianMetaData(info: DebianPackageInfo): DebianMetaData =
     DebianMetaData(
-      debianInfo = info
+      debianInfo = info,
+      architecture = options.debian.architecture,
+      dependsOn = options.debian.debianDependencies,
+      conflicts = options.debian.debianConflicts
     )
 
   private def buildDebianInfo(): DebianPackageInfo =

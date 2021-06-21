@@ -1,7 +1,7 @@
 package packager.mac.pkg
 
-import packager.BuildSettings
 import packager.PackagerUtils.{executablePerms, osWrite}
+import packager.config.BuildSettings
 import packager.mac.MacOSNativePackager
 
 case class PkgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)

@@ -3,7 +3,8 @@ package packager.deb
 case class DebianMetaData(
     debianInfo: DebianPackageInfo,
     architecture: String = "all",
-    depends: Seq[String] = Seq.empty
+    dependsOn: List[String] = Nil,
+    conflicts: List[String] = Nil
 ) {
 
   def generateContent(): String = {
@@ -12,6 +13,8 @@ case class DebianMetaData(
     |Maintainer: ${debianInfo.maintainer}
     |Description: ${debianInfo.description}
     |Architecture: $architecture
+    |${if (dependsOn.nonEmpty) "Depends: " + dependsOn.mkString(", ") else ""}
+    |${if (conflicts.nonEmpty) "Conflicts: " + dependsOn.mkString(", ") else ""}
     |""".stripMargin
   }
 

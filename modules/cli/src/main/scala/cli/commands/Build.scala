@@ -3,7 +3,12 @@ package cli.commands
 import caseapp.core.RemainingArgs
 import caseapp.core.app.Command
 import BuildOptions.NativePackagerType._
-import packager.BuildSettings
+import packager.config.BuildSettings.{
+  DebianSettings,
+  MacOsSettings,
+  RedHatSettings
+}
+import packager.config.BuildSettings
 import packager.deb.DebianPackage
 import packager.mac.dmg.DmgPackage
 import packager.mac.pkg.PkgPackage
@@ -27,9 +32,25 @@ object Build extends Command[BuildOptions] {
       force = options.force,
       workingDirectoryPath = workingDirectoryPath,
       outputPath = destinationPath,
-      version = options.version,
-      maintainer = options.maintainer,
-      description = options.description
+      version = options.sharedOptions.version,
+      maintainer = options.sharedOptions.maintainer,
+      description = options.sharedOptions.description,
+      packageName = options.sharedOptions.name
+        .orElse(sourceAppPath.last.split('.').headOption)
+        .getOrElse("Scala Packager"),
+      debian = DebianSettings(
+        debianConflicts = options.debian.debianConflicts,
+        debianDependencies = options.debian.debianDependencies,
+        architecture = options.debian.debArchitecture
+      ),
+      redHat = RedHatSettings(
+        license = options.redHat.license,
+        release = options.redHat.release
+      ),
+      macOS = MacOsSettings(
+        identifier = options.macOS.identifier
+          .getOrElse(s"org.scala.${options.sharedOptions.name}")
+      )
     )
 
     def alreadyExistsCheck(): Unit =

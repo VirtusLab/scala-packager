@@ -10,7 +10,7 @@ case class MacOSInfoPlist(executableName: String, identifier: String) {
                      |	<key>CFBundleExecutable</key>
                      |	<string>$executableName</string>
                      |	<key>CFBundleIdentifier</key>
-                     |	<string>com.example.$identifier</string>
+                     |	<string>$identifier</string>
                      |</dict>
                      |</plist>""".stripMargin
     content

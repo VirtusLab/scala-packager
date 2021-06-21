@@ -1,6 +1,7 @@
 package packager
 
 import os.PermSet
+import packager.config.BuildSettings
 
 object PackagerUtils {
 
