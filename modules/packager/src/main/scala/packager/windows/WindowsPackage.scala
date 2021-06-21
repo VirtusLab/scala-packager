@@ -11,7 +11,7 @@ case class WindowsPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     packageName = packageName,
     version = options.version,
     manufacturer = options.maintainer,
-    productName = options.packageName,
+    productName = options.productName,
     sourcePath = sourceAppPath,
     licencePath = options.windows.licencePath
   )
