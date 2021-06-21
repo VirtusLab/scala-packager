@@ -13,10 +13,7 @@ jobs:
     strategy:
         fail-fast: false
         matrix:
-          include:
-            - os: ubuntu-latest
-            - os: macos-latest
-            - os: windows-2016
+          OS: [ubuntu-latest, macos-latest, windows-2016]
     steps:
     - uses: actions/checkout@v2
       with:

@@ -14,5 +14,5 @@ object PackagerCli extends CommandsEntryPoint {
     Build
   )
 
-  override def progName: String = "scala"
+  override def progName: String = "packager"
 }

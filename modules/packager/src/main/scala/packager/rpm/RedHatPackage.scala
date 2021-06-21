@@ -3,7 +3,7 @@ package packager.rpm
 import packager.NativePackager
 import packager.PackagerUtils.{osCopy, osMove, osWrite}
 import packager.config.BuildSettings
-import packager.config.BuildSettings.{PackageExtension, RedHatExtension}
+import packager.config.BuildSettings.PackageExtension.{PackageExtension, Rpm}
 
 case class RedHatPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     extends NativePackager {
@@ -63,5 +63,5 @@ case class RedHatPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     osCopy(sourceAppPath, sourcesDirectory / packageName)
   }
 
-  override def extension: PackageExtension = RedHatExtension
+  override def extension: PackageExtension = Rpm
 }

@@ -2,6 +2,7 @@ package packager.dmg
 
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
+import packager.config.BuildSettings.PackageExtension.{PackageExtension, Dmg}
 import packager.mac.dmg.DmgPackage
 
 import scala.util.Properties
@@ -48,5 +49,5 @@ class DmgPackageTests extends munit.FunSuite with PackageHelper {
     }
   }
 
-  override def extension: String = "dmg"
+  override def extension: PackageExtension = Dmg
 }

@@ -3,13 +3,13 @@ package cli.commands
 import caseapp.core.RemainingArgs
 import caseapp.core.app.Command
 import BuildOptions.NativePackagerType._
-import packager.config.BuildSettings.{
+import packager.config.{
+  BuildSettings,
   DebianSettings,
   MacOsSettings,
   RedHatSettings,
   WindowsSettings
 }
-import packager.config.BuildSettings
 import packager.deb.DebianPackage
 import packager.mac.dmg.DmgPackage
 import packager.mac.pkg.PkgPackage
@@ -46,7 +46,8 @@ object Build extends Command[BuildOptions] {
       ),
       redHat = RedHatSettings(
         license = options.redHat.license,
-        release = options.redHat.release
+        release = options.redHat.release,
+        rpmArchitecture = options.redHat.romArchitecture
       ),
       macOS = MacOsSettings(
         identifier = options.macOS.identifier

@@ -2,6 +2,7 @@ package packager
 
 import packager.config.BuildSettings
 import packager.config.BuildSettings.PackageExtension
+import packager.config.BuildSettings.PackageExtension.PackageExtension
 
 trait NativePackager {
 
@@ -11,7 +12,8 @@ trait NativePackager {
   def extension: PackageExtension
 
   protected lazy val packageName: String =
-    buildOptions.outputPath.last.stripSuffix(s".${extension.ext}")
+    buildOptions.outputPath.last
+      .stripSuffix(s".${extension.toString.toLowerCase}")
   protected lazy val basePath: os.Path =
     buildOptions.workingDirectoryPath.getOrElse(
       os.temp.dir(prefix = packageName)

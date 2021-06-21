@@ -2,6 +2,7 @@ package packager.windows
 
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
+import packager.config.BuildSettings.PackageExtension.{PackageExtension, Msi}
 
 import scala.util.Properties
 
@@ -21,5 +22,13 @@ class WindowsPackageTests extends munit.FunSuite with PackageHelper {
     }
   }
 
-  override def extension: String = "msi"
+  test("should exists default licence file for msi package") {
+    val msiPackage = WindowsPackage(echoLauncherPath, buildOptions)
+
+    val licencePath = msiPackage.buildOptions.windows.licencePath
+
+    expect(os.exists(licencePath))
+  }
+
+  override def extension: PackageExtension = Msi
 }

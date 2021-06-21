@@ -2,6 +2,7 @@ package packager.deb
 
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
+import packager.config.BuildSettings.PackageExtension.{PackageExtension, Deb}
 
 import scala.util.Properties
 
@@ -43,5 +44,5 @@ class DebianPackageTests extends munit.FunSuite with PackageHelper {
     }
   }
 
-  override def extension: String = "deb"
+  override def extension: PackageExtension = Deb
 }

@@ -1,7 +1,7 @@
 package cli.commands
 
 import caseapp.core.help.Help
-import caseapp.{Group, HelpMessage, Name, Parser, ValueDescription}
+import caseapp.{Group, HelpMessage, Parser, ValueDescription}
 
 final case class DebianOptions(
     @Group("Debian")

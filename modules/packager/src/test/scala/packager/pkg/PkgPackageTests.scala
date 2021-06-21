@@ -2,6 +2,7 @@ package packager.pkg
 
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
+import packager.config.BuildSettings.PackageExtension.{PackageExtension, Pkg}
 import packager.mac.pkg.PkgPackage
 
 import scala.util.Properties
@@ -67,5 +68,5 @@ class PkgPackageTests extends munit.FunSuite with PackageHelper {
     }
   }
 
-  override def extension: String = "pkg"
+  override def extension: PackageExtension = Pkg
 }

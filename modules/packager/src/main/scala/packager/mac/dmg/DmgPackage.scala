@@ -1,7 +1,7 @@
 package packager.mac.dmg
 
 import packager.config.BuildSettings
-import packager.config.BuildSettings.{DmgExtension, PackageExtension}
+import packager.config.BuildSettings.PackageExtension.{PackageExtension, Dmg}
 import packager.mac.MacOSNativePackager
 
 case class DmgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
@@ -70,5 +70,5 @@ case class DmgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     os.symlink(mountpointPath / "Applications", os.root / "Applications")
   }
 
-  override def extension: PackageExtension = DmgExtension
+  override def extension: PackageExtension = Dmg
 }

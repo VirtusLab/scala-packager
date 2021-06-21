@@ -2,6 +2,7 @@ package packager.rpm
 
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
+import packager.config.BuildSettings.PackageExtension.{PackageExtension, Rpm}
 
 import scala.util.Properties
 
@@ -43,5 +44,5 @@ class RedHatPackageTests extends munit.FunSuite with PackageHelper {
     }
   }
 
-  override def extension: String = "rpm"
+  override def extension: PackageExtension = Rpm
 }
