@@ -16,6 +16,8 @@ final case class BuildOptions(
     redHat: RedHatOptions = RedHatOptions(),
     @Recurse
     macOS: MacOSOptions = MacOSOptions(),
+    @Recurse
+    windows: WindowsOptions = WindowsOptions(),
     @Group("Build")
     @HelpMessage("Overwrite destination file if it exists")
     @Name("f")

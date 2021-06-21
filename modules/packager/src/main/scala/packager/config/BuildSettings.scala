@@ -29,10 +29,17 @@ case object BuildSettings {
       rpmArchitecture: String = "noarch"
   )
   case class MacOsSettings(identifier: String = "org.scala")
-  case class WindowsSettings(
-      licencePath: os.Path =
-        os.pwd / "modules" / "packager" / "src" / "main" / "resources" / "packager" / "common" / "apache-2.0.rtf"
-  )
+  case class WindowsSettings(licencePath: os.Path)
+  case object WindowsSettings {
+
+    def apply(): WindowsSettings =
+      WindowsSettings(
+        licencePath = defaultLicencePath
+      )
+
+    lazy val defaultLicencePath: os.Path =
+      os.pwd / "modules" / "packager" / "src" / "main" / "resources" / "packager" / "common" / "apache-2.0.rtf"
+  }
   case class DebianSettings(
       debianConflicts: List[String] = Nil,
       debianDependencies: List[String] = Nil,

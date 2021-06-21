@@ -6,7 +6,8 @@ import BuildOptions.NativePackagerType._
 import packager.config.BuildSettings.{
   DebianSettings,
   MacOsSettings,
-  RedHatSettings
+  RedHatSettings,
+  WindowsSettings
 }
 import packager.config.BuildSettings
 import packager.deb.DebianPackage
@@ -38,6 +39,7 @@ object Build extends Command[BuildOptions] {
       packageName = options.sharedOptions.name
         .orElse(sourceAppPath.last.split('.').headOption)
         .getOrElse("Scala Packager"),
+      productName = options.windows.productName,
       debian = DebianSettings(
         debianConflicts = options.debian.debianConflicts,
         debianDependencies = options.debian.debianDependencies,
@@ -50,6 +52,11 @@ object Build extends Command[BuildOptions] {
       macOS = MacOsSettings(
         identifier = options.macOS.identifier
           .getOrElse(s"org.scala.${options.sharedOptions.name}")
+      ),
+      windows = WindowsSettings(
+        licencePath = options.windows.licensePath
+          .map(os.Path(_, pwd))
+          .getOrElse(WindowsSettings.defaultLicencePath)
       )
     )
 
