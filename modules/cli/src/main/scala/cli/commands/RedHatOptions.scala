@@ -15,7 +15,7 @@ final case class RedHatOptions(
     )
     release: Long = 1,
     @HelpMessage("Architecture that are supported by the repository, default: ")
-    romArchitecture: String = "all"
+    romArchitecture: String = "noarch"
 )
 
 case object RedHatOptions {
