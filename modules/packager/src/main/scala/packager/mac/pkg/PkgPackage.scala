@@ -2,6 +2,7 @@ package packager.mac.pkg
 
 import packager.PackagerUtils.{executablePerms, osWrite}
 import packager.config.BuildSettings
+import packager.config.BuildSettings.{PackageExtension, PkgExtension}
 import packager.mac.MacOSNativePackager
 
 case class PkgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
@@ -44,5 +45,5 @@ case class PkgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     osWrite(postInstallPath, content, executablePerms)
   }
 
-  override def extension: String = "pkg"
+  override def extension: PackageExtension = PkgExtension
 }

@@ -39,7 +39,6 @@ object Build extends Command[BuildOptions] {
       packageName = options.sharedOptions.name
         .orElse(sourceAppPath.last.split('.').headOption)
         .getOrElse("Scala Packager"),
-      productName = options.windows.productName,
       debian = DebianSettings(
         debianConflicts = options.debian.debianConflicts,
         debianDependencies = options.debian.debianDependencies,
@@ -56,7 +55,8 @@ object Build extends Command[BuildOptions] {
       windows = WindowsSettings(
         licencePath = options.windows.licensePath
           .map(os.Path(_, pwd))
-          .getOrElse(WindowsSettings.defaultLicencePath)
+          .getOrElse(WindowsSettings.defaultLicencePath),
+        productName = options.windows.productName
       )
     )
 

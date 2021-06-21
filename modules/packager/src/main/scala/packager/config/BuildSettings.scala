@@ -15,7 +15,6 @@ case class BuildSettings(
     maintainer: String = "scala-packager",
     description: String = "Native package building by scala-packager",
     packageName: String = "Scala packager product",
-    productName: String = "Scala packager product",
     debian: DebianSettings = DebianSettings(),
     redHat: RedHatSettings = RedHatSettings(),
     macOS: MacOsSettings = MacOsSettings(),
@@ -23,13 +22,36 @@ case class BuildSettings(
 )
 
 case object BuildSettings {
+
+  sealed trait PackageExtension {
+    def ext: String
+  }
+  case object RedHatExtension extends PackageExtension {
+    override def ext: String = "rpm"
+  }
+  case object DebianExtension extends PackageExtension {
+    override def ext: String = "deb"
+  }
+  case object PkgExtension extends PackageExtension {
+    override def ext: String = "pkg"
+  }
+  case object DmgExtension extends PackageExtension {
+    override def ext: String = "dmg"
+  }
+  case object WindowsExtension extends PackageExtension {
+    override def ext: String = "msi"
+  }
+
   case class RedHatSettings(
       license: String = "ASL 2.0",
       release: Long = 1,
       rpmArchitecture: String = "noarch"
   )
   case class MacOsSettings(identifier: String = "org.scala")
-  case class WindowsSettings(licencePath: os.Path)
+  case class WindowsSettings(
+      licencePath: os.Path,
+      productName: String = "Scala packager product"
+  )
   case object WindowsSettings {
 
     def apply(): WindowsSettings =

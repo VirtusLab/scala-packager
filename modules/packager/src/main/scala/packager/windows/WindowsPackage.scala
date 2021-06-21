@@ -3,6 +3,7 @@ package packager.windows
 import packager.PackagerUtils.osWrite
 import packager.NativePackager
 import packager.config.BuildSettings
+import packager.config.BuildSettings.{PackageExtension, WindowsExtension}
 
 case class WindowsPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     extends NativePackager {
@@ -11,7 +12,7 @@ case class WindowsPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     packageName = packageName,
     version = options.version,
     manufacturer = options.maintainer,
-    productName = options.productName,
+    productName = options.windows.productName,
     sourcePath = sourceAppPath,
     licencePath = options.windows.licencePath
   )
@@ -48,5 +49,5 @@ case class WindowsPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     osWrite(wixConfigPath, wixConfig.generateContent())
   }
 
-  override def extension: String = "msi"
+  override def extension: PackageExtension = WindowsExtension
 }

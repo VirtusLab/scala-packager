@@ -7,6 +7,6 @@ final case class WindowsOptions(
     @HelpMessage("Path to license file")
     licensePath: Option[String] = None,
     @Group("Windows")
-    @HelpMessage("Name of product, default: scala-packager")
+    @HelpMessage("Name of product, default: Scala packager")
     productName: String = "Scala packager"
 )

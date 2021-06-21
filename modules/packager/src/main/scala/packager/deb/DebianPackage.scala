@@ -3,6 +3,7 @@ package packager.deb
 import packager.PackagerUtils.{executablePerms, osCopy, osMove, osWrite}
 import packager.NativePackager
 import packager.config.BuildSettings
+import packager.config.BuildSettings.{DebianExtension, PackageExtension}
 
 case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     extends NativePackager {
@@ -70,5 +71,5 @@ case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     osWrite(launchScriptFile, content, executablePerms)
   }
 
-  override def extension: String = "deb"
+  override def extension: PackageExtension = DebianExtension
 }
