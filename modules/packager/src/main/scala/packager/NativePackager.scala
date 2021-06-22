@@ -1,6 +1,6 @@
 package packager
 
-import packager.config.BuildSettings
+import packager.config.{BuildSettings, NativePackageSettings}
 import packager.config.BuildSettings.PackageExtension
 
 trait NativePackager {
@@ -9,6 +9,7 @@ trait NativePackager {
   def buildOptions: BuildSettings
   implicit def options = buildOptions
   def extension: PackageExtension
+  def nativePackageSettings: NativePackageSettings
 
   protected lazy val packageName: String =
     buildOptions.outputPath.last

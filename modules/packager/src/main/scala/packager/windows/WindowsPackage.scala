@@ -2,7 +2,7 @@ package packager.windows
 
 import packager.PackagerUtils.osWrite
 import packager.NativePackager
-import packager.config.BuildSettings
+import packager.config.{BuildSettings, WindowsSettings}
 import packager.config.BuildSettings.{Msi, PackageExtension}
 
 case class WindowsPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
@@ -15,10 +15,15 @@ case class WindowsPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     packageName = packageName,
     version = options.version,
     manufacturer = options.maintainer,
-    productName = options.windows.productName,
+    productName = nativePackageSettings.productName,
     sourcePath = sourceAppPath,
     licencePath = licensePath
   )
+
+  override def nativePackageSettings: WindowsSettings =
+    buildOptions.windows.getOrElse(
+      sys.error("Required settings for windows package")
+    )
 
   override def build(): Unit = {
     createConfFile()
@@ -49,7 +54,7 @@ case class WindowsPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
 
   private def copyLicenseToBasePath() = {
     val license =
-      WindowsUtils.convertLicenseToRtfFormat(options.windows.licencePath)
+      WindowsUtils.convertLicenseToRtfFormat(nativePackageSettings.licencePath)
     os.write(licensePath, license)
   }
 

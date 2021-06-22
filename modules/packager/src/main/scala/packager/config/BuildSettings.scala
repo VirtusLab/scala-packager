@@ -8,10 +8,10 @@ case class BuildSettings(
     maintainer: String = "scala-packager",
     description: String = "Native package building by scala-packager",
     packageName: String = "Scala packager product",
-    debian: DebianSettings = DebianSettings.default,
-    redHat: RedHatSettings = RedHatSettings.default,
-    macOS: MacOsSettings = MacOsSettings.default,
-    windows: WindowsSettings = WindowsSettings.default
+    debian: Option[DebianSettings] = None,
+    redHat: Option[RedHatSettings] = None,
+    macOS: Option[MacOSSettings] = None,
+    windows: Option[WindowsSettings] = None
 )
 
 case object BuildSettings {

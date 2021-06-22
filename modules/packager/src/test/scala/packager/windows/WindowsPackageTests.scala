@@ -25,7 +25,7 @@ class WindowsPackageTests extends munit.FunSuite with PackageHelper {
   test("should exists default licence file for msi package") {
     val msiPackage = WindowsPackage(echoLauncherPath, buildOptions)
 
-    val licencePath = msiPackage.buildOptions.windows.licencePath
+    val licencePath = msiPackage.nativePackageSettings.licencePath
 
     expect(os.read(licencePath).nonEmpty)
   }

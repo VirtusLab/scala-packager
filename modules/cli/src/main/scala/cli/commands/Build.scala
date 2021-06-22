@@ -3,13 +3,7 @@ package cli.commands
 import caseapp.core.RemainingArgs
 import caseapp.core.app.Command
 import BuildOptions.NativePackagerType._
-import packager.config.{
-  BuildSettings,
-  DebianSettings,
-  MacOsSettings,
-  RedHatSettings,
-  WindowsSettings
-}
+import packager.config.BuildSettings
 import packager.deb.DebianPackage
 import packager.mac.dmg.DmgPackage
 import packager.mac.pkg.PkgPackage
@@ -39,26 +33,13 @@ object Build extends Command[BuildOptions] {
       packageName = options.sharedOptions.name
         .orElse(sourceAppPath.last.split('.').headOption)
         .getOrElse("Scala Packager"),
-      debian = DebianSettings(
-        debianConflicts = options.debian.debianConflicts,
-        debianDependencies = options.debian.debianDependencies,
-        architecture = options.debian.debArchitecture
-      ),
-      redHat = RedHatSettings(
-        license = options.redHat.license,
-        release = options.redHat.release,
-        rpmArchitecture = options.redHat.romArchitecture
-      ),
-      macOS = MacOsSettings(
-        identifier = options.macOS.identifier
-          .getOrElse(s"org.scala.${options.sharedOptions.name}")
-      ),
-      windows = WindowsSettings(
-        licencePath = options.windows.licensePath
-          .map(os.Path(_, pwd))
-          .getOrElse(WindowsSettings.defaultLicencePath),
-        productName = options.windows.productName
-      )
+      debian = if (options.deb) Some(options.debian.toDebianSettings) else None,
+      redHat = if (options.rpm) Some(options.redHat.toRedHatSettings) else None,
+      macOS =
+        if (options.deb || options.pkg) Some(options.macOS.toMacOSSettings)
+        else None,
+      windows =
+        if (options.msi) Some(options.windows.toWindowsSettings(pwd)) else None
     )
 
     def alreadyExistsCheck(): Unit =

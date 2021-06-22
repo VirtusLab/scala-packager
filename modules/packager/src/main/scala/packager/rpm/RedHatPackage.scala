@@ -2,7 +2,7 @@ package packager.rpm
 
 import packager.NativePackager
 import packager.PackagerUtils.{osCopy, osMove, osWrite}
-import packager.config.BuildSettings
+import packager.config.{BuildSettings, RedHatSettings}
 import packager.config.BuildSettings.{PackageExtension, Rpm}
 
 case class RedHatPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
@@ -13,6 +13,11 @@ case class RedHatPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
   private val specsDirectory = redHatBasePath / "SPECS"
   private val rpmsDirectory = redHatBasePath / "RPMS"
   private val redHatSpec = buildRedHatSpec()
+
+  override def nativePackageSettings: RedHatSettings =
+    buildOptions.redHat.getOrElse(
+      sys.error("Required settings for redHat package")
+    )
 
   override def build(): Unit = {
     createRedHatDir()
@@ -28,7 +33,7 @@ case class RedHatPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
       .call(cwd = basePath)
     osMove(rpmsDirectory / s"$packageName.rpm", outputPath)
 
-//    postInstallClean()
+    postInstallClean()
   }
 
   private def postInstallClean(): Unit = {
@@ -54,9 +59,9 @@ case class RedHatPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
       packageName = packageName,
       version = options.version,
       description = options.description,
-      buildArch = options.redHat.rpmArchitecture,
-      license = options.redHat.license,
-      release = options.redHat.release
+      buildArch = nativePackageSettings.rpmArchitecture,
+      license = nativePackageSettings.license,
+      release = nativePackageSettings.release
     )
 
   private def copyExecutableFile(): Unit = {

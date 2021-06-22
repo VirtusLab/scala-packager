@@ -2,7 +2,7 @@ package packager.deb
 
 import packager.PackagerUtils.{executablePerms, osCopy, osMove, osWrite}
 import packager.NativePackager
-import packager.config.BuildSettings
+import packager.config.{BuildSettings, DebianSettings}
 import packager.config.BuildSettings.{Deb, PackageExtension}
 
 case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
@@ -13,6 +13,11 @@ case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
   private val packageInfo = buildDebianInfo()
   private val metaData = buildDebianMetaData(packageInfo)
   private val mainDebianDirectory = debianBasePath / "DEBIAN"
+
+  override def nativePackageSettings: DebianSettings =
+    buildOptions.debian.getOrElse(
+      sys.error("Required settings for debian package")
+    )
 
   override def build(): Unit = {
     createDebianDir()
@@ -38,9 +43,9 @@ case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
   private def buildDebianMetaData(info: DebianPackageInfo): DebianMetaData =
     DebianMetaData(
       debianInfo = info,
-      architecture = options.debian.architecture,
-      dependsOn = options.debian.debianDependencies,
-      conflicts = options.debian.debianConflicts
+      architecture = nativePackageSettings.architecture,
+      dependsOn = nativePackageSettings.debianDependencies,
+      conflicts = nativePackageSettings.debianConflicts
     )
 
   private def buildDebianInfo(): DebianPackageInfo =
