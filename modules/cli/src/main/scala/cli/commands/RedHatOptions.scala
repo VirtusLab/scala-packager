@@ -17,7 +17,7 @@ final case class RedHatOptions(
     )
     release: Long = 1,
     @HelpMessage("Architecture that are supported by the repository, default: ")
-    romArchitecture: String = "noarch"
+    rpmArchitecture: String = "noarch"
 ) {
 
   def toRedHatSettings: RedHatSettings =
@@ -25,7 +25,7 @@ final case class RedHatOptions(
       license =
         license.mandatory("License parameter is mandatory for redHat package"),
       release = release,
-      rpmArchitecture = romArchitecture
+      rpmArchitecture = rpmArchitecture
     )
 }
 

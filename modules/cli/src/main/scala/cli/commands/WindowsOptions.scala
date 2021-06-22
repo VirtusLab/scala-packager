@@ -18,7 +18,7 @@ final case class WindowsOptions(
     WindowsSettings(
       licencePath = os.Path(
         licensePath.mandatory(
-          "License parameter is mandatory for macOS packages"
+          "License parameter is mandatory for windows packages"
         ),
         pwd
       ),

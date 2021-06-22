@@ -30,9 +30,7 @@ object Build extends Command[BuildOptions] {
       version = options.sharedOptions.version,
       maintainer = options.sharedOptions.maintainer,
       description = options.sharedOptions.description,
-      packageName = options.sharedOptions.name
-        .orElse(sourceAppPath.last.split('.').headOption)
-        .getOrElse("Scala Packager"),
+      packageName = options.sharedOptions.name,
       debian = if (options.deb) Some(options.debian.toDebianSettings) else None,
       redHat = if (options.rpm) Some(options.redHat.toRedHatSettings) else None,
       macOS =

@@ -7,7 +7,7 @@ case class BuildSettings(
     version: String = "1.0.0",
     maintainer: String = "scala-packager",
     description: String = "Native package building by scala-packager",
-    packageName: String = "Scala packager product",
+    packageName: Option[String] = None,
     debian: Option[DebianSettings] = None,
     redHat: Option[RedHatSettings] = None,
     macOS: Option[MacOSSettings] = None,
