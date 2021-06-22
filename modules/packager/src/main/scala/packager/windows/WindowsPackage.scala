@@ -48,7 +48,8 @@ case class WindowsPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
   }
 
   private def copyLicenseToBasePath() = {
-    val license = os.read(options.windows.licencePath)
+    val license =
+      WindowsUtils.convertLicenseToRtfFormat(options.windows.licencePath)
     os.write(licensePath, license)
   }
 

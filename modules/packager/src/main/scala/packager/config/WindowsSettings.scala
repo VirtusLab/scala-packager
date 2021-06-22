@@ -13,5 +13,5 @@ case object WindowsSettings {
     )
 
   lazy val defaultLicencePath: os.ReadablePath =
-    os.resource / "packager" / "common" / "apache-2.0.rtf"
+    os.resource / "packager" / "common" / "apache-2.0"
 }
