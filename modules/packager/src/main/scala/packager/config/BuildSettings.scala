@@ -16,26 +16,11 @@ case class BuildSettings(
 
 case object BuildSettings {
 
-  object PackageExtension extends Enumeration {
-    type PackageExtension = Value
-    val Rpm, Deb, Pkg, Dmg, Msi = Value
-  }
-//  sealed trait PackageExtension {
-//    def ext: String
-//  }
-//  case object RedHatExtension extends PackageExtension {
-//    override def ext: String = "rpm"
-//  }
-//  case object DebianExtension extends PackageExtension {
-//    override def ext: String = "deb"
-//  }
-//  case object PkgExtension extends PackageExtension {
-//    override def ext: String = "pkg"
-//  }
-//  case object DmgExtension extends PackageExtension {
-//    override def ext: String = "dmg"
-//  }
-//  case object WindowsExtension extends PackageExtension {
-//    override def ext: String = "msi"
-//  }
+  sealed trait PackageExtension
+  case object Rpm extends PackageExtension
+  case object Deb extends PackageExtension
+  case object Pkg extends PackageExtension
+  case object Dmg extends PackageExtension
+  case object Msi extends PackageExtension
+
 }

@@ -1,6 +1,6 @@
 package packager
 
-import packager.config.BuildSettings.PackageExtension.PackageExtension
+import packager.config.BuildSettings.PackageExtension
 import packager.config.{BuildSettings, MacOsSettings}
 
 trait PackageHelper {

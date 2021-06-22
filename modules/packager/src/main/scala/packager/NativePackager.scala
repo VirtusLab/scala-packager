@@ -2,7 +2,6 @@ package packager
 
 import packager.config.BuildSettings
 import packager.config.BuildSettings.PackageExtension
-import packager.config.BuildSettings.PackageExtension.PackageExtension
 
 trait NativePackager {
 

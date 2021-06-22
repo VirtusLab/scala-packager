@@ -2,7 +2,7 @@ package packager.deb
 
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
-import packager.config.BuildSettings.PackageExtension.{PackageExtension, Deb}
+import packager.config.BuildSettings.{Deb, PackageExtension}
 
 import scala.util.Properties
 

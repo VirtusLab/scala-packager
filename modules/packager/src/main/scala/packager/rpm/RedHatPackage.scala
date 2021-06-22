@@ -3,7 +3,7 @@ package packager.rpm
 import packager.NativePackager
 import packager.PackagerUtils.{osCopy, osMove, osWrite}
 import packager.config.BuildSettings
-import packager.config.BuildSettings.PackageExtension.{PackageExtension, Rpm}
+import packager.config.BuildSettings.{PackageExtension, Rpm}
 
 case class RedHatPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     extends NativePackager {

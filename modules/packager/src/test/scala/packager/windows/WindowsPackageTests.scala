@@ -2,7 +2,7 @@ package packager.windows
 
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
-import packager.config.BuildSettings.PackageExtension.{PackageExtension, Msi}
+import packager.config.BuildSettings.{Msi, PackageExtension}
 
 import scala.util.Properties
 
@@ -27,7 +27,7 @@ class WindowsPackageTests extends munit.FunSuite with PackageHelper {
 
     val licencePath = msiPackage.buildOptions.windows.licencePath
 
-    expect(os.exists(licencePath))
+    expect(os.read(licencePath).nonEmpty)
   }
 
   override def extension: PackageExtension = Msi

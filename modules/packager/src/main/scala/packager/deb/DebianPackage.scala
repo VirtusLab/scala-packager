@@ -3,7 +3,7 @@ package packager.deb
 import packager.PackagerUtils.{executablePerms, osCopy, osMove, osWrite}
 import packager.NativePackager
 import packager.config.BuildSettings
-import packager.config.BuildSettings.PackageExtension.{Deb, PackageExtension}
+import packager.config.BuildSettings.{Deb, PackageExtension}
 
 case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     extends NativePackager {

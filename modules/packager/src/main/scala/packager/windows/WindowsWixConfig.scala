@@ -6,7 +6,7 @@ case class WindowsWixConfig(
     manufacturer: String,
     productName: String,
     sourcePath: os.Path,
-    licencePath: os.Path
+    licencePath: os.ReadablePath
 ) {
 
   def randomGuid: String = java.util.UUID.randomUUID.toString
@@ -57,7 +57,7 @@ case class WindowsWixConfig(
         </Feature>
       </Feature>
       
-      <WixVariable Id="WixUILicenseRtf" Value="$licencePath" />
+      <WixVariable Id="WixUILicenseRtf" Value="${licencePath}" />
       <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
 
       <UIRef Id="WixUI_InstallDir" />

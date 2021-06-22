@@ -3,24 +3,26 @@ package packager.windows
 import packager.PackagerUtils.osWrite
 import packager.NativePackager
 import packager.config.BuildSettings
-import packager.config.BuildSettings.PackageExtension.{PackageExtension, Msi}
+import packager.config.BuildSettings.{Msi, PackageExtension}
 
 case class WindowsPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     extends NativePackager {
 
-  val wixConfig: WindowsWixConfig = WindowsWixConfig(
+  private val wixConfigPath: os.Path = basePath / s"$packageName.wxs"
+  private val licensePath: os.Path = basePath / s"license.rtf"
+
+  private val wixConfig: WindowsWixConfig = WindowsWixConfig(
     packageName = packageName,
     version = options.version,
     manufacturer = options.maintainer,
     productName = options.windows.productName,
     sourcePath = sourceAppPath,
-    licencePath = options.windows.licencePath
+    licencePath = licensePath
   )
-
-  private val wixConfigPath: os.Path = basePath / s"$packageName.wxs"
 
   override def build(): Unit = {
     createConfFile()
+    copyLicenseToBasePath()
 
     val wixBin = Option(System.getenv("WIX")).getOrElse("\"%WIX%bin\"")
     val candleBinPath = os.Path(wixBin) / "bin" / "candle.exe"
@@ -43,6 +45,11 @@ case class WindowsPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
         "WixUIExtension"
       )
       .call(cwd = basePath)
+  }
+
+  private def copyLicenseToBasePath() = {
+    val license = os.read(options.windows.licencePath)
+    os.write(licensePath, license)
   }
 
   private def createConfFile(): Unit = {

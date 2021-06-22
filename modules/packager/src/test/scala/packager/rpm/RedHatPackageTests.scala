@@ -2,7 +2,7 @@ package packager.rpm
 
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
-import packager.config.BuildSettings.PackageExtension.{PackageExtension, Rpm}
+import packager.config.BuildSettings.{PackageExtension, Rpm}
 
 import scala.util.Properties
 

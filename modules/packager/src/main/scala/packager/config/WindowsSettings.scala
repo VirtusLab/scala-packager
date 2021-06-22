@@ -1,7 +1,7 @@
 package packager.config
 
 case class WindowsSettings(
-    licencePath: os.Path,
+    licencePath: os.ReadablePath,
     productName: String
 )
 
@@ -12,6 +12,6 @@ case object WindowsSettings {
       productName = "Scala packager product"
     )
 
-  lazy val defaultLicencePath: os.Path =
-    os.pwd / "modules" / "packager" / "src" / "main" / "resources" / "packager" / "common" / "apache-2.0.rtf"
+  lazy val defaultLicencePath: os.ReadablePath =
+    os.resource / "packager" / "common" / "apache-2.0.rtf"
 }

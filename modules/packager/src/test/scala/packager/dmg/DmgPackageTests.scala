@@ -2,7 +2,7 @@ package packager.dmg
 
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
-import packager.config.BuildSettings.PackageExtension.{PackageExtension, Dmg}
+import packager.config.BuildSettings.{Dmg, PackageExtension}
 import packager.mac.dmg.DmgPackage
 
 import scala.util.Properties

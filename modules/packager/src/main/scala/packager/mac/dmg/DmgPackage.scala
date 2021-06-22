@@ -1,7 +1,7 @@
 package packager.mac.dmg
 
 import packager.config.BuildSettings
-import packager.config.BuildSettings.PackageExtension.{PackageExtension, Dmg}
+import packager.config.BuildSettings.{Dmg, PackageExtension}
 import packager.mac.MacOSNativePackager
 
 case class DmgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
