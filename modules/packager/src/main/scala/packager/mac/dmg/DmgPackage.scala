@@ -39,7 +39,7 @@ case class DmgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
       .call(cwd = basePath)
 
     copyAppDirectory()
-    removeDebIfExists()
+    removeDmgIfExists()
 
     os.proc("hdiutil", "detach", "mountpoint/").call(cwd = basePath)
     os.proc(
@@ -56,7 +56,7 @@ case class DmgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     postInstallClean()
   }
 
-  private def removeDebIfExists(): Unit = {
+  private def removeDmgIfExists(): Unit = {
     if (options.force && os.exists(outputPath)) os.remove(outputPath)
   }
 

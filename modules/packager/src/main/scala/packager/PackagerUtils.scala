@@ -19,24 +19,21 @@ object PackagerUtils {
       buildOptions: BuildSettings
   ): Unit = {
     alreadyExistsCheck(to)
-    if (buildOptions.force) os.copy.over(from, to)
-    else os.copy(from, to)
+    os.copy.over(from, to)
   }
 
   def osMove(from: os.Path, to: os.Path)(implicit
       buildOptions: BuildSettings
   ): Unit = {
     alreadyExistsCheck(to)
-    if (buildOptions.force) os.move.over(from, to)
-    else os.move(from, to)
+    os.move.over(from, to)
   }
 
   def osWrite(destPath: os.Path, content: String, perms: PermSet = null)(
       implicit buildOptions: BuildSettings
   ): Unit = {
     alreadyExistsCheck(destPath)
-    if (buildOptions.force) os.write.over(destPath, content, perms)
-    else os.write(destPath, content, perms)
+    os.write.over(destPath, content, perms)
   }
 
   lazy val executablePerms: PermSet = PermSet.fromString("rwxrwxr-x")

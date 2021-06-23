@@ -8,7 +8,7 @@ import packager.config.BuildSettings.{Deb, PackageExtension}
 case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
     extends NativePackager {
 
-  private val debianBasePath = basePath / s"$packageName-deb"
+  private val debianBasePath = basePath / "debian"
   private val usrDirectory = debianBasePath / "usr"
   private val packageInfo = buildDebianInfo()
   private val metaData = buildDebianMetaData(packageInfo)
@@ -22,8 +22,10 @@ case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
   override def build(): Unit = {
     createDebianDir()
 
-    os.proc("dpkg", "-b", debianBasePath).call(cwd = basePath)
-    osMove(basePath / s"$packageName-deb.deb", outputPath)
+    os.proc("dpkg", "-b", debianBasePath)
+      .call(cwd = basePath)
+
+    osMove(basePath / "debian.deb", outputPath)
 
     postInstallClean()
   }
