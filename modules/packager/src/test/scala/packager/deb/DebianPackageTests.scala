@@ -2,6 +2,7 @@ package packager.deb
 
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
+import packager.config.DebianSettings
 import packager.config.BuildSettings.{Deb, PackageExtension}
 
 import scala.util.Properties
@@ -10,7 +11,7 @@ class DebianPackageTests extends munit.FunSuite with PackageHelper {
 
   if (Properties.isLinux) {
     test("should create DEBIAN directory ") {
-      val dmgPackage = DebianPackage(echoLauncherPath, buildOptions)
+      val dmgPackage = DebianPackage(echoLauncherPath, buildSettings)
 
       // create app directory
       dmgPackage.createDebianDir()
@@ -25,7 +26,7 @@ class DebianPackageTests extends munit.FunSuite with PackageHelper {
 
     test("should generate dep package") {
 
-      val depPackage = DebianPackage(echoLauncherPath, buildOptions)
+      val depPackage = DebianPackage(echoLauncherPath, buildSettings)
 
       // create dmg package
       depPackage.build()
@@ -45,4 +46,15 @@ class DebianPackageTests extends munit.FunSuite with PackageHelper {
   }
 
   override def extension: PackageExtension = Deb
+
+  override def buildSettings: DebianSettings =
+    DebianSettings(
+      shared = sharedSettings,
+      version = "1.0.0",
+      maintainer = "Scala Packager",
+      description = "Scala Packager Test",
+      debianConflicts = Nil,
+      debianDependencies = Nil,
+      architecture = "all"
+    )
 }

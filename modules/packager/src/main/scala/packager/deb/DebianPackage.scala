@@ -2,10 +2,10 @@ package packager.deb
 
 import packager.PackagerUtils.{executablePerms, osCopy, osMove, osWrite}
 import packager.NativePackager
-import packager.config.{BuildSettings, DebianSettings}
 import packager.config.BuildSettings.{Deb, PackageExtension}
+import packager.config.DebianSettings
 
-case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
+case class DebianPackage(sourceAppPath: os.Path, buildSettings: DebianSettings)
     extends NativePackager {
 
   private val debianBasePath = basePath / "debian"
@@ -13,11 +13,6 @@ case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
   private val packageInfo = buildDebianInfo()
   private val metaData = buildDebianMetaData(packageInfo)
   private val mainDebianDirectory = debianBasePath / "DEBIAN"
-
-  override def nativePackageSettings: DebianSettings =
-    buildOptions.debian.getOrElse(
-      sys.error("Required settings for debian package")
-    )
 
   override def build(): Unit = {
     createDebianDir()
@@ -45,17 +40,17 @@ case class DebianPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
   private def buildDebianMetaData(info: DebianPackageInfo): DebianMetaData =
     DebianMetaData(
       debianInfo = info,
-      architecture = nativePackageSettings.architecture,
-      dependsOn = nativePackageSettings.debianDependencies,
-      conflicts = nativePackageSettings.debianConflicts
+      architecture = buildSettings.architecture,
+      dependsOn = buildSettings.debianDependencies,
+      conflicts = buildSettings.debianConflicts
     )
 
   private def buildDebianInfo(): DebianPackageInfo =
     DebianPackageInfo(
       packageName = packageName,
-      version = buildOptions.version,
-      maintainer = buildOptions.maintainer,
-      description = buildOptions.description
+      version = buildSettings.version,
+      maintainer = buildSettings.maintainer,
+      description = buildSettings.description
     )
 
   private def copyExecutableFile(): Unit = {

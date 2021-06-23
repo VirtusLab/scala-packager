@@ -2,28 +2,25 @@ package packager.windows
 
 import packager.PackagerUtils.osWrite
 import packager.NativePackager
-import packager.config.{BuildSettings, WindowsSettings}
+import packager.config.WindowsSettings
 import packager.config.BuildSettings.{Msi, PackageExtension}
 
-case class WindowsPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
-    extends NativePackager {
+case class WindowsPackage(
+    sourceAppPath: os.Path,
+    buildSettings: WindowsSettings
+) extends NativePackager {
 
   private val wixConfigPath: os.Path = basePath / s"$packageName.wxs"
   private val licensePath: os.Path = basePath / s"license.rtf"
 
   private val wixConfig: WindowsWixConfig = WindowsWixConfig(
     packageName = packageName,
-    version = options.version,
-    manufacturer = options.maintainer,
-    productName = nativePackageSettings.productName,
+    version = buildSettings.version,
+    manufacturer = buildSettings.maintainer,
+    productName = buildSettings.productName,
     sourcePath = sourceAppPath,
     licencePath = licensePath
   )
-
-  override def nativePackageSettings: WindowsSettings =
-    buildOptions.windows.getOrElse(
-      sys.error("Required settings for windows package")
-    )
 
   override def build(): Unit = {
     createConfFile()
@@ -54,7 +51,7 @@ case class WindowsPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
 
   private def copyLicenseToBasePath() = {
     val license =
-      WindowsUtils.convertLicenseToRtfFormat(nativePackageSettings.licencePath)
+      WindowsUtils.convertLicenseToRtfFormat(buildSettings.licencePath)
     os.write(licensePath, license)
   }
 

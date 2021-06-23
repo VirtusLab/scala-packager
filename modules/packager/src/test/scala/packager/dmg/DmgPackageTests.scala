@@ -2,6 +2,7 @@ package packager.dmg
 
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
+import packager.config.MacOSSettings
 import packager.config.BuildSettings.{Dmg, PackageExtension}
 import packager.mac.dmg.DmgPackage
 
@@ -12,7 +13,7 @@ class DmgPackageTests extends munit.FunSuite with PackageHelper {
   if (Properties.isMac) {
     test("should create app directory for dmg") {
 
-      val dmgPackage = DmgPackage(echoLauncherPath, buildOptions)
+      val dmgPackage = DmgPackage(echoLauncherPath, buildSettings)
 
       // create app directory
       dmgPackage.createAppDirectory()
@@ -26,7 +27,7 @@ class DmgPackageTests extends munit.FunSuite with PackageHelper {
 
     test("should generate dmg package") {
 
-      val dmgPackage = DmgPackage(echoLauncherPath, buildOptions)
+      val dmgPackage = DmgPackage(echoLauncherPath, buildSettings)
 
       // create dmg package
       dmgPackage.build()
@@ -35,7 +36,7 @@ class DmgPackageTests extends munit.FunSuite with PackageHelper {
     }
     test("size dmg package should be similar to the app") {
 
-      val dmgPackage = DmgPackage(echoLauncherPath, buildOptions)
+      val dmgPackage = DmgPackage(echoLauncherPath, buildSettings)
       val echoLauncherSize = os.size(echoLauncherPath)
 
       // create dmg package
@@ -50,4 +51,10 @@ class DmgPackageTests extends munit.FunSuite with PackageHelper {
   }
 
   override def extension: PackageExtension = Dmg
+
+  override def buildSettings: MacOSSettings =
+    MacOSSettings(
+      shared = sharedSettings,
+      identifier = s"org.scala.$packageName"
+    )
 }

@@ -2,7 +2,7 @@ package cli.commands
 
 import caseapp.{Group, HelpMessage, Parser}
 import caseapp.core.help.Help
-import packager.config.MacOSSettings
+import packager.config.{MacOSSettings, SharedSettings}
 import OptionsHelpers._
 
 final case class MacOSOptions(
@@ -12,8 +12,9 @@ final case class MacOSOptions(
     )
     identifier: Option[String] = None
 ) {
-  def toMacOSSettings: MacOSSettings =
+  def toMacOSSettings(sharedSettings: SharedSettings): MacOSSettings =
     MacOSSettings(
+      shared = sharedSettings,
       identifier = identifier.mandatory(
         "Identifier parameter is mandatory for macOS packages"
       )

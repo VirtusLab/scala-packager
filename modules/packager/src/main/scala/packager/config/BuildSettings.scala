@@ -1,18 +1,8 @@
 package packager.config
 
-case class BuildSettings(
-    force: Boolean = false,
-    workingDirectoryPath: Option[os.Path] = None,
-    outputPath: os.Path,
-    version: String = "1.0.0",
-    maintainer: String = "scala-packager",
-    description: String = "Native package building by scala-packager",
-    packageName: Option[String] = None,
-    debian: Option[DebianSettings] = None,
-    redHat: Option[RedHatSettings] = None,
-    macOS: Option[MacOSSettings] = None,
-    windows: Option[WindowsSettings] = None
-)
+trait BuildSettings {
+  def shared: SharedSettings
+}
 
 case object BuildSettings {
 
@@ -22,5 +12,6 @@ case object BuildSettings {
   case object Pkg extends PackageExtension
   case object Dmg extends PackageExtension
   case object Msi extends PackageExtension
+  case object Docker extends PackageExtension
 
 }

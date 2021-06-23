@@ -2,7 +2,7 @@ package cli.commands
 
 import caseapp.core.help.Help
 import caseapp.{Group, HelpMessage, Parser, ValueDescription}
-import packager.config.DebianSettings
+import packager.config.{DebianSettings, SharedSettings}
 
 final case class DebianOptions(
     @Group("Debian")
@@ -19,8 +19,15 @@ final case class DebianOptions(
     )
     debArchitecture: String = "all"
 ) {
-  def toDebianSettings: DebianSettings =
+  def toDebianSettings(
+      sharedSettings: SharedSettings,
+      sharedOptions: SharedOptions
+  ): DebianSettings =
     DebianSettings(
+      shared = sharedSettings,
+      version = sharedOptions.version,
+      maintainer = sharedOptions.maintainer,
+      description = sharedOptions.description,
       debianConflicts = debianConflicts,
       debianDependencies = debianDependencies,
       architecture = debArchitecture

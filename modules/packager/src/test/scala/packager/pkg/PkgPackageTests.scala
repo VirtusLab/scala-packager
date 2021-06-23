@@ -2,6 +2,7 @@ package packager.pkg
 
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
+import packager.config.MacOSSettings
 import packager.config.BuildSettings.{PackageExtension, Pkg}
 import packager.mac.pkg.PkgPackage
 
@@ -12,7 +13,7 @@ class PkgPackageTests extends munit.FunSuite with PackageHelper {
   if (Properties.isMac) {
     test("should create app directory") {
 
-      val pkgPackage = PkgPackage(echoLauncherPath, buildOptions)
+      val pkgPackage = PkgPackage(echoLauncherPath, buildSettings)
 
       // create app directory
       pkgPackage.createAppDirectory()
@@ -26,7 +27,7 @@ class PkgPackageTests extends munit.FunSuite with PackageHelper {
 
     test("should generate pkg package") {
 
-      val pkgPackage = PkgPackage(echoLauncherPath, buildOptions)
+      val pkgPackage = PkgPackage(echoLauncherPath, buildSettings)
 
       // create pkg package
       pkgPackage.build()
@@ -51,7 +52,7 @@ class PkgPackageTests extends munit.FunSuite with PackageHelper {
 
     test("should copy post install script to pkg package") {
 
-      val pkgPackage = PkgPackage(echoLauncherPath, buildOptions)
+      val pkgPackage = PkgPackage(echoLauncherPath, buildSettings)
 
       // create deb package
       pkgPackage.build()
@@ -69,4 +70,10 @@ class PkgPackageTests extends munit.FunSuite with PackageHelper {
   }
 
   override def extension: PackageExtension = Pkg
+
+  override def buildSettings: MacOSSettings =
+    MacOSSettings(
+      shared = sharedSettings,
+      identifier = s"org.scala.$packageName"
+    )
 }

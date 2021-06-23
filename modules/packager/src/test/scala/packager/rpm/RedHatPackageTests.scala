@@ -3,6 +3,7 @@ package packager.rpm
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
 import packager.config.BuildSettings.{PackageExtension, Rpm}
+import packager.config.RedHatSettings
 
 import scala.util.Properties
 
@@ -11,7 +12,7 @@ class RedHatPackageTests extends munit.FunSuite with PackageHelper {
   if (Properties.isLinux) {
     test("should create rpmbuild directory ") {
 
-      val rpmPackage = RedHatPackage(echoLauncherPath, buildOptions)
+      val rpmPackage = RedHatPackage(echoLauncherPath, buildSettings)
 
       // create app directory
       rpmPackage.createRedHatDir()
@@ -26,7 +27,7 @@ class RedHatPackageTests extends munit.FunSuite with PackageHelper {
 
     test("should generate rpm package") {
 
-      val rpmPackage = RedHatPackage(echoLauncherPath, buildOptions)
+      val rpmPackage = RedHatPackage(echoLauncherPath, buildSettings)
 
       // create dmg package
       rpmPackage.build()
@@ -45,4 +46,14 @@ class RedHatPackageTests extends munit.FunSuite with PackageHelper {
   }
 
   override def extension: PackageExtension = Rpm
+
+  override def buildSettings: RedHatSettings =
+    RedHatSettings(
+      shared = sharedSettings,
+      version = "1.0.0",
+      description = "Scala Packager Test",
+      license = "ASL 2.0",
+      release = 1,
+      rpmArchitecture = "noarch"
+    )
 }

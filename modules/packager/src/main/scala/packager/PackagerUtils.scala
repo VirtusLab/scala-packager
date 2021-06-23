@@ -8,7 +8,7 @@ object PackagerUtils {
   def alreadyExistsCheck(
       destPath: os.Path
   )(implicit buildOptions: BuildSettings): Unit =
-    if (!buildOptions.force && os.exists(destPath)) {
+    if (!buildOptions.shared.force && os.exists(destPath)) {
       System.err.println(
         s"Error: $destPath already exists. Pass -f or --force to force erasing it."
       )

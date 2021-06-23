@@ -1,3 +1,6 @@
 package packager.config
 
-case class MacOSSettings(identifier: String) extends NativePackageSettings
+case class MacOSSettings(
+    shared: SharedSettings,
+    identifier: String
+) extends BuildSettings

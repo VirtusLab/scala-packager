@@ -2,6 +2,7 @@ package cli.commands
 
 import caseapp.{Group, HelpMessage, Name, Parser, Recurse}
 import caseapp.core.help.Help
+import packager.config._
 
 final case class BuildOptions(
     @Group("Build")
@@ -52,9 +53,21 @@ final case class BuildOptions(
     else if (msi) "app.msi"
     else if (dmg) "app.dmg"
     else if (pkg) "app.pkg"
+    else if (msi) "app.msi"
     else "package"
   }
 
+  def toDebianSettings(sharedSettings: SharedSettings): DebianSettings =
+    debian.toDebianSettings(sharedSettings, sharedOptions)
+
+  def toWindowsSettings(sharedSettings: SharedSettings): WindowsSettings =
+    windows.toWindowsSettings(sharedSettings, sharedOptions)
+
+  def toMacOSSettings(sharedSettings: SharedSettings): MacOSSettings =
+    macOS.toMacOSSettings(sharedSettings)
+
+  def toRedHatSettings(sharedSettings: SharedSettings): RedHatSettings =
+    redHat.toRedHatSettings(sharedSettings, sharedOptions)
 }
 
 object BuildOptions {

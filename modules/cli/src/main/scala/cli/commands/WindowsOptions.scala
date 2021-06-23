@@ -3,7 +3,7 @@ package cli.commands
 import caseapp.core.help.Help
 import caseapp.{Group, HelpMessage, Parser}
 import cli.commands.OptionsHelpers.Mandatory
-import packager.config.WindowsSettings
+import packager.config.{SharedSettings, WindowsSettings}
 
 final case class WindowsOptions(
     @Group("Windows")
@@ -14,13 +14,19 @@ final case class WindowsOptions(
     productName: String = "Scala packager"
 ) {
 
-  def toWindowsSettings(pwd: os.Path): WindowsSettings =
+  def toWindowsSettings(
+      sharedSettings: SharedSettings,
+      sharedOptions: SharedOptions
+  ): WindowsSettings =
     WindowsSettings(
+      shared = sharedSettings,
+      version = sharedOptions.version,
+      maintainer = sharedOptions.maintainer,
       licencePath = os.Path(
         licensePath.mandatory(
           "License parameter is mandatory for windows packages"
         ),
-        pwd
+        os.pwd
       ),
       productName = productName
     )

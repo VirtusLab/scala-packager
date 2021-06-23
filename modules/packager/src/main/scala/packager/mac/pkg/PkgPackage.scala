@@ -1,11 +1,11 @@
 package packager.mac.pkg
 
 import packager.PackagerUtils.{executablePerms, osWrite}
-import packager.config.BuildSettings
+import packager.config.MacOSSettings
 import packager.config.BuildSettings.{PackageExtension, Pkg}
 import packager.mac.MacOSNativePackager
 
-case class PkgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
+case class PkgPackage(sourceAppPath: os.Path, buildSettings: MacOSSettings)
     extends MacOSNativePackager {
 
   private val scriptsPath = basePath / "scripts"

@@ -10,12 +10,9 @@ trait MacOSNativePackager extends NativePackager {
   protected val contentPath: os.Path = macOSAppPath / "Contents"
   protected val macOsPath: os.Path = contentPath / "MacOS"
   protected val infoPlist: MacOSInfoPlist =
-    MacOSInfoPlist(packageName, nativePackageSettings.identifier)
+    MacOSInfoPlist(packageName, buildSettings.identifier)
 
-  override def nativePackageSettings: MacOSSettings =
-    buildOptions.macOS.getOrElse(
-      sys.error("Required settings for macOS package")
-    )
+  override def buildSettings: MacOSSettings
 
   def createAppDirectory(): Unit = {
     os.makeDir.all(macOsPath)

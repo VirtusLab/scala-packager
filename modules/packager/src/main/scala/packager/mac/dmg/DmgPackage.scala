@@ -1,10 +1,10 @@
 package packager.mac.dmg
 
-import packager.config.BuildSettings
+import packager.config.MacOSSettings
 import packager.config.BuildSettings.{Dmg, PackageExtension}
 import packager.mac.MacOSNativePackager
 
-case class DmgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
+case class DmgPackage(sourceAppPath: os.Path, buildSettings: MacOSSettings)
     extends MacOSNativePackager {
 
   private val tmpPackageName = s"$packageName-tmp"
@@ -57,7 +57,7 @@ case class DmgPackage(sourceAppPath: os.Path, buildOptions: BuildSettings)
   }
 
   private def removeDmgIfExists(): Unit = {
-    if (options.force && os.exists(outputPath)) os.remove(outputPath)
+    if (options.shared.force && os.exists(outputPath)) os.remove(outputPath)
   }
 
   private def postInstallClean(): Unit = {

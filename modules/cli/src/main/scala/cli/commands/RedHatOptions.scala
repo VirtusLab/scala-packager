@@ -2,7 +2,7 @@ package cli.commands
 
 import caseapp.{Group, HelpMessage, Parser}
 import caseapp.core.help.Help
-import packager.config.RedHatSettings
+import packager.config.{RedHatSettings, SharedSettings}
 import OptionsHelpers._
 
 final case class RedHatOptions(
@@ -20,10 +20,15 @@ final case class RedHatOptions(
     rpmArchitecture: String = "noarch"
 ) {
 
-  def toRedHatSettings: RedHatSettings =
+  def toRedHatSettings(
+      sharedSettings: SharedSettings,
+      sharedOptions: SharedOptions
+  ): RedHatSettings =
     RedHatSettings(
-      license =
-        license.mandatory("License parameter is mandatory for redHat package"),
+      shared = sharedSettings,
+      version = sharedOptions.version,
+      description = sharedOptions.description,
+      license = license.mandatory("License parameter is mandatory for redHat package"),
       release = release,
       rpmArchitecture = rpmArchitecture
     )

@@ -3,7 +3,7 @@ package cli.commands
 import caseapp.core.RemainingArgs
 import caseapp.core.app.Command
 import BuildOptions.NativePackagerType._
-import packager.config.BuildSettings
+import packager.config.SharedSettings
 import packager.deb.DebianPackage
 import packager.mac.dmg.DmgPackage
 import packager.mac.pkg.PkgPackage
@@ -23,21 +23,11 @@ object Build extends Command[BuildOptions] {
     val destinationPath: os.Path = os.Path(destinationFileName, pwd)
     val workingDirectoryPath = options.workingDirectory.map(os.Path(_, pwd))
 
-    val buildSettings: BuildSettings = BuildSettings(
+    val sharedSettings: SharedSettings = SharedSettings(
       force = options.force,
       workingDirectoryPath = workingDirectoryPath,
       outputPath = destinationPath,
-      version = options.sharedOptions.version,
-      maintainer = options.sharedOptions.maintainer,
-      description = options.sharedOptions.description,
-      packageName = options.sharedOptions.name,
-      debian = if (options.deb) Some(options.debian.toDebianSettings) else None,
-      redHat = if (options.rpm) Some(options.redHat.toRedHatSettings) else None,
-      macOS =
-        if (options.deb || options.pkg) Some(options.macOS.toMacOSSettings)
-        else None,
-      windows =
-        if (options.msi) Some(options.windows.toWindowsSettings(pwd)) else None
+      packageName = options.sharedOptions.name
     )
 
     def alreadyExistsCheck(): Unit =
@@ -52,15 +42,20 @@ object Build extends Command[BuildOptions] {
 
     options.nativePackager match {
       case Some(Debian) =>
-        DebianPackage(sourceAppPath, buildSettings).build()
+        DebianPackage(sourceAppPath, options.toDebianSettings(sharedSettings))
+          .build()
       case Some(Msi) =>
-        WindowsPackage(sourceAppPath, buildSettings).build()
+        WindowsPackage(sourceAppPath, options.toWindowsSettings(sharedSettings))
+          .build()
       case Some(Dmg) =>
-        DmgPackage(sourceAppPath, buildSettings).build()
+        DmgPackage(sourceAppPath, options.toMacOSSettings(sharedSettings))
+          .build()
       case Some(Pkg) =>
-        PkgPackage(sourceAppPath, buildSettings).build()
+        PkgPackage(sourceAppPath, options.toMacOSSettings(sharedSettings))
+          .build()
       case Some(Rpm) =>
-        RedHatPackage(sourceAppPath, buildSettings).build()
+        RedHatPackage(sourceAppPath, options.toRedHatSettings(sharedSettings))
+          .build()
       case None => ()
     }
   }
