@@ -5,9 +5,9 @@ import caseapp.core.help.Help
 
 final case class SharedOptions(
     @Group("Shared")
-    @HelpMessage("Set package name, default: name of source app")
-    @ValueDescription("name")
-    name: Option[String] = None,
+    @HelpMessage("Set launcher app name, default: name of source app")
+    @ValueDescription("launcher-name")
+    launcherName: Option[String] = None,
     @Group("Shared")
     @HelpMessage("The version is set to 1.0.0 by default")
     @Name("v")

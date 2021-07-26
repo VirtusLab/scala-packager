@@ -27,7 +27,7 @@ object Build extends Command[BuildOptions] {
       force = options.force,
       workingDirectoryPath = workingDirectoryPath,
       outputPath = destinationPath,
-      packageName = options.sharedOptions.name
+      launcherName = options.sharedOptions.launcherName
     )
 
     def alreadyExistsCheck(): Unit =

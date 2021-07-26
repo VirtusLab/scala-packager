@@ -38,8 +38,8 @@ case class PkgPackage(sourceAppPath: os.Path, buildSettings: MacOSSettings)
 
   private def createScriptFile(): Unit = {
     val content = s"""#!/bin/bash
-                    |rm -f /usr/local/bin/$packageName
-                    |ln -s /Applications/$packageName.app/Contents/MacOS/$packageName /usr/local/bin/$packageName""".stripMargin
+                    |rm -f /usr/local/bin/$launcherName
+                    |ln -s /Applications/$packageName.app/Contents/MacOS/$launcherName /usr/local/bin/$launcherName""".stripMargin
     os.makeDir.all(scriptsPath)
     val postInstallPath = scriptsPath / "postinstall"
     osWrite(postInstallPath, content, executablePerms)

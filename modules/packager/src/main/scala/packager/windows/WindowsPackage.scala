@@ -19,6 +19,7 @@ case class WindowsPackage(
     manufacturer = buildSettings.maintainer,
     productName = buildSettings.productName,
     sourcePath = sourceAppPath,
+    launcherName = launcherName,
     licencePath = licensePath
   )
 

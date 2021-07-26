@@ -4,5 +4,5 @@ case class SharedSettings(
     force: Boolean = false,
     workingDirectoryPath: Option[os.Path] = None,
     outputPath: os.Path,
-    packageName: Option[String] = None
+    launcherName: Option[String] = None
 )

@@ -2,6 +2,7 @@ package packager.rpm
 
 case class RedHatSpecPackage(
     packageName: String,
+    launcherName: String,
     version: String,
     description: String,
     buildArch: String,
@@ -37,7 +38,7 @@ case class RedHatSpecPackage(
        |rm -rf $$RPM_BUILD_ROOT
        |
        |%files
-       |%{_bindir}/$packageName
+       |%{_bindir}/$launcherName
        |""".stripMargin
 
 }

@@ -56,7 +56,7 @@ case class DebianPackage(sourceAppPath: os.Path, buildSettings: DebianSettings)
   private def copyExecutableFile(): Unit = {
     val scalaDirectory = usrDirectory / "share" / "scala"
     os.makeDir.all(scalaDirectory)
-    osCopy(sourceAppPath, scalaDirectory / packageName)
+    osCopy(sourceAppPath, scalaDirectory / launcherName)
   }
 
   private def createConfFile(): Unit = {
@@ -66,9 +66,9 @@ case class DebianPackage(sourceAppPath: os.Path, buildSettings: DebianSettings)
   private def createScriptFile(): Unit = {
     val binDirectory = usrDirectory / "bin"
     os.makeDir.all(binDirectory)
-    val launchScriptFile = binDirectory / packageName
+    val launchScriptFile = binDirectory / launcherName
     val content = s"""#!/bin/bash
-                      |/usr/share/scala/$packageName \"$$@\"
+                      |/usr/share/scala/$launcherName \"$$@\"
                       |""".stripMargin
     osWrite(launchScriptFile, content, executablePerms)
   }

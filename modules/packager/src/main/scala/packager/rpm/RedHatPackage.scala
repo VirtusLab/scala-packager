@@ -52,6 +52,7 @@ case class RedHatPackage(sourceAppPath: os.Path, buildSettings: RedHatSettings)
   private def buildRedHatSpec(): RedHatSpecPackage =
     RedHatSpecPackage(
       packageName = packageName,
+      launcherName = launcherName,
       version = buildSettings.version,
       description = buildSettings.description,
       buildArch = buildSettings.rpmArchitecture,

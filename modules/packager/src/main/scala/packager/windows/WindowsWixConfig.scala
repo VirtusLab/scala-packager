@@ -6,6 +6,7 @@ case class WindowsWixConfig(
     manufacturer: String,
     productName: String,
     sourcePath: os.Path,
+    launcherName: String,
     licencePath: os.ReadablePath
 ) {
 
@@ -24,7 +25,7 @@ case class WindowsWixConfig(
         <Directory Id="ProgramFilesFolder">
           <Directory Id="INSTALLDIR" Name="$packageName">
             <Component Id="ApplicationFiles" Guid="$randomGuid">
-              <File Id="ApplicationFile1" Source="$sourcePath" Name="${sourcePath.last}"/>
+              <File Id="ApplicationFile1" Source="$sourcePath" Name="$launcherName"/>
             </Component>
           </Directory>
         </Directory>

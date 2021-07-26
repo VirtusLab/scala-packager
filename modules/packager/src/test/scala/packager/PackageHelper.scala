@@ -13,7 +13,8 @@ trait PackageHelper {
   lazy val sharedSettings: SharedSettings = SharedSettings(
     force = true,
     workingDirectoryPath = Some(tmpDir),
-    outputPath = outputPackagePath
+    outputPath = outputPackagePath,
+    launcherName = None
   )
 
   def buildSettings: BuildSettings
