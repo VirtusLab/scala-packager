@@ -17,7 +17,7 @@ trait MacOSNativePackager extends NativePackager {
   def createAppDirectory(): Unit = {
     os.makeDir.all(macOsPath)
 
-    val appPath = macOsPath / launcherName
+    val appPath = macOsPath / launcherAppName
     osCopy(sourceAppPath, appPath)
   }
 

@@ -52,11 +52,11 @@ class PkgPackageTests extends munit.FunSuite with PackageHelper {
 
     test("should set given launcher name explicitly for pkg package") {
 
-      val launcherName = "launcher-test"
+      val launcherAppName = "launcher-test"
 
       val buildSettingsWithLauncherName: MacOSSettings = buildSettings.copy(
         shared = sharedSettings.copy(
-          launcherName = Some(launcherName)
+          launcherAppName = Some(launcherAppName)
         )
       )
 
@@ -77,7 +77,7 @@ class PkgPackageTests extends munit.FunSuite with PackageHelper {
         .trim
       val expectedAppPath = os.RelPath(s"$packageName.app")
       val expectedEchoLauncherPath =
-        expectedAppPath / "Contents" / "MacOS" / launcherName
+        expectedAppPath / "Contents" / "MacOS" / launcherAppName
 
       expect(payloadFiles contains s"./$expectedAppPath")
       expect(payloadFiles contains s"./$expectedEchoLauncherPath")

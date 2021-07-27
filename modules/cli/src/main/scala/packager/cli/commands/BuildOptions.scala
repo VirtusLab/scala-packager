@@ -1,11 +1,11 @@
-package cli.commands
+package packager.cli.commands
 
 import caseapp.{Group, HelpMessage, Name, Parser, Recurse}
 import caseapp.core.help.Help
 import packager.config._
 
 final case class BuildOptions(
-    @Group("Build")
+    @Group("Packager")
     @HelpMessage("Set destination path")
     @Name("o")
     output: Option[String] = None,
@@ -19,22 +19,32 @@ final case class BuildOptions(
     macOS: MacOSOptions = MacOSOptions(),
     @Recurse
     windows: WindowsOptions = WindowsOptions(),
-    @Group("Build")
+    @Group("Packager")
     @HelpMessage("Overwrite destination file if it exists")
     @Name("f")
     force: Boolean = false,
-    @Group("Build")
+    @Group("Packager")
     @HelpMessage("Set working directory path")
     @Name("w")
     workingDirectory: Option[String] = None,
-    @Group("Build")
+    @Group("Packager")
     @HelpMessage("Source app path")
     @Name("a")
     sourceAppPath: String,
+    @Group("Packager")
+    @HelpMessage("Build debian package, available only on linux")
     deb: Boolean = false,
+    @Group("Packager")
+    @HelpMessage("Build rpm package, available only on linux")
     rpm: Boolean = false,
+    @Group("Packager")
+    @HelpMessage("Build msi package, available only on windows")
     msi: Boolean = false,
+    @Group("Packager")
+    @HelpMessage("Build dmg package, available only on centOS")
     dmg: Boolean = false,
+    @Group("Packager")
+    @HelpMessage("Build pkg package, available only on centOS")
     pkg: Boolean = false
 ) {
 
@@ -58,16 +68,20 @@ final case class BuildOptions(
   }
 
   def toDebianSettings(sharedSettings: SharedSettings): DebianSettings =
-    debian.toDebianSettings(sharedSettings, sharedOptions)
+    debian.toDebianSettings(
+      sharedSettings,
+      sharedOptions.maintainer,
+      sharedOptions.description
+    )
 
   def toWindowsSettings(sharedSettings: SharedSettings): WindowsSettings =
-    windows.toWindowsSettings(sharedSettings, sharedOptions)
+    windows.toWindowsSettings(sharedSettings, sharedOptions.maintainer)
 
   def toMacOSSettings(sharedSettings: SharedSettings): MacOSSettings =
     macOS.toMacOSSettings(sharedSettings)
 
   def toRedHatSettings(sharedSettings: SharedSettings): RedHatSettings =
-    redHat.toRedHatSettings(sharedSettings, sharedOptions)
+    redHat.toRedHatSettings(sharedSettings, sharedOptions.description)
 }
 
 object BuildOptions {

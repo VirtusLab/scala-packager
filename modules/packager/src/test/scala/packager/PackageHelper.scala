@@ -12,9 +12,11 @@ trait PackageHelper {
     tmpDir / s"echo.${extension.toString.toLowerCase}"
   lazy val sharedSettings: SharedSettings = SharedSettings(
     force = true,
+    version = "1.0.0",
     workingDirectoryPath = Some(tmpDir),
     outputPath = outputPackagePath,
-    launcherName = None
+    launcherAppName = None,
+    logoPath = None
   )
 
   def buildSettings: BuildSettings

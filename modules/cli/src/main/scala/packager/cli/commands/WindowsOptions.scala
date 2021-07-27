@@ -1,8 +1,8 @@
-package cli.commands
+package packager.cli.commands
 
 import caseapp.core.help.Help
 import caseapp.{Group, HelpMessage, Parser}
-import cli.commands.OptionsHelpers.Mandatory
+import SettingsHelpers.{Mandatory, Validate}
 import packager.config.{SharedSettings, WindowsSettings}
 
 final case class WindowsOptions(
@@ -14,33 +14,26 @@ final case class WindowsOptions(
     productName: String = "Scala packager",
     @Group("Windows")
     @HelpMessage("Text will be displayed on exit dialog")
-    exitDialog: Option[String] = None,
-    @Group("Windows")
-    @HelpMessage("Path to bitmap, it will be used in top banner")
-    bannerBmp: Option[String] = None,
-    @Group("Windows")
-    @HelpMessage("Background bitmap used on the welcome and completion dialogs")
-    dialogBmp: Option[String] = None
+    exitDialog: Option[String] = None
 ) {
 
   def toWindowsSettings(
       sharedSettings: SharedSettings,
-      sharedOptions: SharedOptions
+      maintainer: Option[String]
   ): WindowsSettings =
     WindowsSettings(
       shared = sharedSettings,
-      version = sharedOptions.version,
-      maintainer = sharedOptions.maintainer,
+      maintainer = maintainer.mandatory(
+        "Maintainer parameter is mandatory for debian package"
+      ),
       licencePath = os.Path(
         licensePath.mandatory(
-          "License parameter is mandatory for windows packages"
+          "License path parameter is mandatory for windows packages"
         ),
         os.pwd
       ),
       productName = productName,
-      exitDialog = exitDialog,
-      bannerBmp = bannerBmp.map(os.Path(_, os.pwd)),
-      dialogBmp = dialogBmp.map(os.Path(_, os.pwd))
+      exitDialog = exitDialog
     )
 }
 

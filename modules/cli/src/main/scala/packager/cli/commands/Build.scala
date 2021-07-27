@@ -1,4 +1,4 @@
-package cli.commands
+package packager.cli.commands
 
 import caseapp.core.RemainingArgs
 import caseapp.core.app.Command
@@ -25,9 +25,11 @@ object Build extends Command[BuildOptions] {
 
     val sharedSettings: SharedSettings = SharedSettings(
       force = options.force,
+      version = options.sharedOptions.version,
       workingDirectoryPath = workingDirectoryPath,
       outputPath = destinationPath,
-      launcherName = options.sharedOptions.launcherName
+      launcherAppName = options.sharedOptions.launcherAppName,
+      logoPath = options.sharedOptions.logoPath.map(os.Path(_, pwd))
     )
 
     def alreadyExistsCheck(): Unit =

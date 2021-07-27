@@ -13,8 +13,8 @@ trait NativePackager {
   lazy val packageName = buildSettings.shared.outputPath.last
     .stripSuffix(s".${extension.toString.toLowerCase}")
 
-  protected lazy val launcherName: String =
-    buildSettings.shared.launcherName.getOrElse(sourceAppPath.last)
+  protected lazy val launcherAppName: String =
+    buildSettings.shared.launcherAppName.getOrElse(sourceAppPath.last)
 
   protected lazy val basePath: os.Path =
     buildSettings.shared.workingDirectoryPath.getOrElse(

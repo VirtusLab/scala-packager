@@ -2,12 +2,12 @@ package packager.rpm
 
 case class RedHatSpecPackage(
     packageName: String,
-    launcherName: String,
+    launcherAppName: String,
     version: String,
     description: String,
     buildArch: String,
     license: String,
-    release: Long
+    release: String
 ) {
 
   def generateContent: String =
@@ -32,13 +32,13 @@ case class RedHatSpecPackage(
        |%install
        |rm -rf $$RPM_BUILD_ROOT
        |mkdir -p $$RPM_BUILD_ROOT/%{_bindir}
-       |cp ./rpmbuild/SOURCES/$packageName $$RPM_BUILD_ROOT/%{_bindir}
+       |cp ./rpmbuild/SOURCES/$launcherAppName $$RPM_BUILD_ROOT/%{_bindir}
        |
        |%clean
        |rm -rf $$RPM_BUILD_ROOT
        |
        |%files
-       |%{_bindir}/$launcherName
+       |%{_bindir}/$launcherAppName
        |""".stripMargin
 
 }

@@ -3,6 +3,7 @@ package packager.windows
 import packager.PackagerUtils.osWrite
 import packager.NativePackager
 import packager.config.WindowsSettings
+import packager.windows.WindowsUtils._
 import packager.config.BuildSettings.{Msi, PackageExtension}
 
 case class WindowsPackage(
@@ -12,13 +13,26 @@ case class WindowsPackage(
 
   private val wixConfigPath: os.Path = basePath / s"$packageName.wxs"
   private val licensePath: os.Path = basePath / s"license.rtf"
+  private val iconPath: Option[os.Path] =
+    buildSettings.shared.logoPath.map(generateIcon(_, basePath))
+  private val bannerPath: Option[os.Path] =
+    buildSettings.shared.logoPath.map(generateBanner(_, basePath))
+  private val dialogPath: Option[os.Path] =
+    buildSettings.shared.logoPath.map(generateDialog(_, basePath))
 
   private val wixConfig: WindowsWixConfig =
     WindowsWixConfig(
-      buildSettings = buildSettings,
       packageName = packageName,
       sourcePath = sourceAppPath,
-      launcherName = launcherName
+      iconPath = iconPath,
+      bannerPath = bannerPath,
+      dialogPath = dialogPath,
+      licensePath = licensePath,
+      exitDialog = buildSettings.exitDialog,
+      productName = buildSettings.productName,
+      version = buildSettings.shared.version,
+      maintainer = buildSettings.maintainer,
+      launcherAppName = launcherAppName
     )
 
   override def build(): Unit = {
@@ -46,6 +60,14 @@ case class WindowsPackage(
         "WixUIExtension"
       )
       .call(cwd = basePath)
+
+    postInstallClean()
+  }
+
+  private def postInstallClean() = {
+    iconPath.map(os.remove)
+    bannerPath.map(os.remove)
+    dialogPath.map(os.remove)
   }
 
   private def copyLicenseToBasePath() = {

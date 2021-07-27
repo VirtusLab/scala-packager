@@ -46,11 +46,11 @@ class DebianPackageTests extends munit.FunSuite with PackageHelper {
 
     test("should set given launcher name explicitly for debian package") {
 
-      val launcherName = "launcher-test"
+      val launcherAppName = "launcher-test"
 
       val buildSettingsWithLauncherName: DebianSettings = buildSettings.copy(
         shared = sharedSettings.copy(
-          launcherName = Some(launcherName)
+          launcherAppName = Some(launcherAppName)
         )
       )
 
@@ -65,9 +65,9 @@ class DebianPackageTests extends munit.FunSuite with PackageHelper {
       // list files which will be installed
       val payloadFiles =
         os.proc("dpkg", "--contents", outputPackagePath).call().out.text().trim
-      val expectedScriptPath = os.RelPath("usr") / "bin" / launcherName
+      val expectedScriptPath = os.RelPath("usr") / "bin" / launcherAppName
       val expectedEchoLauncherPath =
-        os.RelPath("usr") / "share" / "scala" / launcherName
+        os.RelPath("usr") / "share" / "scala" / launcherAppName
 
       expect(payloadFiles contains s"./$expectedScriptPath")
       expect(payloadFiles contains s"./$expectedEchoLauncherPath")
@@ -79,7 +79,6 @@ class DebianPackageTests extends munit.FunSuite with PackageHelper {
   override def buildSettings: DebianSettings =
     DebianSettings(
       shared = sharedSettings,
-      version = "1.0.0",
       maintainer = "Scala Packager",
       description = "Scala Packager Test",
       debianConflicts = Nil,
