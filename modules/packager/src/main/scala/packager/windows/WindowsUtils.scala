@@ -2,14 +2,10 @@ package packager.windows
 
 case object WindowsUtils {
 
-  lazy val rtfHeaderPath: os.ResourcePath =
-    os.resource / "packager" / "common" / "rtf-header"
-  lazy val rtfHeader: String = os.read(rtfHeaderPath)
-
   def convertLicenseToRtfFormat(licensePath: os.ReadablePath): String = {
     val license = os.read(licensePath)
     val rtfLicense =
-      s"""$rtfHeader
+      s"""{\rtf1\\ansi{\\fonttbl{\\f0\\fcharset0 Times New Roman;}}
          |\\
          |${license.replaceAll("\n", "\\\\\n")}
          |""".stripMargin

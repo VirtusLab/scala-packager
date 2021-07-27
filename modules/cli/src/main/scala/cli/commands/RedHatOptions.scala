@@ -28,7 +28,8 @@ final case class RedHatOptions(
       shared = sharedSettings,
       version = sharedOptions.version,
       description = sharedOptions.description,
-      license = license.mandatory("License parameter is mandatory for redHat package"),
+      license =
+        license.mandatory("License parameter is mandatory for redHat package"),
       release = release,
       rpmArchitecture = rpmArchitecture
     )

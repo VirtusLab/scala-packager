@@ -13,15 +13,13 @@ case class WindowsPackage(
   private val wixConfigPath: os.Path = basePath / s"$packageName.wxs"
   private val licensePath: os.Path = basePath / s"license.rtf"
 
-  private val wixConfig: WindowsWixConfig = WindowsWixConfig(
-    packageName = packageName,
-    version = buildSettings.version,
-    manufacturer = buildSettings.maintainer,
-    productName = buildSettings.productName,
-    sourcePath = sourceAppPath,
-    launcherName = launcherName,
-    licencePath = licensePath
-  )
+  private val wixConfig: WindowsWixConfig =
+    WindowsWixConfig(
+      buildSettings = buildSettings,
+      packageName = packageName,
+      sourcePath = sourceAppPath,
+      launcherName = launcherName
+    )
 
   override def build(): Unit = {
     createConfFile()

@@ -39,6 +39,9 @@ class WindowsPackageTests extends munit.FunSuite with PackageHelper {
       version = "1.0.0",
       maintainer = "Scala Packager",
       licencePath = os.resource / "packager" / "apache-2.0",
-      productName = "Scala packager product"
+      productName = "Scala packager product",
+      exitDialog = None,
+      bannerBmp = None,
+      dialogBmp = None
     )
 }

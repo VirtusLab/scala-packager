@@ -5,5 +5,8 @@ case class WindowsSettings(
     version: String,
     maintainer: String,
     licencePath: os.ReadablePath,
-    productName: String
+    productName: String,
+    exitDialog: Option[String],
+    bannerBmp: Option[os.Path],
+    dialogBmp: Option[os.Path]
 ) extends BuildSettings
