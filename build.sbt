@@ -21,6 +21,7 @@ inThisBuild(
 scalacOptions := Seq("-unchecked", "-deprecation")
 scalaVersion := ScalaVersions.scala213
 crossScalaVersions := ScalaVersions.all
+fork in run := true
 
 lazy val coreDependencies = Seq(
   libraryDependencies ++= Seq(
@@ -35,7 +36,7 @@ lazy val testFramework = Seq(
 )
 
 lazy val cliMainClass = Seq(
-  Compile / mainClass := Some("pacakger.cli.PackagerCli")
+  Compile / mainClass := Some("packager.cli.PackagerCli")
 )
 
 lazy val packagerProjectSettings = Seq(

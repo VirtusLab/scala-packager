@@ -24,10 +24,11 @@ case object WindowsUtils {
   }
 
   def generateIcon(logoPath: os.Path, workDirPath: os.Path): os.Path = {
-    val icoPath = workDirPath / "logo.ico"
+    val icoTmpPath = workDirPath / "logo_tmp.ico"
     val iconImage: BufferedImage = ImageIO.read(new File(logoPath.toString()));
-
-    ICOEncoder.write(iconImage, new File(icoPath.toString()));
+    ICOEncoder.write(iconImage, new File(icoTmpPath.toString()));
+    val icoPath = workDirPath / "logo.ico"
+    os.copy.over(icoTmpPath, icoPath)
     icoPath
   }
 

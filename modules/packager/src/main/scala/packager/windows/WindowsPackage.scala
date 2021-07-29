@@ -13,11 +13,11 @@ case class WindowsPackage(
 
   private val wixConfigPath: os.Path = basePath / s"$packageName.wxs"
   private val licensePath: os.Path = basePath / s"license.rtf"
-  private val iconPath: Option[os.Path] =
+  private lazy val iconPath: Option[os.Path] =
     buildSettings.shared.logoPath.map(generateIcon(_, basePath))
-  private val bannerPath: Option[os.Path] =
+  private lazy val bannerPath: Option[os.Path] =
     buildSettings.shared.logoPath.map(generateBanner(_, basePath))
-  private val dialogPath: Option[os.Path] =
+  private lazy val dialogPath: Option[os.Path] =
     buildSettings.shared.logoPath.map(generateDialog(_, basePath))
 
   private val wixConfig: WindowsWixConfig =

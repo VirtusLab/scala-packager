@@ -1,6 +1,5 @@
 package packager.windows
 
-import packager.windows.WindowsUtils._
 import packager.windows.wix._
 
 case class WindowsWixConfig(
@@ -34,12 +33,12 @@ case class WindowsWixConfig(
     .getOrElse("")
 
   lazy val wixPropertyIcon = iconPath
-    .map(path => Property(id = ARPPRODUCTICON, value = path.last))
+    .map(_ => Property(id = ARPPRODUCTICON, value = "logo_ico"))
     .map(_.generate)
     .getOrElse("")
 
   lazy val wixIcon = iconPath
-    .map(path => Icon(id = path.last, sourceFile = path.toString()))
+    .map(path => Icon(id = "logo_ico", sourceFile = path.toString()))
     .map(_.generate)
     .getOrElse("")
 

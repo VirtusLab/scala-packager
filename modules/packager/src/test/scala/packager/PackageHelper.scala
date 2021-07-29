@@ -16,7 +16,7 @@ trait PackageHelper {
     workingDirectoryPath = Some(tmpDir),
     outputPath = outputPackagePath,
     launcherAppName = None,
-    logoPath = None
+    logoPath = Some(TestUtils.logo(tmpDir))
   )
 
   def buildSettings: BuildSettings
