@@ -57,7 +57,7 @@ case class WindowsWixConfig(
         <Directory Id="ProgramFilesFolder">
           <Directory Id="INSTALLDIR" Name="$packageName">
             <Component Id="ApplicationFiles" Guid="$randomGuid">
-              <File Id="ApplicationFile1" Source="$sourcePath" Name="$launcherAppName"/>
+              <File Id="ApplicationFile1" Source="$sourcePath" Name="$launcherAppName.${sourcePath.ext}"/>
             </Component>
           </Directory>
         </Directory>
