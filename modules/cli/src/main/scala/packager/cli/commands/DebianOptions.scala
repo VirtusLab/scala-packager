@@ -1,7 +1,8 @@
-package cli.commands
+package packager.cli.commands
 
 import caseapp.core.help.Help
 import caseapp.{Group, HelpMessage, Parser, ValueDescription}
+import packager.cli.commands.SettingsHelpers.Mandatory
 import packager.config.{DebianSettings, SharedSettings}
 
 final case class DebianOptions(
@@ -21,13 +22,17 @@ final case class DebianOptions(
 ) {
   def toDebianSettings(
       sharedSettings: SharedSettings,
-      sharedOptions: SharedOptions
+      maintainer: Option[String],
+      description: Option[String]
   ): DebianSettings =
     DebianSettings(
       shared = sharedSettings,
-      version = sharedOptions.version,
-      maintainer = sharedOptions.maintainer,
-      description = sharedOptions.description,
+      maintainer = maintainer.mandatory(
+        "Maintainer parameter is mandatory for debian package"
+      ),
+      description = description.mandatory(
+        "Description parameter is mandatory for debian package"
+      ),
       debianConflicts = debianConflicts,
       debianDependencies = debianDependencies,
       architecture = debArchitecture

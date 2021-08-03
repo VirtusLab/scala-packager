@@ -1,13 +1,13 @@
-package cli.commands
+package packager.cli.commands
 
 import caseapp.{Group, HelpMessage, Name, Parser, ValueDescription}
 import caseapp.core.help.Help
 
 final case class SharedOptions(
     @Group("Shared")
-    @HelpMessage("Set package name, default: name of source app")
-    @ValueDescription("name")
-    name: Option[String] = None,
+    @HelpMessage("Set launcher app name, default: name of source app")
+    @ValueDescription("launcher-app-name")
+    launcherAppName: Option[String] = None,
     @Group("Shared")
     @HelpMessage("The version is set to 1.0.0 by default")
     @Name("v")
@@ -18,13 +18,18 @@ final case class SharedOptions(
     )
     @ValueDescription("Description")
     @Name("d")
-    description: String = "Native package building by scala-packager",
+    description: Option[String] = None,
     @Group("Shared")
     @HelpMessage(
-      "The maintainer is set to scala-packager by default, it should contains names and email addresses of co-maintainers of the package"
+      "It should contains names and email addresses of co-maintainers of the package"
     )
     @Name("m")
-    maintainer: String = "scala-packager"
+    maintainer: Option[String] = None,
+    @Group("Windows")
+    @HelpMessage(
+      "Path to application logo in png format, it will be used to generate icon and banner/dialog in msi installer"
+    )
+    logoPath: Option[String] = None
 )
 case object SharedOptions {
 

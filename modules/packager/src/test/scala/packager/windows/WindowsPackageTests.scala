@@ -36,9 +36,9 @@ class WindowsPackageTests extends munit.FunSuite with PackageHelper {
   override def buildSettings: WindowsSettings =
     WindowsSettings(
       shared = sharedSettings,
-      version = "1.0.0",
       maintainer = "Scala Packager",
       licencePath = os.resource / "packager" / "apache-2.0",
-      productName = "Scala packager product"
+      productName = "Scala packager product",
+      exitDialog = None
     )
 }

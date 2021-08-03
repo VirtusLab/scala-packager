@@ -10,11 +10,11 @@ trait NativePackager {
   implicit def options = buildSettings
   def extension: PackageExtension
 
-  lazy val defaultPackageName = buildSettings.shared.outputPath.last
+  lazy val packageName = buildSettings.shared.outputPath.last
     .stripSuffix(s".${extension.toString.toLowerCase}")
 
-  protected lazy val packageName: String =
-    buildSettings.shared.packageName.getOrElse(defaultPackageName)
+  protected lazy val launcherAppName: String =
+    buildSettings.shared.launcherAppName.getOrElse(sourceAppPath.last)
 
   protected lazy val basePath: os.Path =
     buildSettings.shared.workingDirectoryPath.getOrElse(

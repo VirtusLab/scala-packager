@@ -43,6 +43,35 @@ class DebianPackageTests extends munit.FunSuite with PackageHelper {
       expect(payloadFiles contains s"./$expectedScriptPath")
       expect(payloadFiles contains s"./$expectedEchoLauncherPath")
     }
+
+    test("should set given launcher name explicitly for debian package") {
+
+      val launcherAppName = "launcher-test"
+
+      val buildSettingsWithLauncherName: DebianSettings = buildSettings.copy(
+        shared = sharedSettings.copy(
+          launcherAppName = Some(launcherAppName)
+        )
+      )
+
+      val depPackage =
+        DebianPackage(echoLauncherPath, buildSettingsWithLauncherName)
+
+      // create dmg package
+      depPackage.build()
+
+      expect(os.exists(outputPackagePath))
+
+      // list files which will be installed
+      val payloadFiles =
+        os.proc("dpkg", "--contents", outputPackagePath).call().out.text().trim
+      val expectedScriptPath = os.RelPath("usr") / "bin" / launcherAppName
+      val expectedEchoLauncherPath =
+        os.RelPath("usr") / "share" / "scala" / launcherAppName
+
+      expect(payloadFiles contains s"./$expectedScriptPath")
+      expect(payloadFiles contains s"./$expectedEchoLauncherPath")
+    }
   }
 
   override def extension: PackageExtension = Deb
@@ -50,7 +79,6 @@ class DebianPackageTests extends munit.FunSuite with PackageHelper {
   override def buildSettings: DebianSettings =
     DebianSettings(
       shared = sharedSettings,
-      version = "1.0.0",
       maintainer = "Scala Packager",
       description = "Scala Packager Test",
       debianConflicts = Nil,

@@ -1,7 +1,7 @@
-package cli
+package packager.cli
 
 import caseapp.core.app.CommandsEntryPoint
-import cli.commands.Build
+import packager.cli.commands.Build
 
 object PackagerCli extends CommandsEntryPoint {
 

@@ -50,10 +50,9 @@ class RedHatPackageTests extends munit.FunSuite with PackageHelper {
   override def buildSettings: RedHatSettings =
     RedHatSettings(
       shared = sharedSettings,
-      version = "1.0.0",
       description = "Scala Packager Test",
       license = "ASL 2.0",
-      release = 1,
+      release = "1",
       rpmArchitecture = "noarch"
     )
 }

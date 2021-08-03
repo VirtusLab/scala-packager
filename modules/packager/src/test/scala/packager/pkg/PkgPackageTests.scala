@@ -2,7 +2,7 @@ package packager.pkg
 
 import com.eed3si9n.expecty.Expecty.expect
 import packager.PackageHelper
-import packager.config.MacOSSettings
+import packager.config.{DebianSettings, MacOSSettings}
 import packager.config.BuildSettings.{PackageExtension, Pkg}
 import packager.mac.pkg.PkgPackage
 
@@ -44,6 +44,40 @@ class PkgPackageTests extends munit.FunSuite with PackageHelper {
       val expectedAppPath = os.RelPath(s"$packageName.app")
       val expectedEchoLauncherPath =
         expectedAppPath / "Contents" / "MacOS" / packageName
+
+      expect(payloadFiles contains s"./$expectedAppPath")
+      expect(payloadFiles contains s"./$expectedEchoLauncherPath")
+
+    }
+
+    test("should set given launcher name explicitly for pkg package") {
+
+      val launcherAppName = "launcher-test"
+
+      val buildSettingsWithLauncherName: MacOSSettings = buildSettings.copy(
+        shared = sharedSettings.copy(
+          launcherAppName = Some(launcherAppName)
+        )
+      )
+
+      val pkgPackage =
+        PkgPackage(echoLauncherPath, buildSettingsWithLauncherName)
+
+      // create pkg package
+      pkgPackage.build()
+
+      expect(os.isFile(outputPackagePath))
+
+      // list files which will be installed
+      val payloadFiles = os
+        .proc("pkgutil", "--payload-files", outputPackagePath)
+        .call()
+        .out
+        .text()
+        .trim
+      val expectedAppPath = os.RelPath(s"$packageName.app")
+      val expectedEchoLauncherPath =
+        expectedAppPath / "Contents" / "MacOS" / launcherAppName
 
       expect(payloadFiles contains s"./$expectedAppPath")
       expect(payloadFiles contains s"./$expectedEchoLauncherPath")

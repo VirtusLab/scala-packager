@@ -52,7 +52,8 @@ case class RedHatPackage(sourceAppPath: os.Path, buildSettings: RedHatSettings)
   private def buildRedHatSpec(): RedHatSpecPackage =
     RedHatSpecPackage(
       packageName = packageName,
-      version = buildSettings.version,
+      launcherAppName = launcherAppName,
+      version = buildSettings.shared.version,
       description = buildSettings.description,
       buildArch = buildSettings.rpmArchitecture,
       license = buildSettings.license,
@@ -60,7 +61,7 @@ case class RedHatPackage(sourceAppPath: os.Path, buildSettings: RedHatSettings)
     )
 
   private def copyExecutableFile(): Unit = {
-    osCopy(sourceAppPath, sourcesDirectory / packageName)
+    osCopy(sourceAppPath, sourcesDirectory / launcherAppName)
   }
 
   override def extension: PackageExtension = Rpm
