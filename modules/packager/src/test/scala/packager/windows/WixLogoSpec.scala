@@ -9,7 +9,7 @@ class WixLogoSpec extends munit.FunSuite {
   private lazy val logoPath: os.Path = TestUtils.logo(workDirPath)
 
   test("should prepare icon for wix installer") {
-    val iconPath = WindowsUtils.generateIcon(logoPath, workDirPath)
+    val iconPath = DefaultImageResizer.generateIcon(logoPath, workDirPath)
 
     val expectedIconPath = workDirPath / "logo.ico"
 
@@ -18,7 +18,7 @@ class WixLogoSpec extends munit.FunSuite {
   }
 
   test("should prepare banner for wix installer") {
-    val bannerPath = WindowsUtils.generateBanner(logoPath, workDirPath)
+    val bannerPath = DefaultImageResizer.generateBanner(logoPath, workDirPath)
 
     val expectedBannerPath = workDirPath / "banner.bmp"
 
@@ -28,7 +28,7 @@ class WixLogoSpec extends munit.FunSuite {
 
   test("should prepare dialog for wix installer") {
 
-    val dialogPath = WindowsUtils.generateDialog(logoPath, workDirPath)
+    val dialogPath = DefaultImageResizer.generateDialog(logoPath, workDirPath)
 
     val expectedDialogPath = workDirPath / "dialog.bmp"
 
