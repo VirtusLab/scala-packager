@@ -13,15 +13,20 @@ case class WindowsPackage(
 
   private val wixConfigPath: os.Path = basePath / s"$packageName.wxs"
   private val licensePath: os.Path = basePath / s"license.rtf"
-  private lazy val iconPath: Option[os.Path] =
-    buildSettings.shared.logoPath.map(generateIcon(_, basePath))
-  private lazy val bannerPath: Option[os.Path] =
-    buildSettings.shared.logoPath.map(generateBanner(_, basePath))
-  private lazy val dialogPath: Option[os.Path] =
-    buildSettings.shared.logoPath.map(generateDialog(_, basePath))
 
-  private val wixConfig: WindowsWixConfig =
-    WindowsWixConfig(
+  override def build(): Unit = {
+
+    val iconPath = buildSettings.shared.logoPath.map(generateIcon(_, basePath))
+    val bannerPath = buildSettings.shared.logoPath.map(generateBanner(_, basePath))
+    val dialogPath = buildSettings.shared.logoPath.map(generateDialog(_, basePath))
+
+    def postInstallClean() = {
+      iconPath.foreach(os.remove)
+      bannerPath.foreach(os.remove)
+      dialogPath.foreach(os.remove)
+    }
+
+    val wixConfig = WindowsWixConfig(
       packageName = packageName,
       sourcePath = sourceAppPath,
       iconPath = iconPath,
@@ -35,8 +40,7 @@ case class WindowsPackage(
       launcherAppName = launcherAppName
     )
 
-  override def build(): Unit = {
-    createConfFile()
+    createConfFile(wixConfig)
     copyLicenseToBasePath()
 
     val wixBin = Option(System.getenv("WIX")).getOrElse("\"%WIX%bin\"")
@@ -64,19 +68,13 @@ case class WindowsPackage(
     postInstallClean()
   }
 
-  private def postInstallClean() = {
-    iconPath.map(os.remove)
-    bannerPath.map(os.remove)
-    dialogPath.map(os.remove)
-  }
-
   private def copyLicenseToBasePath() = {
     val license =
       WindowsUtils.convertLicenseToRtfFormat(buildSettings.licencePath)
     os.write(licensePath, license)
   }
 
-  private def createConfFile(): Unit = {
+  private def createConfFile(wixConfig: WindowsWixConfig): Unit = {
     osWrite(wixConfigPath, wixConfig.generateContent())
   }
 
