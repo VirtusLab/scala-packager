@@ -8,7 +8,8 @@ import packager.config.BuildSettings.{Msi, PackageExtension}
 
 case class WindowsPackage(
     sourceAppPath: os.Path,
-    buildSettings: WindowsSettings
+    buildSettings: WindowsSettings,
+    imageResizerOpt: Option[ImageResizer] = Some(DefaultImageResizer)
 ) extends NativePackager {
 
   private val wixConfigPath: os.Path = basePath / s"$packageName.wxs"
@@ -16,9 +17,15 @@ case class WindowsPackage(
 
   override def build(): Unit = {
 
-    val iconPath = buildSettings.shared.logoPath.map(generateIcon(_, basePath))
-    val bannerPath = buildSettings.shared.logoPath.map(generateBanner(_, basePath))
-    val dialogPath = buildSettings.shared.logoPath.map(generateDialog(_, basePath))
+    val iconPath = buildSettings.shared.logoPath.flatMap { logoPath =>
+      imageResizerOpt.map(_.generateIcon(logoPath, basePath))
+    }
+    val bannerPath = buildSettings.shared.logoPath.flatMap { logoPath =>
+      imageResizerOpt.map(_.generateBanner(logoPath, basePath))
+    }
+    val dialogPath = buildSettings.shared.logoPath.flatMap { logoPath =>
+      imageResizerOpt.map(_.generateDialog(logoPath, basePath))
+    }
 
     def postInstallClean() = {
       iconPath.foreach(os.remove)
