@@ -54,6 +54,10 @@ case class WindowsPackage(
     val candleBinPath = os.Path(wixBin) / "bin" / "candle.exe"
     val lightBinPath = os.Path(wixBin) / "bin" / "light.exe"
 
+    val lightExtraArguments =
+      if (buildSettings.suppressValidation) Seq("-sval")
+      else Nil
+
     os.proc(
         candleBinPath,
         wixConfigPath,
@@ -68,7 +72,8 @@ case class WindowsPackage(
         "-o",
         outputPath,
         "-ext",
-        "WixUIExtension"
+        "WixUIExtension",
+        lightExtraArguments
       )
       .call(cwd = basePath)
 

@@ -14,7 +14,10 @@ final case class WindowsOptions(
     productName: String = "Scala packager",
     @Group("Windows")
     @HelpMessage("Text will be displayed on exit dialog")
-    exitDialog: Option[String] = None
+    exitDialog: Option[String] = None,
+    @Group("Windows")
+    @HelpMessage("Suppress Wix ICE validation (required for users that are neither interactive, not local administrators)")
+    suppressValidation: Boolean = false
 ) {
 
   def toWindowsSettings(
@@ -33,7 +36,8 @@ final case class WindowsOptions(
         os.pwd
       ),
       productName = productName,
-      exitDialog = exitDialog
+      exitDialog = exitDialog,
+      suppressValidation = suppressValidation
     )
 }
 
