@@ -13,7 +13,8 @@ case class WindowsWixConfig(
     productName: String,
     version: String,
     maintainer: String,
-    launcherAppName: String
+    launcherAppName: String,
+    extraConfig: Option[String]
 ) {
 
   lazy val wixExitDialog =
@@ -100,6 +101,8 @@ case class WindowsWixConfig(
       $wixIcon
 
       <UIRef Id="WixUI_InstallDir" />
+
+      ${extraConfig.getOrElse("")}
 
     </Product>
     </Wix>

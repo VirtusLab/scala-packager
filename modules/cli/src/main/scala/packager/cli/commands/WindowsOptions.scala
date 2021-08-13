@@ -1,9 +1,11 @@
 package packager.cli.commands
 
 import caseapp.core.help.Help
-import caseapp.{Group, HelpMessage, Parser}
+import caseapp.{Group, HelpMessage, Parser, ValueDescription}
 import SettingsHelpers.{Mandatory, Validate}
 import packager.config.{SharedSettings, WindowsSettings}
+
+import java.nio.charset.Charset
 
 final case class WindowsOptions(
     @Group("Windows")
@@ -17,7 +19,11 @@ final case class WindowsOptions(
     exitDialog: Option[String] = None,
     @Group("Windows")
     @HelpMessage("Suppress Wix ICE validation (required for users that are neither interactive, not local administrators)")
-    suppressValidation: Boolean = false
+    suppressValidation: Boolean = false,
+    @Group("Windows")
+    @HelpMessage("Path to extra WIX config content")
+    @ValueDescription("path")
+    extraConfig: List[String] = Nil
 ) {
 
   def toWindowsSettings(
@@ -37,7 +43,18 @@ final case class WindowsOptions(
       ),
       productName = productName,
       exitDialog = exitDialog,
-      suppressValidation = suppressValidation
+      suppressValidation = suppressValidation,
+      extraConfig =
+        if (extraConfig.isEmpty) None
+        else
+          Some {
+            extraConfig
+              .map { path =>
+                val path0 = os.Path(path, os.pwd)
+                os.read(path0, charSet = Charset.defaultCharset(), offset = 0L)
+              }
+              .mkString(System.lineSeparator())
+          }
     )
 }
 

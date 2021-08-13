@@ -44,7 +44,8 @@ case class WindowsPackage(
       productName = buildSettings.productName,
       version = buildSettings.shared.version,
       maintainer = buildSettings.maintainer,
-      launcherAppName = launcherAppName
+      launcherAppName = launcherAppName,
+      extraConfig = buildSettings.extraConfig
     )
 
     createConfFile(wixConfig)
