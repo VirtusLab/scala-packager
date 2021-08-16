@@ -13,7 +13,8 @@ case class WindowsWixConfig(
     productName: String,
     version: String,
     maintainer: String,
-    launcherAppName: String
+    launcherAppName: String,
+    extraConfig: Option[String]
 ) {
 
   lazy val wixExitDialog =
@@ -76,10 +77,10 @@ case class WindowsWixConfig(
                        Value="[INSTALLDIR]" />
         </Component>
       </DirectoryRef>
-      
+
       <MajorUpgrade Schedule="afterInstallInitialize"
-        DowngradeErrorMessage="A later version of $productName is already installed. Installer will now exit." 
-        AllowDowngrades="no" 
+        DowngradeErrorMessage="A later version of $productName is already installed. Installer will now exit."
+        AllowDowngrades="no"
       />
 
       <Feature Id='Complete' Title='Foobar 1.0' Description='The complete package.'
@@ -89,10 +90,10 @@ case class WindowsWixConfig(
         <ComponentRef Id="setEnviroment"/>
         </Feature>
       </Feature>
-      
+
       <WixVariable Id="WixUILicenseRtf" Value="$licensePath" />
       <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
-        
+
       $wixExitDialog
       $wixBannerBmp
       $wixDialogBmp
@@ -100,7 +101,9 @@ case class WindowsWixConfig(
       $wixIcon
 
       <UIRef Id="WixUI_InstallDir" />
-      
+
+      ${extraConfig.getOrElse("")}
+
     </Product>
     </Wix>
    """

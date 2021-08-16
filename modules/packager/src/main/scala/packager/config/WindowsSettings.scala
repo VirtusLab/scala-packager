@@ -6,5 +6,6 @@ case class WindowsSettings(
     licencePath: os.ReadablePath,
     productName: String,
     exitDialog: Option[String],
-    suppressValidation: Boolean
+    suppressValidation: Boolean,
+    extraConfig: Option[String]
 ) extends BuildSettings
