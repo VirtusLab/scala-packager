@@ -7,6 +7,8 @@ import packager.config.{SharedSettings, WindowsSettings}
 
 import java.nio.charset.Charset
 
+import scala.io.Codec
+
 final case class WindowsOptions(
     @Group("Windows")
     @HelpMessage("Path to license file")
@@ -51,7 +53,7 @@ final case class WindowsOptions(
             extraConfig
               .map { path =>
                 val path0 = os.Path(path, os.pwd)
-                os.read(path0, charSet = Charset.defaultCharset(), offset = 0L)
+                os.read(path0, Codec(Charset.defaultCharset()))
               }
               .mkString(System.lineSeparator())
           }
