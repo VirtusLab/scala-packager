@@ -41,6 +41,8 @@ class WindowsPackageTests extends munit.FunSuite with PackageHelper {
       productName = "Scala packager product",
       exitDialog = None,
       suppressValidation = true,
-      extraConfig = None
+      extraConfig = None,
+      is64Bits = false,
+      installerVersion = None
     )
 }

@@ -1,7 +1,7 @@
 package packager.cli.commands
 
 import caseapp.core.help.Help
-import caseapp.{Group, HelpMessage, Parser, ValueDescription}
+import caseapp.{Group, HelpMessage, Name, Parser, ValueDescription}
 import SettingsHelpers.{Mandatory, Validate}
 import packager.config.{SharedSettings, WindowsSettings}
 
@@ -25,7 +25,14 @@ final case class WindowsOptions(
     @Group("Windows")
     @HelpMessage("Path to extra WIX config content")
     @ValueDescription("path")
-    extraConfig: List[String] = Nil
+    extraConfig: List[String] = Nil,
+    @Group("Windows")
+    @HelpMessage("Whether a 64-bit executable is getting packaged")
+    @Name("64")
+    is64Bits: Boolean = true,
+    @Group("Windows")
+    @HelpMessage("WIX installer version")
+    installerVersion: Option[String] = None
 ) {
 
   def toWindowsSettings(
@@ -56,7 +63,9 @@ final case class WindowsOptions(
                 os.read(path0, Codec(Charset.defaultCharset()))
               }
               .mkString(System.lineSeparator())
-          }
+          },
+      is64Bits = is64Bits,
+      installerVersion = installerVersion
     )
 }
 
