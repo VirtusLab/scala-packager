@@ -42,6 +42,7 @@ class WindowsPackageTests extends munit.FunSuite with PackageHelper {
       exitDialog = None,
       suppressValidation = true,
       extraConfig = None,
-      is64Bits = false
+      is64Bits = false,
+      installerVersion = None
     )
 }

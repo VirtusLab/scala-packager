@@ -15,7 +15,8 @@ case class WindowsWixConfig(
     maintainer: String,
     launcherAppName: String,
     extraConfig: Option[String],
-    is64Bits: Boolean
+    is64Bits: Boolean,
+    installerVersion: Option[String]
 ) {
 
   lazy val wixExitDialog =
@@ -58,7 +59,7 @@ case class WindowsWixConfig(
     <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Product Id="*" UpgradeCode="$randomGuid"
              Name="$productName" Version="$version" Manufacturer="$maintainer" Language="1033">
-      <Package $extraPackage InstallerVersion="200" Compressed="yes" Comments="Windows Installer Package"/>
+      <Package $extraPackage InstallerVersion="${installerVersion.getOrElse("200")}" Compressed="yes" Comments="Windows Installer Package"/>
       <Media Id="1" Cabinet="product.cab" EmbedCab="yes"/>
 
 

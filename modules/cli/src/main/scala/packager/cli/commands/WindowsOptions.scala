@@ -29,7 +29,10 @@ final case class WindowsOptions(
     @Group("Windows")
     @HelpMessage("Whether a 64-bit executable is getting packaged")
     @Name("64")
-    is64Bits: Boolean = true
+    is64Bits: Boolean = true,
+    @Group("Windows")
+    @HelpMessage("WIX installer version")
+    installerVersion: Option[String] = None
 ) {
 
   def toWindowsSettings(
@@ -61,7 +64,8 @@ final case class WindowsOptions(
               }
               .mkString(System.lineSeparator())
           },
-      is64Bits = is64Bits
+      is64Bits = is64Bits,
+      installerVersion = installerVersion
     )
 }
 
