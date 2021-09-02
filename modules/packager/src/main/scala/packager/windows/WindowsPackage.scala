@@ -45,7 +45,8 @@ case class WindowsPackage(
       version = buildSettings.shared.version,
       maintainer = buildSettings.maintainer,
       launcherAppName = launcherAppName,
-      extraConfig = buildSettings.extraConfig
+      extraConfig = buildSettings.extraConfig,
+      is64Bits = buildSettings.is64Bits
     )
 
     createConfFile(wixConfig)
@@ -59,9 +60,14 @@ case class WindowsPackage(
       if (buildSettings.suppressValidation) Seq("-sval")
       else Nil
 
+    val extraCandleOptions =
+      if (buildSettings.is64Bits) Seq("-arch", "x64")
+      else Nil
+
     os.proc(
         candleBinPath,
         wixConfigPath,
+        extraCandleOptions,
         "-ext",
         "WixUIExtension"
       )

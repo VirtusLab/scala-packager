@@ -14,7 +14,8 @@ case class WindowsWixConfig(
     version: String,
     maintainer: String,
     launcherAppName: String,
-    extraConfig: Option[String]
+    extraConfig: Option[String],
+    is64Bits: Boolean
 ) {
 
   lazy val wixExitDialog =
@@ -45,17 +46,24 @@ case class WindowsWixConfig(
 
   def randomGuid: String = java.util.UUID.randomUUID.toString
 
+  private def extraPackage =
+    if (is64Bits) """Platform="x64""""
+    else ""
+  private def programFiles =
+    if (is64Bits) "ProgramFiles64Folder"
+    else "ProgramFilesFolder"
+
   def generateContent(): String =
     s"""<?xml version="1.0"?>
     <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Product Id="*" UpgradeCode="$randomGuid"
              Name="$productName" Version="$version" Manufacturer="$maintainer" Language="1033">
-      <Package InstallerVersion="200" Compressed="yes" Comments="Windows Installer Package"/>
+      <Package $extraPackage InstallerVersion="200" Compressed="yes" Comments="Windows Installer Package"/>
       <Media Id="1" Cabinet="product.cab" EmbedCab="yes"/>
 
 
       <Directory Id="TARGETDIR" Name="SourceDir">
-        <Directory Id="ProgramFilesFolder">
+        <Directory Id="$programFiles">
           <Directory Id="INSTALLDIR" Name="$packageName">
             <Component Id="ApplicationFiles" Guid="$randomGuid">
               <File Id="ApplicationFile1" Source="$sourcePath" Name="$launcherAppName.${sourcePath.ext}"/>
