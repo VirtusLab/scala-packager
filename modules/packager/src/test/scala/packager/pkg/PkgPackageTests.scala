@@ -1,19 +1,20 @@
 package packager.pkg
 
 import com.eed3si9n.expecty.Expecty.expect
-import packager.PackageHelper
-import packager.config.{DebianSettings, MacOSSettings}
-import packager.config.BuildSettings.{PackageExtension, Pkg}
+import packager.NativePackageHelper
+import packager.config.MacOSSettings
 import packager.mac.pkg.PkgPackage
 
 import scala.util.Properties
 
-class PkgPackageTests extends munit.FunSuite with PackageHelper {
+class PkgPackageTests extends munit.FunSuite with NativePackageHelper {
+
+  override def outputPackagePath: os.Path = tmpDir / s"echo.pkg"
 
   if (Properties.isMac) {
     test("should create app directory") {
 
-      val pkgPackage = PkgPackage(echoLauncherPath, buildSettings)
+      val pkgPackage = PkgPackage(buildSettings)
 
       // create app directory
       pkgPackage.createAppDirectory()
@@ -27,7 +28,7 @@ class PkgPackageTests extends munit.FunSuite with PackageHelper {
 
     test("should generate pkg package") {
 
-      val pkgPackage = PkgPackage(echoLauncherPath, buildSettings)
+      val pkgPackage = PkgPackage(buildSettings)
 
       // create pkg package
       pkgPackage.build()
@@ -50,18 +51,28 @@ class PkgPackageTests extends munit.FunSuite with PackageHelper {
 
     }
 
+    test("should override generated pkg package") {
+      val pkgPackage = PkgPackage(buildSettings)
+
+      // create twice pkg package
+      pkgPackage.build()
+      pkgPackage.build()
+
+      expect(os.isFile(outputPackagePath))
+    }
+
     test("should set given launcher name explicitly for pkg package") {
 
-      val launcherAppName = "launcher-test"
+      val launcherApp = "launcher-test"
 
       val buildSettingsWithLauncherName: MacOSSettings = buildSettings.copy(
         shared = sharedSettings.copy(
-          launcherAppName = Some(launcherAppName)
+          launcherApp = Some(launcherApp)
         )
       )
 
       val pkgPackage =
-        PkgPackage(echoLauncherPath, buildSettingsWithLauncherName)
+        PkgPackage(buildSettingsWithLauncherName)
 
       // create pkg package
       pkgPackage.build()
@@ -77,7 +88,7 @@ class PkgPackageTests extends munit.FunSuite with PackageHelper {
         .trim
       val expectedAppPath = os.RelPath(s"$packageName.app")
       val expectedEchoLauncherPath =
-        expectedAppPath / "Contents" / "MacOS" / launcherAppName
+        expectedAppPath / "Contents" / "MacOS" / launcherApp
 
       expect(payloadFiles contains s"./$expectedAppPath")
       expect(payloadFiles contains s"./$expectedEchoLauncherPath")
@@ -86,7 +97,7 @@ class PkgPackageTests extends munit.FunSuite with PackageHelper {
 
     test("should copy post install script to pkg package") {
 
-      val pkgPackage = PkgPackage(echoLauncherPath, buildSettings)
+      val pkgPackage = PkgPackage(buildSettings)
 
       // create deb package
       pkgPackage.build()
@@ -102,8 +113,6 @@ class PkgPackageTests extends munit.FunSuite with PackageHelper {
       expect(os.isFile(postInstallScriptPath))
     }
   }
-
-  override def extension: PackageExtension = Pkg
 
   override def buildSettings: MacOSSettings =
     MacOSSettings(

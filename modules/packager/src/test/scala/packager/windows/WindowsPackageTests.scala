@@ -1,21 +1,33 @@
 package packager.windows
 
 import com.eed3si9n.expecty.Expecty.expect
-import packager.PackageHelper
-import packager.config.BuildSettings.{Msi, PackageExtension}
+import packager.NativePackageHelper
 import packager.config.WindowsSettings
 
 import scala.util.Properties
 
-class WindowsPackageTests extends munit.FunSuite with PackageHelper {
+class WindowsPackageTests extends munit.FunSuite with NativePackageHelper {
+
+  override def outputPackagePath: os.Path = tmpDir / s"echo.msi"
 
   if (Properties.isWin) {
 
     test("should generate msi package") {
 
-      val msiPackage = WindowsPackage(echoLauncherPath, buildSettings)
+      val msiPackage = WindowsPackage(buildSettings)
 
       // create msi package
+      msiPackage.build()
+
+      val expectedMsiPath = tmpDir / s"$packageName.msi"
+      expect(os.exists(expectedMsiPath))
+    }
+    test("should override generated msi package") {
+
+      val msiPackage = WindowsPackage(buildSettings)
+
+      // create twice msi package
+      msiPackage.build()
       msiPackage.build()
 
       val expectedMsiPath = tmpDir / s"$packageName.msi"
@@ -24,14 +36,12 @@ class WindowsPackageTests extends munit.FunSuite with PackageHelper {
   }
 
   test("should exists default licence file for msi package") {
-    val msiPackage = WindowsPackage(echoLauncherPath, buildSettings)
+    val msiPackage = WindowsPackage(buildSettings)
 
     val licencePath = msiPackage.buildSettings.licencePath
 
     expect(os.read(licencePath).nonEmpty)
   }
-
-  override def extension: PackageExtension = Msi
 
   override def buildSettings: WindowsSettings =
     WindowsSettings(
@@ -41,7 +51,7 @@ class WindowsPackageTests extends munit.FunSuite with PackageHelper {
       productName = "Scala packager product",
       exitDialog = None,
       suppressValidation = true,
-      extraConfig = None,
+      extraConfigs = Nil,
       is64Bits = false,
       installerVersion = None
     )

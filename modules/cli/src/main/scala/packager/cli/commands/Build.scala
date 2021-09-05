@@ -3,8 +3,10 @@ package packager.cli.commands
 import caseapp.core.RemainingArgs
 import caseapp.core.app.Command
 import BuildOptions.NativePackagerType._
+import packager.cli.commands.BuildOptions.PackagerType.Docker
 import packager.config.SharedSettings
 import packager.deb.DebianPackage
+import packager.docker.DockerPackage
 import packager.mac.dmg.DmgPackage
 import packager.mac.pkg.PkgPackage
 import packager.rpm.RedHatPackage
@@ -24,11 +26,12 @@ object Build extends Command[BuildOptions] {
     val workingDirectoryPath = options.workingDirectory.map(os.Path(_, pwd))
 
     val sharedSettings: SharedSettings = SharedSettings(
+      sourceAppPath = sourceAppPath,
       force = options.force,
       version = options.sharedOptions.version,
       workingDirectoryPath = workingDirectoryPath,
       outputPath = destinationPath,
-      launcherAppName = options.sharedOptions.launcherAppName,
+      launcherApp = options.sharedOptions.launcherApp,
       logoPath = options.sharedOptions.logoPath.map(os.Path(_, pwd))
     )
 
@@ -42,22 +45,19 @@ object Build extends Command[BuildOptions] {
 
     alreadyExistsCheck()
 
-    options.nativePackager match {
+    options.packagerType match {
       case Some(Debian) =>
-        DebianPackage(sourceAppPath, options.toDebianSettings(sharedSettings))
-          .build()
+        DebianPackage(options.toDebianSettings(sharedSettings)).build()
       case Some(Msi) =>
-        WindowsPackage(sourceAppPath, options.toWindowsSettings(sharedSettings))
-          .build()
+        WindowsPackage(options.toWindowsSettings(sharedSettings)).build()
       case Some(Dmg) =>
-        DmgPackage(sourceAppPath, options.toMacOSSettings(sharedSettings))
-          .build()
+        DmgPackage(options.toMacOSSettings(sharedSettings)).build()
       case Some(Pkg) =>
-        PkgPackage(sourceAppPath, options.toMacOSSettings(sharedSettings))
-          .build()
+        PkgPackage(options.toMacOSSettings(sharedSettings)).build()
       case Some(Rpm) =>
-        RedHatPackage(sourceAppPath, options.toRedHatSettings(sharedSettings))
-          .build()
+        RedHatPackage(options.toRedHatSettings(sharedSettings)).build()
+      case Some(Docker) =>
+        DockerPackage(sourceAppPath, options.toDockerSettings).build()
       case None => ()
     }
   }

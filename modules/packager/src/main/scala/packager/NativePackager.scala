@@ -1,26 +1,27 @@
 package packager
 
-import packager.config.BuildSettings
-import packager.config.BuildSettings.PackageExtension
+import packager.config.NativeSettings
 
-trait NativePackager {
+import org.apache.commons.io.FilenameUtils
 
-  def sourceAppPath: os.Path
-  def buildSettings: BuildSettings
+trait NativePackager extends Packager {
+
   implicit def options = buildSettings
-  def extension: PackageExtension
+  override def buildSettings: NativeSettings
 
-  lazy val packageName = buildSettings.shared.outputPath.last
-    .stripSuffix(s".${extension.toString.toLowerCase}")
+  lazy val sourceAppPath: os.Path = buildSettings.shared.sourceAppPath
 
-  protected lazy val launcherAppName: String =
-    buildSettings.shared.launcherAppName.getOrElse(sourceAppPath.last)
+  override def launcherApp: String =
+    buildSettings.shared.launcherApp.getOrElse(super.launcherApp).toLowerCase()
 
-  protected lazy val basePath: os.Path =
+  lazy val outputPath: os.Path = buildSettings.shared.outputPath
+
+  lazy val packageName =
+    FilenameUtils.removeExtension(buildSettings.shared.outputPath.last)
+
+  lazy val basePath: os.Path =
     buildSettings.shared.workingDirectoryPath.getOrElse(
       os.temp.dir(prefix = packageName)
     )
-  protected lazy val outputPath: os.Path = buildSettings.shared.outputPath
 
-  def build(): Unit
 }

@@ -5,10 +5,6 @@ import caseapp.{Group, HelpMessage, Name, Parser, ValueDescription}
 import SettingsHelpers.{Mandatory, Validate}
 import packager.config.{SharedSettings, WindowsSettings}
 
-import java.nio.charset.Charset
-
-import scala.io.Codec
-
 final case class WindowsOptions(
     @Group("Windows")
     @HelpMessage("Path to license file")
@@ -20,12 +16,14 @@ final case class WindowsOptions(
     @HelpMessage("Text will be displayed on exit dialog")
     exitDialog: Option[String] = None,
     @Group("Windows")
-    @HelpMessage("Suppress Wix ICE validation (required for users that are neither interactive, not local administrators)")
+    @HelpMessage(
+      "Suppress Wix ICE validation (required for users that are neither interactive, not local administrators)"
+    )
     suppressValidation: Boolean = false,
     @Group("Windows")
     @HelpMessage("Path to extra WIX config content")
     @ValueDescription("path")
-    extraConfig: List[String] = Nil,
+    extraConfigs: List[String] = Nil,
     @Group("Windows")
     @HelpMessage("Whether a 64-bit executable is getting packaged")
     @Name("64")
@@ -53,17 +51,7 @@ final case class WindowsOptions(
       productName = productName,
       exitDialog = exitDialog,
       suppressValidation = suppressValidation,
-      extraConfig =
-        if (extraConfig.isEmpty) None
-        else
-          Some {
-            extraConfig
-              .map { path =>
-                val path0 = os.Path(path, os.pwd)
-                os.read(path0, Codec(Charset.defaultCharset()))
-              }
-              .mkString(System.lineSeparator())
-          },
+      extraConfigs = extraConfigs,
       is64Bits = is64Bits,
       installerVersion = installerVersion
     )

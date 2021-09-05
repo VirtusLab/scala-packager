@@ -18,16 +18,13 @@ inThisBuild(
   )
 )
 
-scalacOptions := Seq("-unchecked", "-deprecation")
-scalaVersion := ScalaVersions.scala213
-crossScalaVersions := ScalaVersions.all
-fork in run := true
-
 lazy val coreDependencies = Seq(
   libraryDependencies ++= Seq(
+    Deps.commonsIo,
+    Deps.image4j,
+    Deps.jib,
     Deps.osLib,
-    Deps.thumbnailator,
-    Deps.image4j
+    Deps.thumbnailator
   )
 )
 
@@ -37,6 +34,10 @@ lazy val testFramework = Seq(
 
 lazy val cliMainClass = Seq(
   Compile / mainClass := Some("packager.cli.PackagerCli")
+)
+
+lazy val compileOptions: Seq[Setting[_]] = Seq(
+  scalacOptions ++= Seq("-Xfatal-warnings", "-deprecation")
 )
 
 lazy val packagerProjectSettings = Seq(
@@ -62,12 +63,14 @@ lazy val cli = project("cli")
   .settings(
     cliProjectSettings,
     cliMainClass,
-    utest
+    utest,
+    compileOptions
   )
 
 lazy val packager = project("packager")
   .settings(
     packagerProjectSettings,
     coreDependencies,
-    utest
+    utest,
+    compileOptions
   )

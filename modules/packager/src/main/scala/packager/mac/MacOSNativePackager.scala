@@ -1,7 +1,6 @@
 package packager.mac
 
-import packager.NativePackager
-import packager.PackagerUtils.{osCopy, osWrite}
+import packager.{FileUtils, NativePackager}
 import packager.config.MacOSSettings
 
 trait MacOSNativePackager extends NativePackager {
@@ -17,13 +16,13 @@ trait MacOSNativePackager extends NativePackager {
   def createAppDirectory(): Unit = {
     os.makeDir.all(macOsPath)
 
-    val appPath = macOsPath / launcherAppName
-    osCopy(sourceAppPath, appPath)
+    val appPath = macOsPath / launcherApp
+    FileUtils.copy(sourceAppPath, appPath)
   }
 
   protected def createInfoPlist(): Unit = {
     val infoPlistPath = contentPath / "Info.plist"
 
-    osWrite(infoPlistPath, infoPlist.generateContent)
+    FileUtils.write(infoPlistPath, infoPlist.generateContent)
   }
 }

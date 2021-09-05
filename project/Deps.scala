@@ -7,4 +7,6 @@ object Deps {
   def caseApp = "com.github.alexarchambault" %% "case-app" % "2.1.0-M2"
   def thumbnailator = "net.coobird" % "thumbnailator" % "0.4.14"
   def image4j = "org.jclarion" % "image4j" % "0.7"
+  def jib = "com.google.cloud.tools" % "jib-core" % "0.19.0"
+  def commonsIo = "commons-io" % "commons-io" % "2.11.0"
 }

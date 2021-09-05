@@ -1,17 +1,18 @@
 package packager.deb
 
 import com.eed3si9n.expecty.Expecty.expect
-import packager.PackageHelper
+import packager.NativePackageHelper
 import packager.config.DebianSettings
-import packager.config.BuildSettings.{Deb, PackageExtension}
 
 import scala.util.Properties
 
-class DebianPackageTests extends munit.FunSuite with PackageHelper {
+class DebianPackageTests extends munit.FunSuite with NativePackageHelper {
+
+  override def outputPackagePath: os.Path = tmpDir / s"echo.deb"
 
   if (Properties.isLinux) {
     test("should create DEBIAN directory ") {
-      val dmgPackage = DebianPackage(echoLauncherPath, buildSettings)
+      val dmgPackage = DebianPackage(buildSettings)
 
       // create app directory
       dmgPackage.createDebianDir()
@@ -26,7 +27,7 @@ class DebianPackageTests extends munit.FunSuite with PackageHelper {
 
     test("should generate dep package") {
 
-      val depPackage = DebianPackage(echoLauncherPath, buildSettings)
+      val depPackage = DebianPackage(buildSettings)
 
       // create dmg package
       depPackage.build()
@@ -44,18 +45,29 @@ class DebianPackageTests extends munit.FunSuite with PackageHelper {
       expect(payloadFiles contains s"./$expectedEchoLauncherPath")
     }
 
+    test("should override generated dep package") {
+
+      val depPackage = DebianPackage(buildSettings)
+
+      // create twice dmg package
+      depPackage.build()
+      depPackage.build()
+
+      expect(os.exists(outputPackagePath))
+    }
+
     test("should set given launcher name explicitly for debian package") {
 
-      val launcherAppName = "launcher-test"
+      val launcherApp = "launcher-test"
 
       val buildSettingsWithLauncherName: DebianSettings = buildSettings.copy(
         shared = sharedSettings.copy(
-          launcherAppName = Some(launcherAppName)
+          launcherApp = Some(launcherApp)
         )
       )
 
       val depPackage =
-        DebianPackage(echoLauncherPath, buildSettingsWithLauncherName)
+        DebianPackage(buildSettingsWithLauncherName)
 
       // create dmg package
       depPackage.build()
@@ -65,16 +77,14 @@ class DebianPackageTests extends munit.FunSuite with PackageHelper {
       // list files which will be installed
       val payloadFiles =
         os.proc("dpkg", "--contents", outputPackagePath).call().out.text().trim
-      val expectedScriptPath = os.RelPath("usr") / "bin" / launcherAppName
+      val expectedScriptPath = os.RelPath("usr") / "bin" / launcherApp
       val expectedEchoLauncherPath =
-        os.RelPath("usr") / "share" / "scala" / launcherAppName
+        os.RelPath("usr") / "share" / "scala" / launcherApp
 
       expect(payloadFiles contains s"./$expectedScriptPath")
       expect(payloadFiles contains s"./$expectedEchoLauncherPath")
     }
   }
-
-  override def extension: PackageExtension = Deb
 
   override def buildSettings: DebianSettings =
     DebianSettings(
