@@ -7,4 +7,4 @@ case class DebianSettings(
     debianConflicts: List[String],
     debianDependencies: List[String],
     architecture: String
-) extends BuildSettings
+) extends NativeSettings

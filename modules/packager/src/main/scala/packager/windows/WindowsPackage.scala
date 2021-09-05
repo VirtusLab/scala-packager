@@ -1,13 +1,9 @@
 package packager.windows
 
-import packager.PackagerUtils.osWrite
-import packager.NativePackager
+import packager.{FileUtils, NativePackager}
 import packager.config.WindowsSettings
-import packager.windows.WindowsUtils._
-import packager.config.BuildSettings.{Msi, PackageExtension}
 
 case class WindowsPackage(
-    sourceAppPath: os.Path,
     buildSettings: WindowsSettings,
     imageResizerOpt: Option[ImageResizer] = Some(DefaultImageResizer)
 ) extends NativePackager {
@@ -44,8 +40,8 @@ case class WindowsPackage(
       productName = buildSettings.productName,
       version = buildSettings.shared.version,
       maintainer = buildSettings.maintainer,
-      launcherAppName = launcherAppName,
-      extraConfig = buildSettings.extraConfig,
+      launcherAppName = launcherApp,
+      extraConfigs = buildSettings.extraConfigs,
       is64Bits = buildSettings.is64Bits,
       installerVersion = buildSettings.installerVersion
     )
@@ -91,12 +87,11 @@ case class WindowsPackage(
   private def copyLicenseToBasePath() = {
     val license =
       WindowsUtils.convertLicenseToRtfFormat(buildSettings.licencePath)
-    os.write(licensePath, license)
+    os.write.over(licensePath, license)
   }
 
   private def createConfFile(wixConfig: WindowsWixConfig): Unit = {
-    osWrite(wixConfigPath, wixConfig.generateContent())
+    FileUtils.write(wixConfigPath, wixConfig.generateContent())
   }
 
-  override def extension: PackageExtension = Msi
 }

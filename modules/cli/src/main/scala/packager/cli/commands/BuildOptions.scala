@@ -2,6 +2,7 @@ package packager.cli.commands
 
 import caseapp.{Group, HelpMessage, Name, Parser, Recurse}
 import caseapp.core.help.Help
+import packager.cli.commands.BuildOptions.PackagerType
 import packager.config._
 
 final case class BuildOptions(
@@ -19,6 +20,8 @@ final case class BuildOptions(
     macOS: MacOSOptions = MacOSOptions(),
     @Recurse
     windows: WindowsOptions = WindowsOptions(),
+    @Recurse
+    dockerOptions: DockerOptions = DockerOptions(),
     @Group("Packager")
     @HelpMessage("Overwrite destination file if it exists")
     @Name("f")
@@ -45,26 +48,31 @@ final case class BuildOptions(
     dmg: Boolean = false,
     @Group("Packager")
     @HelpMessage("Build pkg package, available only on centOS")
-    pkg: Boolean = false
+    pkg: Boolean = false,
+    @Group("Packager")
+    @HelpMessage("Build docker image")
+    docker: Boolean = false
 ) {
 
   import BuildOptions.NativePackagerType
-  def nativePackager: Option[NativePackagerType] = {
+  def packagerType: Option[PackagerType] = {
     if (deb) Some(NativePackagerType.Debian)
     else if (rpm) Some(NativePackagerType.Rpm)
     else if (msi) Some(NativePackagerType.Msi)
     else if (dmg) Some(NativePackagerType.Dmg)
     else if (pkg) Some(NativePackagerType.Pkg)
+    else if (docker) Some(PackagerType.Docker)
     else None
   }
 
   def defaultName: String = {
     if (deb) "app.deb"
+    else if (rpm) "app.rpm"
     else if (msi) "app.msi"
     else if (dmg) "app.dmg"
     else if (pkg) "app.pkg"
     else if (msi) "app.msi"
-    else "package"
+    else "app"
   }
 
   def toDebianSettings(sharedSettings: SharedSettings): DebianSettings =
@@ -82,11 +90,17 @@ final case class BuildOptions(
 
   def toRedHatSettings(sharedSettings: SharedSettings): RedHatSettings =
     redHat.toRedHatSettings(sharedSettings, sharedOptions.description)
+
+  def toDockerSettings: DockerSettings = dockerOptions.toDockerSettings
 }
 
 object BuildOptions {
 
-  sealed abstract class NativePackagerType extends Product with Serializable
+  sealed abstract class PackagerType extends Product with Serializable
+  case object PackagerType {
+    case object Docker extends PackagerType
+  }
+  sealed abstract class NativePackagerType extends PackagerType
   case object NativePackagerType {
     case object Debian extends NativePackagerType
     case object Msi extends NativePackagerType

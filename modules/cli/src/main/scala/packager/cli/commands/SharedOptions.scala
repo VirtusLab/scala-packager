@@ -7,7 +7,7 @@ final case class SharedOptions(
     @Group("Shared")
     @HelpMessage("Set launcher app name, default: name of source app")
     @ValueDescription("launcher-app-name")
-    launcherAppName: Option[String] = None,
+    launcherApp: Option[String] = None,
     @Group("Shared")
     @HelpMessage("The version is set to 1.0.0 by default")
     @Name("v")

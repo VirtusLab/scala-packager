@@ -1,18 +1,19 @@
 package packager.rpm
 
 import com.eed3si9n.expecty.Expecty.expect
-import packager.PackageHelper
-import packager.config.BuildSettings.{PackageExtension, Rpm}
+import packager.NativePackageHelper
 import packager.config.RedHatSettings
 
 import scala.util.Properties
 
-class RedHatPackageTests extends munit.FunSuite with PackageHelper {
+class RedHatPackageTests extends munit.FunSuite with NativePackageHelper {
+
+  override def outputPackagePath: os.Path = tmpDir / s"echo.rpm"
 
   if (Properties.isLinux) {
     test("should create rpmbuild directory ") {
 
-      val rpmPackage = RedHatPackage(echoLauncherPath, buildSettings)
+      val rpmPackage = RedHatPackage(buildSettings)
 
       // create app directory
       rpmPackage.createRedHatDir()
@@ -27,7 +28,7 @@ class RedHatPackageTests extends munit.FunSuite with PackageHelper {
 
     test("should generate rpm package") {
 
-      val rpmPackage = RedHatPackage(echoLauncherPath, buildSettings)
+      val rpmPackage = RedHatPackage(buildSettings)
 
       // create dmg package
       rpmPackage.build()
@@ -43,9 +44,19 @@ class RedHatPackageTests extends munit.FunSuite with PackageHelper {
 
       expect(payloadFiles contains s"/$expectedEchoLauncherPath")
     }
-  }
 
-  override def extension: PackageExtension = Rpm
+    test("should override generated rpm package") {
+
+      val rpmPackage = RedHatPackage(buildSettings)
+
+      // create twice dmg package
+      rpmPackage.build()
+      rpmPackage.build()
+
+      val expectedRpmPath = tmpDir / s"$packageName.rpm"
+      expect(os.exists(expectedRpmPath))
+    }
+  }
 
   override def buildSettings: RedHatSettings =
     RedHatSettings(

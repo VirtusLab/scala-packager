@@ -12,9 +12,11 @@ final case class DebianOptions(
     )
     @ValueDescription("debian dependencies conflicts")
     debianConflicts: List[String] = Nil,
+    @Group("Debian")
     @HelpMessage("The list of debian package that this package depends on")
     @ValueDescription("debian dependencies")
     debianDependencies: List[String] = Nil,
+    @Group("Debian")
     @HelpMessage(
       "Architecture that are supported by the repository, default: all"
     )

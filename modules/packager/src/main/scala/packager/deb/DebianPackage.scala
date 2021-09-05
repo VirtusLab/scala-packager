@@ -1,12 +1,9 @@
 package packager.deb
 
-import packager.PackagerUtils.{executablePerms, osCopy, osMove, osWrite}
-import packager.NativePackager
-import packager.config.BuildSettings.{Deb, PackageExtension}
+import packager.{FileUtils, NativePackager}
 import packager.config.DebianSettings
 
-case class DebianPackage(sourceAppPath: os.Path, buildSettings: DebianSettings)
-    extends NativePackager {
+case class DebianPackage(buildSettings: DebianSettings) extends NativePackager {
 
   private val debianBasePath = basePath / "debian"
   private val usrDirectory = debianBasePath / "usr"
@@ -20,7 +17,7 @@ case class DebianPackage(sourceAppPath: os.Path, buildSettings: DebianSettings)
     os.proc("dpkg", "-b", debianBasePath)
       .call(cwd = basePath)
 
-    osMove(basePath / "debian.deb", outputPath)
+    FileUtils.move(basePath / "debian.deb", outputPath)
 
     postInstallClean()
   }
@@ -56,23 +53,21 @@ case class DebianPackage(sourceAppPath: os.Path, buildSettings: DebianSettings)
   private def copyExecutableFile(): Unit = {
     val scalaDirectory = usrDirectory / "share" / "scala"
     os.makeDir.all(scalaDirectory)
-    osCopy(sourceAppPath, scalaDirectory / launcherAppName)
+    FileUtils.copy(sourceAppPath, scalaDirectory / launcherApp)
   }
 
   private def createConfFile(): Unit = {
-    osWrite(mainDebianDirectory / "control", metaData.generateContent())
+    FileUtils.write(mainDebianDirectory / "control", metaData.generateContent())
   }
 
   private def createScriptFile(): Unit = {
     val binDirectory = usrDirectory / "bin"
     os.makeDir.all(binDirectory)
-    val launchScriptFile = binDirectory / launcherAppName
+    val launchScriptFile = binDirectory / launcherApp
     val content = s"""#!/bin/bash
-                      |/usr/share/scala/$launcherAppName \"$$@\"
+                      |/usr/share/scala/$launcherApp \"$$@\"
                       |""".stripMargin
-    osWrite(launchScriptFile, content, executablePerms)
+    FileUtils.write(launchScriptFile, content, FileUtils.executablePerms)
   }
-
-  override def extension: PackageExtension = Deb
 
 }

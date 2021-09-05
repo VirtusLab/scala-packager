@@ -1,6 +1,9 @@
 package packager.windows
 
 import packager.windows.wix._
+import java.nio.charset.Charset
+
+import scala.io.Codec
 
 case class WindowsWixConfig(
     packageName: String,
@@ -14,10 +17,22 @@ case class WindowsWixConfig(
     version: String,
     maintainer: String,
     launcherAppName: String,
-    extraConfig: Option[String],
+    extraConfigs: List[String],
     is64Bits: Boolean,
     installerVersion: Option[String]
 ) {
+
+  lazy val extraConfig: Option[String] =
+    if (extraConfigs.isEmpty) None
+    else
+      Some {
+        extraConfigs
+          .map { path =>
+            val path0 = os.Path(path, os.pwd)
+            os.read(path0, Codec(Charset.defaultCharset()))
+          }
+          .mkString(System.lineSeparator())
+      }
 
   lazy val wixExitDialog =
     exitDialog
@@ -59,7 +74,9 @@ case class WindowsWixConfig(
     <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Product Id="*" UpgradeCode="$randomGuid"
              Name="$productName" Version="$version" Manufacturer="$maintainer" Language="1033">
-      <Package $extraPackage InstallerVersion="${installerVersion.getOrElse("200")}" Compressed="yes" Comments="Windows Installer Package"/>
+      <Package $extraPackage InstallerVersion="${installerVersion.getOrElse(
+      "200"
+    )}" Compressed="yes" Comments="Windows Installer Package"/>
       <Media Id="1" Cabinet="product.cab" EmbedCab="yes"/>
 
 

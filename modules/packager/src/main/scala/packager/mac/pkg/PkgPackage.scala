@@ -1,11 +1,10 @@
 package packager.mac.pkg
 
-import packager.PackagerUtils.{executablePerms, osWrite}
+import packager.FileUtils
 import packager.config.MacOSSettings
-import packager.config.BuildSettings.{PackageExtension, Pkg}
 import packager.mac.MacOSNativePackager
 
-case class PkgPackage(sourceAppPath: os.Path, buildSettings: MacOSSettings)
+case class PkgPackage(buildSettings: MacOSSettings)
     extends MacOSNativePackager {
 
   private val scriptsPath = basePath / "scripts"
@@ -38,12 +37,11 @@ case class PkgPackage(sourceAppPath: os.Path, buildSettings: MacOSSettings)
 
   private def createScriptFile(): Unit = {
     val content = s"""#!/bin/bash
-                    |rm -f /usr/local/bin/$launcherAppName
-                    |ln -s /Applications/$packageName.app/Contents/MacOS/$launcherAppName /usr/local/bin/$launcherAppName""".stripMargin
+                    |rm -f /usr/local/bin/$launcherApp
+                    |ln -s /Applications/$packageName.app/Contents/MacOS/$launcherApp /usr/local/bin/$launcherApp""".stripMargin
     os.makeDir.all(scriptsPath)
     val postInstallPath = scriptsPath / "postinstall"
-    osWrite(postInstallPath, content, executablePerms)
+    FileUtils.write(postInstallPath, content, FileUtils.executablePerms)
   }
 
-  override def extension: PackageExtension = Pkg
 }

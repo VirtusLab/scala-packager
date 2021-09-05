@@ -1,12 +1,9 @@
 package packager.rpm
 
-import packager.NativePackager
-import packager.PackagerUtils.{osCopy, osMove, osWrite}
+import packager.{FileUtils, NativePackager}
 import packager.config.RedHatSettings
-import packager.config.BuildSettings.{PackageExtension, Rpm}
 
-case class RedHatPackage(sourceAppPath: os.Path, buildSettings: RedHatSettings)
-    extends NativePackager {
+case class RedHatPackage(buildSettings: RedHatSettings) extends NativePackager {
 
   private val redHatBasePath = basePath / "rpmbuild"
   private val sourcesDirectory = redHatBasePath / "SOURCES"
@@ -26,7 +23,7 @@ case class RedHatPackage(sourceAppPath: os.Path, buildSettings: RedHatSettings)
         s"$specsDirectory/$packageName.spec"
       )
       .call(cwd = basePath)
-    osMove(rpmsDirectory / s"$packageName.rpm", outputPath)
+    FileUtils.move(rpmsDirectory / s"$packageName.rpm", outputPath)
 
     postInstallClean()
   }
@@ -46,13 +43,13 @@ case class RedHatPackage(sourceAppPath: os.Path, buildSettings: RedHatSettings)
   private def createSpecFile(): Unit = {
     val content = redHatSpec.generateContent
     val specFilePath = specsDirectory / s"$packageName.spec"
-    osWrite(specFilePath, content)
+    FileUtils.write(specFilePath, content)
   }
 
   private def buildRedHatSpec(): RedHatSpecPackage =
     RedHatSpecPackage(
       packageName = packageName,
-      launcherAppName = launcherAppName,
+      launcherAppName = launcherApp,
       version = buildSettings.shared.version,
       description = buildSettings.description,
       buildArch = buildSettings.rpmArchitecture,
@@ -61,8 +58,7 @@ case class RedHatPackage(sourceAppPath: os.Path, buildSettings: RedHatSettings)
     )
 
   private def copyExecutableFile(): Unit = {
-    osCopy(sourceAppPath, sourcesDirectory / launcherAppName)
+    FileUtils.copy(sourceAppPath, sourcesDirectory / launcherApp)
   }
 
-  override def extension: PackageExtension = Rpm
 }

@@ -7,7 +7,7 @@ case class WindowsSettings(
     productName: String,
     exitDialog: Option[String],
     suppressValidation: Boolean,
-    extraConfig: Option[String],
+    extraConfigs: List[String],
     is64Bits: Boolean,
     installerVersion: Option[String]
-) extends BuildSettings
+) extends NativeSettings

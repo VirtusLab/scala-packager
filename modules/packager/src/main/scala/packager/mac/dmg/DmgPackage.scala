@@ -1,10 +1,9 @@
 package packager.mac.dmg
 
 import packager.config.MacOSSettings
-import packager.config.BuildSettings.{Dmg, PackageExtension}
 import packager.mac.MacOSNativePackager
 
-case class DmgPackage(sourceAppPath: os.Path, buildSettings: MacOSSettings)
+case class DmgPackage(buildSettings: MacOSSettings)
     extends MacOSNativePackager {
 
   private val tmpPackageName = s"$packageName-tmp"
@@ -70,5 +69,4 @@ case class DmgPackage(sourceAppPath: os.Path, buildSettings: MacOSSettings)
     os.symlink(mountpointPath / "Applications", os.root / "Applications")
   }
 
-  override def extension: PackageExtension = Dmg
 }

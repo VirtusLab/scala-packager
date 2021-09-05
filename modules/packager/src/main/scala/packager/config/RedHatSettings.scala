@@ -6,4 +6,4 @@ case class RedHatSettings(
     license: String,
     release: String,
     rpmArchitecture: String
-) extends BuildSettings
+) extends NativeSettings
