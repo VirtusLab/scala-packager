@@ -31,7 +31,7 @@ final case class DockerOptions(
     @HelpMessage(
       "Executable that will run an application, default sh"
     )
-    exec: String = "sh"
+    exec: Option[String] = Some("sh")
 ) {
   def toDockerSettings: DockerSettings =
     DockerSettings(

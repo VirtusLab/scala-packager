@@ -6,12 +6,15 @@ import com.google.cloud.tools.jib.api.{
   ImageReference,
   Jib
 }
-import com.google.cloud.tools.jib.api.buildplan.AbsoluteUnixPath
+import com.google.cloud.tools.jib.api.buildplan.{
+  AbsoluteUnixPath,
+  FileEntriesLayer,
+  FilePermissions
+}
 import packager.Packager
 import packager.config.DockerSettings
 
 import java.time.Instant
-import java.util.Arrays
 
 case class DockerPackage(sourceAppPath: os.Path, buildSettings: DockerSettings)
     extends Packager {
@@ -26,15 +29,30 @@ case class DockerPackage(sourceAppPath: os.Path, buildSettings: DockerSettings)
       )
 
     val targetImage = DockerDaemonImage.named(targetImageReference)
+    val entrypoint = buildSettings.exec
+      .map(e => List(s"$e", s"/$launcherApp"))
+      .getOrElse(List(s"/$launcherApp"))
+
+    def makeFileEntryLayerConfiguration(
+        resourcePath: os.Path,
+        dest: String
+    ): FileEntriesLayer = {
+      val layerConfigurationBuilder = FileEntriesLayer.builder
+      layerConfigurationBuilder.addEntry(
+        resourcePath.toNIO,
+        AbsoluteUnixPath.get(dest),
+        FilePermissions.fromOctalString("755")
+      )
+      layerConfigurationBuilder.build()
+    }
 
     Jib
       .from(buildSettings.from)
-      .addLayer(
-        Arrays.asList(sourceAppPath.toNIO),
-        AbsoluteUnixPath.get("/")
+      .setFileEntriesLayers(
+        makeFileEntryLayerConfiguration(sourceAppPath, s"/$launcherApp")
       )
       .setCreationTime(Instant.now())
-      .setEntrypoint(buildSettings.exec, s"/$launcherApp")
+      .setEntrypoint(entrypoint: _*)
       .containerize(
         Containerizer.to(targetImage)
       )

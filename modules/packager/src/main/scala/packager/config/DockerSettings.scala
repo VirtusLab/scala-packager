@@ -5,5 +5,5 @@ case class DockerSettings(
     registry: Option[String],
     repository: String,
     tag: Option[String],
-    exec: String
+    exec: Option[String]
 ) extends BuildSettings
