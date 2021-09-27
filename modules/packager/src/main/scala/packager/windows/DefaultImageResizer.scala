@@ -14,7 +14,9 @@ case object DefaultImageResizer extends ImageResizer {
 
   def generateIcon(logoPath: os.Path, workDirPath: os.Path): os.Path = {
     val icoTmpPath = workDirPath / "logo_tmp.ico"
-    val iconImage: BufferedImage = ImageIO.read(new File(logoPath.toString()));
+    val resizedLogoPath = resizeLogo(logoPath, 32, 32, workDirPath)
+    val iconImage: BufferedImage =
+      ImageIO.read(new File(resizedLogoPath.toString()));
     ICOEncoder.write(iconImage, new File(icoTmpPath.toString()));
     val icoPath = workDirPath / "logo.ico"
     os.copy.over(icoTmpPath, icoPath)

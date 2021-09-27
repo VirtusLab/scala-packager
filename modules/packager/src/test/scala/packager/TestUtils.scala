@@ -17,7 +17,7 @@ object TestUtils {
   def logo(tmpDir: os.Path): os.Path = {
     val logoPath = tmpDir / "logo.png"
     val logo: BufferedImage =
-      new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB)
+      new BufferedImage(231, 250, BufferedImage.TYPE_INT_ARGB)
     ImageIO.write(logo, "png", new File(logoPath.toString()))
     logoPath
   }
