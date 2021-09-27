@@ -14,6 +14,23 @@ object TestUtils {
     dest
   }
 
+  def echoNative(tmpDir: os.Path): os.Path = {
+    val dest = tmpDir / "echo-native"
+    os.proc(
+        "cs",
+        "launch",
+        "coursier",
+        "--",
+        "bootstrap",
+        "echo-native",
+        "-o",
+        dest.toString,
+        "--native"
+      )
+      .call()
+    dest
+  }
+
   def logo(tmpDir: os.Path): os.Path = {
     val logoPath = tmpDir / "logo.png"
     val logo: BufferedImage =
