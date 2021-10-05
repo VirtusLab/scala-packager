@@ -1,7 +1,6 @@
 package packager.rpm
 
 case class RedHatSpecPackage(
-    packageName: String,
     launcherAppName: String,
     version: String,
     description: String,
@@ -11,7 +10,7 @@ case class RedHatSpecPackage(
 ) {
 
   def generateContent: String =
-    s"""Name:           $packageName
+    s"""Name:           $launcherAppName
        |Version:        $version
        |Release:        $release
        |Summary:        $description
