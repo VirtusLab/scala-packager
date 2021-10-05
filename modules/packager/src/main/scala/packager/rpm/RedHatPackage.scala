@@ -48,7 +48,6 @@ case class RedHatPackage(buildSettings: RedHatSettings) extends NativePackager {
 
   private def buildRedHatSpec(): RedHatSpecPackage =
     RedHatSpecPackage(
-      packageName = packageName,
       launcherAppName = launcherApp,
       version = buildSettings.shared.version,
       description = buildSettings.description,
