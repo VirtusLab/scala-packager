@@ -23,7 +23,7 @@ case class RedHatPackage(buildSettings: RedHatSettings) extends NativePackager {
         s"$specsDirectory/$packageName.spec"
       )
       .call(cwd = basePath)
-    FileUtils.move(rpmsDirectory / s"$packageName.rpm", outputPath)
+    FileUtils.move(rpmsDirectory / s"$launcherApp.rpm", outputPath)
 
     postInstallClean()
   }
