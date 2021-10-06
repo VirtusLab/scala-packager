@@ -56,6 +56,30 @@ class RedHatPackageTests extends munit.FunSuite with NativePackageHelper {
       val expectedRpmPath = tmpDir / s"$packageName.rpm"
       expect(os.exists(expectedRpmPath))
     }
+
+    test("should set given launcher name explicitly for redhat package") {
+
+      val launcherApp = "launcher-test"
+
+      val buildSettingsWithLauncherName: RedHatSettings = buildSettings.copy(
+        shared = sharedSettings.copy(
+          launcherApp = Some(launcherApp)
+        )
+      )
+
+      val rpmPackage = RedHatPackage(buildSettingsWithLauncherName)
+
+      // create rpm package
+      rpmPackage.build()
+
+      // list files which will be installed
+      val payloadFiles =
+        os.proc("rpm", "-qpl", outputPackagePath).call().out.text().trim
+      val expectedEchoLauncherPath =
+        os.RelPath("usr") / "bin" / launcherApp
+
+      expect(payloadFiles contains s"/$expectedEchoLauncherPath")
+    }
   }
 
   override def buildSettings: RedHatSettings =
