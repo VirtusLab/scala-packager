@@ -12,45 +12,42 @@ case class DmgPackage(buildSettings: MacOSSettings)
 
   override def build(): Unit = {
     os.proc(
-        "hdiutil",
-        "create",
-        "-megabytes",
-        appSize,
-        "-fs",
-        "HFS+",
-        "-volname",
-        packageName,
-        tmpPackageName
-      )
-      .call(cwd = basePath)
+      "hdiutil",
+      "create",
+      "-megabytes",
+      appSize,
+      "-fs",
+      "HFS+",
+      "-volname",
+      packageName,
+      tmpPackageName
+    ).call(cwd = basePath)
 
     createAppDirectory()
     createInfoPlist()
 
     os.proc(
-        "hdiutil",
-        "attach",
-        s"$tmpPackageName.dmg",
-        "-readwrite",
-        "-mountpoint",
-        "mountpoint/"
-      )
-      .call(cwd = basePath)
+      "hdiutil",
+      "attach",
+      s"$tmpPackageName.dmg",
+      "-readwrite",
+      "-mountpoint",
+      "mountpoint/"
+    ).call(cwd = basePath)
 
     copyAppDirectory()
     removeDmgIfExists()
 
     os.proc("hdiutil", "detach", "mountpoint/").call(cwd = basePath)
     os.proc(
-        "hdiutil",
-        "convert",
-        s"$tmpPackageName.dmg",
-        "-format",
-        "UDZO",
-        "-o",
-        outputPath
-      )
-      .call(cwd = basePath)
+      "hdiutil",
+      "convert",
+      s"$tmpPackageName.dmg",
+      "-format",
+      "UDZO",
+      "-o",
+      outputPath
+    ).call(cwd = basePath)
 
     postInstallClean()
   }

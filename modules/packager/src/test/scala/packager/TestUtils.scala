@@ -17,17 +17,16 @@ object TestUtils {
   def echoNative(tmpDir: os.Path): os.Path = {
     val dest = tmpDir / "echo-native"
     os.proc(
-        "cs",
-        "launch",
-        "coursier",
-        "--",
-        "bootstrap",
-        "echo-native",
-        "-o",
-        dest.toString,
-        "--native"
-      )
-      .call()
+      "cs",
+      "launch",
+      "coursier",
+      "--",
+      "bootstrap",
+      "echo-native",
+      "-o",
+      dest.toString,
+      "--native"
+    ).call()
     dest
   }
 

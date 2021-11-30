@@ -62,24 +62,22 @@ case class WindowsPackage(
       else Nil
 
     os.proc(
-        candleBinPath,
-        wixConfigPath,
-        extraCandleOptions,
-        "-ext",
-        "WixUIExtension"
-      )
-      .call(cwd = basePath)
+      candleBinPath,
+      wixConfigPath,
+      extraCandleOptions,
+      "-ext",
+      "WixUIExtension"
+    ).call(cwd = basePath)
 
     os.proc(
-        lightBinPath,
-        s"$packageName.wixobj",
-        "-o",
-        outputPath,
-        "-ext",
-        "WixUIExtension",
-        lightExtraArguments
-      )
-      .call(cwd = basePath)
+      lightBinPath,
+      s"$packageName.wixobj",
+      "-o",
+      outputPath,
+      "-ext",
+      "WixUIExtension",
+      lightExtraArguments
+    ).call(cwd = basePath)
 
     postInstallClean()
   }

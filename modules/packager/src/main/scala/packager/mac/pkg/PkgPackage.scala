@@ -16,16 +16,15 @@ case class PkgPackage(buildSettings: MacOSSettings)
     createScriptFile()
 
     os.proc(
-        "pkgbuild",
-        "--install-location",
-        "/Applications",
-        "--component",
-        s"$packageName.app",
-        outputPath,
-        "--scripts",
-        scriptsPath
-      )
-      .call(cwd = basePath)
+      "pkgbuild",
+      "--install-location",
+      "/Applications",
+      "--component",
+      s"$packageName.app",
+      outputPath,
+      "--scripts",
+      scriptsPath
+    ).call(cwd = basePath)
 
     postInstallClean()
   }
