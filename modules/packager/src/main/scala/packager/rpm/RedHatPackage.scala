@@ -15,14 +15,13 @@ case class RedHatPackage(buildSettings: RedHatSettings) extends NativePackager {
     createRedHatDir()
 
     os.proc(
-        "rpmbuild",
-        "-bb",
-        "--build-in-place",
-        "--define",
-        s"_topdir $redHatBasePath",
-        s"$specsDirectory/$packageName.spec"
-      )
-      .call(cwd = basePath)
+      "rpmbuild",
+      "-bb",
+      "--build-in-place",
+      "--define",
+      s"_topdir $redHatBasePath",
+      s"$specsDirectory/$packageName.spec"
+    ).call(cwd = basePath)
     FileUtils.move(rpmsDirectory / s"$launcherApp.rpm", outputPath)
 
     postInstallClean()
