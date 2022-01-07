@@ -5,7 +5,7 @@ import packager.config.WindowsSettings
 
 case class WindowsPackage(
     buildSettings: WindowsSettings,
-    imageResizerOpt: Option[ImageResizer] = Some(DefaultImageResizer)
+    imageResizerOpt: Option[ImageResizer] = None
 ) extends NativePackager {
 
   private val wixConfigPath: os.Path = basePath / s"$packageName.wxs"

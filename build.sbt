@@ -21,9 +21,14 @@ inThisBuild(
 lazy val coreDependencies = Seq(
   libraryDependencies ++= Seq(
     Deps.commonsIo,
-    Deps.image4j,
     Deps.jib,
-    Deps.osLib,
+    Deps.osLib
+  )
+)
+
+lazy val imageResizerDependencies = Seq(
+  libraryDependencies ++= Seq(
+    Deps.image4j,
     Deps.thumbnailator
   )
 )
@@ -46,6 +51,12 @@ lazy val packagerProjectSettings = Seq(
   crossScalaVersions := ScalaVersions.all
 )
 
+lazy val imageResizerProjectSettings = Seq(
+  name := "scala-packager-image-resizer",
+  scalaVersion := ScalaVersions.scala213,
+  crossScalaVersions := ScalaVersions.all
+)
+
 lazy val cliProjectSettings = Seq(
   name := "scala-packager-cli",
   scalaVersion := ScalaVersions.scala213,
@@ -59,7 +70,7 @@ lazy val utest: Seq[Setting[_]] = Seq(
 )
 
 lazy val cli = project("cli")
-  .dependsOn(packager)
+  .dependsOn(packager, `image-resizer`)
   .settings(
     cliProjectSettings,
     cliMainClass,
@@ -71,6 +82,15 @@ lazy val packager = project("packager")
   .settings(
     packagerProjectSettings,
     coreDependencies,
+    utest,
+    compileOptions
+  )
+
+lazy val `image-resizer` = project("image-resizer")
+  .dependsOn(packager, packager % "test->test")
+  .settings(
+    imageResizerProjectSettings,
+    imageResizerDependencies,
     utest,
     compileOptions
   )
