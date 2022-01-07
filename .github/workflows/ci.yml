@@ -24,7 +24,7 @@ jobs:
       with:
         jvm: 8
     - name: Test
-      run: sbt test
+      run: sbt +test
 
   publish:
     needs: test

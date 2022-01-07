@@ -14,7 +14,10 @@ class WindowsPackageTests extends munit.FunSuite with NativePackageHelper {
 
     test("should generate msi package") {
 
-      val msiPackage = WindowsPackage(buildSettings)
+      val msiPackage = WindowsPackage(
+        buildSettings,
+        imageResizerOpt = Some(DefaultImageResizer)
+      )
 
       // create msi package
       msiPackage.build()
@@ -24,7 +27,10 @@ class WindowsPackageTests extends munit.FunSuite with NativePackageHelper {
     }
     test("should override generated msi package") {
 
-      val msiPackage = WindowsPackage(buildSettings)
+      val msiPackage = WindowsPackage(
+        buildSettings,
+        imageResizerOpt = Some(DefaultImageResizer)
+      )
 
       // create twice msi package
       msiPackage.build()
@@ -36,7 +42,10 @@ class WindowsPackageTests extends munit.FunSuite with NativePackageHelper {
   }
 
   test("should exists default licence file for msi package") {
-    val msiPackage = WindowsPackage(buildSettings)
+    val msiPackage = WindowsPackage(
+      buildSettings,
+      imageResizerOpt = Some(DefaultImageResizer)
+    )
 
     val licencePath = msiPackage.buildSettings.licencePath
 

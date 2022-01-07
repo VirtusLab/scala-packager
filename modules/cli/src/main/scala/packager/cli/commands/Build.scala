@@ -10,7 +10,7 @@ import packager.docker.DockerPackage
 import packager.mac.dmg.DmgPackage
 import packager.mac.pkg.PkgPackage
 import packager.rpm.RedHatPackage
-import packager.windows.WindowsPackage
+import packager.windows.{DefaultImageResizer, WindowsPackage}
 
 object Build extends Command[BuildOptions] {
   override def run(
@@ -49,7 +49,10 @@ object Build extends Command[BuildOptions] {
       case Some(Debian) =>
         DebianPackage(options.toDebianSettings(sharedSettings)).build()
       case Some(Msi) =>
-        WindowsPackage(options.toWindowsSettings(sharedSettings)).build()
+        WindowsPackage(
+          options.toWindowsSettings(sharedSettings),
+          imageResizerOpt = Some(DefaultImageResizer)
+        ).build()
       case Some(Dmg) =>
         DmgPackage(options.toMacOSSettings(sharedSettings)).build()
       case Some(Pkg) =>
