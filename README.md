@@ -19,7 +19,7 @@ The project consists of two dependent modules
 
 ### Cli
 
-Provides the command line application interface to building native formats. It is used in [scala-cli](https://github.com/VirtusLab/scala-cli/blob/master/.github/scripts/generate-os-packages.sh) for generating os package.
+Provides the command line application interface to building native formats. It is used in [scala-cli](https://github.com/VirtusLab/scala-cli/blob/main/.github/scripts/generate-os-packages.sh) for generating os package.
 
 ### Packager
 
