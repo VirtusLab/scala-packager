@@ -49,7 +49,7 @@ final case class DockerOptions(
       ),
       registry = registry,
       repository = repository.mandatory(
-        "Maintainer parameter is mandatory for docker image"
+        "Repository parameter is mandatory for docker image"
       ),
       tag = tag,
       exec = exec,
