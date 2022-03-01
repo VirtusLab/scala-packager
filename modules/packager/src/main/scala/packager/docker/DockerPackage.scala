@@ -28,7 +28,8 @@ case class DockerPackage(sourceAppPath: os.Path, buildSettings: DockerSettings)
         buildSettings.tag.orNull
       )
 
-    val targetImage = DockerDaemonImage.named(targetImageReference)
+    val targetImage = DockerDaemonImage
+      .named(targetImageReference)
     val entrypoint = buildSettings.exec
       .map(e => List(s"$e", s"/$launcherApp"))
       .getOrElse(List(s"/$launcherApp"))
@@ -54,7 +55,7 @@ case class DockerPackage(sourceAppPath: os.Path, buildSettings: DockerSettings)
       .setCreationTime(Instant.now())
       .setEntrypoint(entrypoint: _*)
       .containerize(
-        Containerizer.to(targetImage)
+        Containerizer.to(buildSettings.dockerExecutable.map(targetImage.setDockerExecutable).getOrElse(targetImage))
       )
   }
 
