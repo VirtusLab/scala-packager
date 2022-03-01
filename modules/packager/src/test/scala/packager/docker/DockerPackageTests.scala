@@ -4,6 +4,7 @@ import packager.PackagerHelper
 import packager.config.DockerSettings
 import com.eed3si9n.expecty.Expecty.expect
 
+import java.nio.file.Paths;
 import scala.util.Properties
 
 class DockerPackageTests extends munit.FunSuite with PackagerHelper {
@@ -67,7 +68,8 @@ class DockerPackageTests extends munit.FunSuite with PackagerHelper {
       registry = None,
       repository = repository,
       tag = Some(qualifier),
-      exec = Some("sh")
+      exec = Some("sh"),
+      dockerExecutable = Some(Paths.get("docker"))
     )
 
 }

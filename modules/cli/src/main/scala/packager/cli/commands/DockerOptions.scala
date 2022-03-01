@@ -4,6 +4,8 @@ import caseapp.core.help.Help
 import caseapp.{Group, HelpMessage, Parser, ValueDescription}
 import packager.cli.commands.SettingsHelpers.Mandatory
 import packager.config.DockerSettings
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 final case class DockerOptions(
     @Group("Docker")
@@ -31,7 +33,14 @@ final case class DockerOptions(
     @HelpMessage(
       "Executable that will run an application, default sh"
     )
-    exec: Option[String] = Some("sh")
+    exec: Option[String] = Some("sh"),
+
+    @Group("Docker")
+    @HelpMessage(
+      "docker executable that will be used. ex. docker, podman"
+    )
+    @ValueDescription("docker")
+    dockerExecutable: Option[Path] = Some(Paths.get("docker"))
 ) {
   def toDockerSettings: DockerSettings =
     DockerSettings(
@@ -40,10 +49,11 @@ final case class DockerOptions(
       ),
       registry = registry,
       repository = repository.mandatory(
-        "Maintainer parameter is mandatory for docker image"
+        "Repository parameter is mandatory for docker image"
       ),
       tag = tag,
-      exec = exec
+      exec = exec,
+      dockerExecutable = dockerExecutable
     )
 }
 
