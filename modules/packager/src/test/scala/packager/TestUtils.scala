@@ -19,12 +19,12 @@ object TestUtils {
     os.proc(
       "cs",
       "launch",
-      "coursier",
+      "io.get-coursier:coursier-cli_2.12:2.1.0-M6-53-gb4f448130",
       "--",
       "bootstrap",
-      "echo-native",
+      "io.get-coursier:echo_native0.4_2.13:1.0.5",
       "-o",
-      dest.toString,
+      dest,
       "--native"
     ).call()
     dest
