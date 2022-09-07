@@ -20,7 +20,17 @@ final case class DebianOptions(
     @HelpMessage(
       "Architecture that are supported by the repository, default: all"
     )
-    debArchitecture: String = "all"
+    debArchitecture: String = "all",
+    @Group("Debian")
+    @HelpMessage(
+      "This field represents how important it is that the user have the package installed"
+    )
+    priority: Option[String] = None,
+    @Group("Debian")
+    @HelpMessage(
+      "This field specifies an application area into which the package has been classified"
+    )
+    section: Option[String] = None
 ) {
   def toDebianSettings(
       sharedSettings: SharedSettings,
@@ -37,7 +47,9 @@ final case class DebianOptions(
       ),
       debianConflicts = debianConflicts,
       debianDependencies = debianDependencies,
-      architecture = debArchitecture
+      architecture = debArchitecture,
+      priority = priority,
+      section = section
     )
 }
 
