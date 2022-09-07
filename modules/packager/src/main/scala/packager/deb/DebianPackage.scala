@@ -39,7 +39,9 @@ case class DebianPackage(buildSettings: DebianSettings) extends NativePackager {
       debianInfo = info,
       architecture = buildSettings.architecture,
       dependsOn = buildSettings.debianDependencies,
-      conflicts = buildSettings.debianConflicts
+      conflicts = buildSettings.debianConflicts,
+      priority = buildSettings.priority,
+      section = buildSettings.section
     )
 
   private def buildDebianInfo(): DebianPackageInfo =

@@ -6,5 +6,7 @@ case class DebianSettings(
     description: String,
     debianConflicts: List[String],
     debianDependencies: List[String],
-    architecture: String
+    architecture: String,
+    priority: Option[String],
+    section: Option[String]
 ) extends NativeSettings

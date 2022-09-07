@@ -84,6 +84,20 @@ class DebianPackageTests extends munit.FunSuite with NativePackageHelper {
       expect(payloadFiles contains s"./$expectedScriptPath")
       expect(payloadFiles contains s"./$expectedEchoLauncherPath")
     }
+
+    test("should contain priority and section flags") {
+
+      val depPackage = DebianPackage(buildSettings)
+
+      // create dmg package
+      depPackage.build()
+
+      // list files which will be installed
+      val payloadFiles = os.proc("dpkg", "--info", outputPackagePath).call().out.text().trim
+
+      expect(payloadFiles contains "Priority: optional")
+      expect(payloadFiles contains "Section: devel")
+    }
   }
 
   override def buildSettings: DebianSettings =
@@ -93,6 +107,8 @@ class DebianPackageTests extends munit.FunSuite with NativePackageHelper {
       description = "Scala Packager Test",
       debianConflicts = Nil,
       debianDependencies = Nil,
-      architecture = "all"
+      architecture = "all",
+      priority = Some("optional"),
+      section = Some("devel")
     )
 }
