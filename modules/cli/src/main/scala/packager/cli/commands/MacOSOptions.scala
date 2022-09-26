@@ -10,14 +10,17 @@ final case class MacOSOptions(
     @HelpMessage(
       "CF Bundle Identifier"
     )
-    identifier: Option[String] = None
+    identifier: Option[String] = None,
+    @Group("MacOS")
+    hostArchitectures: List[String] = Nil
 ) {
   def toMacOSSettings(sharedSettings: SharedSettings): MacOSSettings =
     MacOSSettings(
       shared = sharedSettings,
       identifier = identifier.mandatory(
         "Identifier parameter is mandatory for macOS packages"
-      )
+      ),
+      hostArchitectures = hostArchitectures
     )
 }
 

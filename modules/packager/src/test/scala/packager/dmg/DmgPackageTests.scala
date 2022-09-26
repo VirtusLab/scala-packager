@@ -66,6 +66,7 @@ class DmgPackageTests extends munit.FunSuite with NativePackageHelper {
   override def buildSettings: MacOSSettings =
     MacOSSettings(
       shared = sharedSettings,
-      identifier = s"org.scala.$packageName"
+      identifier = s"org.scala.$packageName",
+      hostArchitectures = Nil
     )
 }

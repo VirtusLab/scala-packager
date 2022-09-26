@@ -9,7 +9,11 @@ trait MacOSNativePackager extends NativePackager {
   protected val contentPath: os.Path = macOSAppPath / "Contents"
   protected val macOsPath: os.Path = contentPath / "MacOS"
   protected val infoPlist: MacOSInfoPlist =
-    MacOSInfoPlist(packageName, buildSettings.identifier)
+    MacOSInfoPlist(
+      packageName,
+      buildSettings.identifier,
+      buildSettings.hostArchitectures
+    )
 
   override def buildSettings: MacOSSettings
 
