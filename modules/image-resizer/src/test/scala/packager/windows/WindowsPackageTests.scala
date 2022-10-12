@@ -62,6 +62,7 @@ class WindowsPackageTests extends munit.FunSuite with NativePackageHelper {
       suppressValidation = true,
       extraConfigs = Nil,
       is64Bits = false,
-      installerVersion = None
+      installerVersion = None,
+      wixUpgradeCodeGuid = None,
     )
 }

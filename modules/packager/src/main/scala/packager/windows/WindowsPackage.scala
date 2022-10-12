@@ -43,7 +43,8 @@ case class WindowsPackage(
       launcherAppName = launcherApp,
       extraConfigs = buildSettings.extraConfigs,
       is64Bits = buildSettings.is64Bits,
-      installerVersion = buildSettings.installerVersion
+      installerVersion = buildSettings.installerVersion,
+      wixUpgradeCodeGuid = buildSettings.wixUpgradeCodeGuid
     )
 
     createConfFile(wixConfig)

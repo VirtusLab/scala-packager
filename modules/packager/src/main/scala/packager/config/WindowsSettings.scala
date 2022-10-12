@@ -9,5 +9,6 @@ case class WindowsSettings(
     suppressValidation: Boolean,
     extraConfigs: List[String],
     is64Bits: Boolean,
-    installerVersion: Option[String]
+    installerVersion: Option[String],
+    wixUpgradeCodeGuid: Option[String]
 ) extends NativeSettings
