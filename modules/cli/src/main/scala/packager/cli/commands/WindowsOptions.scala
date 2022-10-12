@@ -30,7 +30,10 @@ final case class WindowsOptions(
     is64Bits: Boolean = true,
     @Group("Windows")
     @HelpMessage("WIX installer version")
-    installerVersion: Option[String] = None
+    installerVersion: Option[String] = None,
+    @Group("Windows")
+    @HelpMessage("The GUID to identify that the windows package can be upgraded.")
+    wixUpgradeCodeGuid: Option[String] = None
 ) {
 
   def toWindowsSettings(
@@ -53,7 +56,8 @@ final case class WindowsOptions(
       suppressValidation = suppressValidation,
       extraConfigs = extraConfigs,
       is64Bits = is64Bits,
-      installerVersion = installerVersion
+      installerVersion = installerVersion,
+      wixUpgradeCodeGuid = wixUpgradeCodeGuid
     )
 }
 

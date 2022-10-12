@@ -19,7 +19,8 @@ case class WindowsWixConfig(
     launcherAppName: String,
     extraConfigs: List[String],
     is64Bits: Boolean,
-    installerVersion: Option[String]
+    installerVersion: Option[String],
+    wixUpgradeCodeGuid: Option[String]
 ) {
 
   lazy val extraConfig: Option[String] =
@@ -72,7 +73,7 @@ case class WindowsWixConfig(
   def generateContent(): String =
     s"""<?xml version="1.0"?>
     <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <Product Id="*" UpgradeCode="$randomGuid"
+    <Product Id="*" UpgradeCode="${wixUpgradeCodeGuid.getOrElse(randomGuid)}"
              Name="$productName" Version="$version" Manufacturer="$maintainer" Language="1033">
       <Package $extraPackage InstallerVersion="${installerVersion.getOrElse(
       "200"
