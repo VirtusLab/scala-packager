@@ -6,7 +6,7 @@ import org.apache.commons.io.FilenameUtils
 
 trait NativePackager extends Packager {
 
-  implicit def options = buildSettings
+  implicit def options: NativeSettings = buildSettings
   override def buildSettings: NativeSettings
 
   lazy val sourceAppPath: os.Path = buildSettings.shared.sourceAppPath

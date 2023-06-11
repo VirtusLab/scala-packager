@@ -59,7 +59,7 @@ final case class DockerOptions(
 
 case object DockerOptions {
 
-  implicit val parser = Parser[DockerOptions]
-  implicit val help = Help[DockerOptions]
+  implicit val parser: Parser[DockerOptions] = Parser[DockerOptions]
+  implicit val help: Help[DockerOptions] = Help[DockerOptions]
 
 }

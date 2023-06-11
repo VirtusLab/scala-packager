@@ -109,6 +109,6 @@ object BuildOptions {
     case object Rpm extends NativePackagerType
   }
 
-  implicit val parser = Parser[BuildOptions]
-  implicit val help = Help[BuildOptions]
+  implicit val parser: Parser[BuildOptions] = Parser[BuildOptions]
+  implicit val help: Help[BuildOptions] = Help[BuildOptions]
 }
