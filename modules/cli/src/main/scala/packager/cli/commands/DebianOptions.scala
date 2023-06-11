@@ -55,7 +55,7 @@ final case class DebianOptions(
 
 case object DebianOptions {
 
-  implicit val parser = Parser[DebianOptions]
-  implicit val help = Help[DebianOptions]
+  implicit val parser: Parser[DebianOptions] = Parser[DebianOptions]
+  implicit val help: Help[DebianOptions] = Help[DebianOptions]
 
 }

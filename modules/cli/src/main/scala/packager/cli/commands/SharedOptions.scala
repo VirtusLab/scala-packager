@@ -33,6 +33,6 @@ final case class SharedOptions(
 )
 case object SharedOptions {
 
-  implicit val parser = Parser[SharedOptions]
-  implicit val help = Help[SharedOptions]
+  implicit val parser: Parser[SharedOptions] = Parser[SharedOptions]
+  implicit val help: Help[SharedOptions] = Help[SharedOptions]
 }
