@@ -15,7 +15,7 @@ jobs:
         matrix:
           OS: ["ubuntu-20.04", macos-latest, windows-latest]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
         submodules: true
@@ -31,7 +31,7 @@ jobs:
     if: github.event_name == 'push'
     runs-on: "ubuntu-20.04"
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
         submodules: true
