@@ -1,6 +1,7 @@
 package packager.cli.commands
 
 import caseapp.core.help.Help
+import caseapp.core.parser.Parser
 import caseapp.{Group, HelpMessage, Parser, ValueDescription}
 import packager.cli.commands.SettingsHelpers.Mandatory
 import packager.config.{DebianSettings, SharedSettings}
@@ -55,7 +56,7 @@ final case class DebianOptions(
 
 case object DebianOptions {
 
-  implicit val parser: Parser[DebianOptions] = Parser[DebianOptions]
-  implicit val help: Help[DebianOptions] = Help[DebianOptions]
+  implicit lazy val parser: Parser[DebianOptions] = Parser.derive
+  implicit lazy val help: Help[DebianOptions] = Help.derive
 
 }
