@@ -23,7 +23,7 @@ final case class MacOSOptions(
 
 case object MacOSOptions {
 
-  implicit val parser: Parser[MacOSOptions] = Parser[MacOSOptions]
-  implicit val help: Help[MacOSOptions] = Help[MacOSOptions]
+  implicit lazy val parser: Parser[MacOSOptions] = Parser.derive
+  implicit lazy val help: Help[MacOSOptions] = Help.derive
 
 }

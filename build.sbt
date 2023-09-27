@@ -47,19 +47,19 @@ lazy val compileOptions: Seq[Setting[_]] = Seq(
 
 lazy val packagerProjectSettings = Seq(
   name := "scala-packager",
-  scalaVersion := ScalaVersions.scala213,
+  scalaVersion := ScalaVersions.scala3,
   crossScalaVersions := ScalaVersions.all
 )
 
 lazy val imageResizerProjectSettings = Seq(
   name := "scala-packager-image-resizer",
-  scalaVersion := ScalaVersions.scala213,
+  scalaVersion := ScalaVersions.scala3,
   crossScalaVersions := ScalaVersions.all
 )
 
 lazy val cliProjectSettings = Seq(
   name := "scala-packager-cli",
-  scalaVersion := ScalaVersions.scala213,
+  scalaVersion := ScalaVersions.scala3,
   crossScalaVersions := ScalaVersions.all,
   libraryDependencies ++= Seq(Deps.caseApp)
 )
