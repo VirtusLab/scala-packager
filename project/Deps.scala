@@ -8,5 +8,5 @@ object Deps {
   def thumbnailator = "net.coobird" % "thumbnailator" % "0.4.20"
   def image4j = "org.jclarion" % "image4j" % "0.7"
   def jib = "com.google.cloud.tools" % "jib-core" % "0.24.0"
-  def commonsIo = "commons-io" % "commons-io" % "2.13.0"
+  def commonsIo = "commons-io" % "commons-io" % "2.16.0"
 }
