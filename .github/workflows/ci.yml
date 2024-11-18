@@ -23,6 +23,7 @@ jobs:
     - uses: coursier/setup-action@v1
       with:
         jvm: 8
+        apps: 'sbt'
     - name: Test
       run: sbt +test
 
@@ -37,6 +38,8 @@ jobs:
         submodules: true
     - uses: coursier/cache-action@v6.4
     - uses: coursier/setup-action@v1
+      with:
+        apps: 'sbt'
     - uses: olafurpg/setup-gpg@v3
     - name: Release
       run: sbt ci-release
