@@ -1,12 +1,12 @@
 package packager.deb
 
 case class DebianMetaData(
-    debianInfo: DebianPackageInfo,
-    architecture: String = "all",
-    dependsOn: List[String] = Nil,
-    conflicts: List[String] = Nil,
-    priority: Option[String],
-    section: Option[String]
+  debianInfo: DebianPackageInfo,
+  architecture: String = "all",
+  dependsOn: List[String] = Nil,
+  conflicts: List[String] = Nil,
+  priority: Option[String],
+  section: Option[String]
 ) {
 
   def generateContent(): String = {

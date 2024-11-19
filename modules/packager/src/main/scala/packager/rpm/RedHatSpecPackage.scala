@@ -1,12 +1,12 @@
 package packager.rpm
 
 case class RedHatSpecPackage(
-    launcherAppName: String,
-    version: String,
-    description: String,
-    buildArch: String,
-    license: String,
-    release: String
+  launcherAppName: String,
+  version: String,
+  description: String,
+  buildArch: String,
+  license: String,
+  release: String
 ) {
 
   def generateContent: String =

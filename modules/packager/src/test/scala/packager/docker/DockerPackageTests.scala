@@ -9,56 +9,52 @@ import scala.util.Properties
 
 class DockerPackageTests extends munit.FunSuite with PackagerHelper {
 
-  private val qualifier = "latest"
+  private val qualifier  = "latest"
   private val repository = "echo-scala-packager"
 
   if (Properties.isLinux) {
     test("should build docker image") {
-      {
-        val dockerPackage = DockerPackage(echoLauncherPath, buildSettings)
-        // build docker image
-        dockerPackage.build()
+      val dockerPackage = DockerPackage(echoLauncherPath, buildSettings)
+      // build docker image
+      dockerPackage.build()
 
-        val expectedImage =
-          s"$repository:$qualifier"
-        val expectedOutput = "echo"
+      val expectedImage =
+        s"$repository:$qualifier"
+      val expectedOutput = "echo"
 
-        val output = os
-          .proc("docker", "run", expectedImage, expectedOutput)
-          .call(cwd = os.root)
-          .out
-          .text()
-          .trim
+      val output = os
+        .proc("docker", "run", expectedImage, expectedOutput)
+        .call(cwd = os.root)
+        .out
+        .text()
+        .trim
 
-        expect(output == expectedOutput)
+      expect(output == expectedOutput)
 
-        // clear
-        os.proc("docker", "rmi", "-f", expectedImage).call(cwd = os.root)
-      }
+      // clear
+      os.proc("docker", "rmi", "-f", expectedImage).call(cwd = os.root)
     }
     test("should build docker image with native application") {
-      {
-        val nativeAppSettings = buildSettings.copy(exec = None)
-        val dockerPackage = DockerPackage(echoNativePath, nativeAppSettings)
-        // build docker image
-        dockerPackage.build()
+      val nativeAppSettings = buildSettings.copy(exec = None)
+      val dockerPackage     = DockerPackage(echoNativePath, nativeAppSettings)
+      // build docker image
+      dockerPackage.build()
 
-        val expectedImage =
-          s"$repository:$qualifier"
-        val expectedOutput = "echo"
+      val expectedImage =
+        s"$repository:$qualifier"
+      val expectedOutput = "echo"
 
-        val output = os
-          .proc("docker", "run", expectedImage, expectedOutput)
-          .call(cwd = os.root)
-          .out
-          .text()
-          .trim
+      val output = os
+        .proc("docker", "run", expectedImage, expectedOutput)
+        .call(cwd = os.root)
+        .out
+        .text()
+        .trim
 
-        expect(output == expectedOutput)
+      expect(output == expectedOutput)
 
-        // clear
-        os.proc("docker", "rmi", "-f", expectedImage).call(cwd = os.root)
-      }
+      // clear
+      os.proc("docker", "rmi", "-f", expectedImage).call(cwd = os.root)
     }
   }
 

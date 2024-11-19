@@ -6,7 +6,7 @@ import packager.config.{BuildSettings, NativeSettings}
 object FileUtils {
 
   def alreadyExistsCheck(
-      destPath: os.Path
+    destPath: os.Path
   )(implicit buildOptions: NativeSettings): Unit =
     if (!buildOptions.shared.force && os.exists(destPath)) {
       System.err.println(
@@ -16,21 +16,21 @@ object FileUtils {
     }
 
   def copy(from: os.Path, to: os.Path)(implicit
-      buildOptions: NativeSettings
+    buildOptions: NativeSettings
   ): Unit = {
     alreadyExistsCheck(to)
     os.copy.over(from, to)
   }
 
   def move(from: os.Path, to: os.Path)(implicit
-      buildOptions: NativeSettings
+    buildOptions: NativeSettings
   ): Unit = {
     alreadyExistsCheck(to)
     os.move.over(from, to)
   }
 
   def write(destPath: os.Path, content: String, perms: PermSet = null)(implicit
-      buildOptions: NativeSettings
+    buildOptions: NativeSettings
   ): Unit = {
     alreadyExistsCheck(destPath)
     os.write.over(destPath, content, perms)

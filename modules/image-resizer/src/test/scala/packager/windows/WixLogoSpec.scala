@@ -5,7 +5,7 @@ import packager.TestUtils
 
 class WixLogoSpec extends munit.FunSuite {
 
-  private lazy val workDirPath = TestUtils.tmpUtilDir
+  private lazy val workDirPath       = TestUtils.tmpUtilDir
   private lazy val logoPath: os.Path = TestUtils.logo(workDirPath)
 
   test("should prepare icon for wix installer") {

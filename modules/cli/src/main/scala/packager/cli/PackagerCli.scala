@@ -7,7 +7,7 @@ object PackagerCli extends CommandsEntryPoint {
 
   final override def defaultCommand = Some(Build)
 
-  override def enableCompleteCommand = true
+  override def enableCompleteCommand    = true
   override def enableCompletionsCommand = true
 
   val commands = Seq(

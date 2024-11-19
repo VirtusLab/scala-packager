@@ -6,8 +6,8 @@ import packager.config.MacOSSettings
 trait MacOSNativePackager extends NativePackager {
 
   protected val macOSAppPath: os.Path = basePath / s"$packageName.app"
-  protected val contentPath: os.Path = macOSAppPath / "Contents"
-  protected val macOsPath: os.Path = contentPath / "MacOS"
+  protected val contentPath: os.Path  = macOSAppPath / "Contents"
+  protected val macOsPath: os.Path    = contentPath / "MacOS"
   protected val infoPlist: MacOSInfoPlist =
     MacOSInfoPlist(packageName, buildSettings.identifier)
 

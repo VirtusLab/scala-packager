@@ -18,7 +18,7 @@ class RedHatPackageTests extends munit.FunSuite with NativePackageHelper {
       // create app directory
       rpmPackage.createRedHatDir()
 
-      val rpmDirectoryPath = tmpDir / "rpmbuild"
+      val rpmDirectoryPath         = tmpDir / "rpmbuild"
       val expectedAppDirectoryPath = rpmDirectoryPath / "SOURCES"
       val expectedEchoLauncherPath =
         expectedAppDirectoryPath / packageName

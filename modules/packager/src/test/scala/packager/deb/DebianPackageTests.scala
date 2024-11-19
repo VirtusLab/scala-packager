@@ -17,7 +17,7 @@ class DebianPackageTests extends munit.FunSuite with NativePackageHelper {
       // create app directory
       dmgPackage.createDebianDir()
 
-      val debianDirectoryPath = tmpDir / "debian"
+      val debianDirectoryPath      = tmpDir / "debian"
       val expectedAppDirectoryPath = debianDirectoryPath / "DEBIAN"
       val expectedEchoLauncherPath =
         debianDirectoryPath / "usr" / "share" / "scala" / packageName

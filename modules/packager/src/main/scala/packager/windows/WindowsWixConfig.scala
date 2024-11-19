@@ -6,21 +6,21 @@ import java.nio.charset.Charset
 import scala.io.Codec
 
 case class WindowsWixConfig(
-    packageName: String,
-    sourcePath: os.Path,
-    iconPath: Option[os.Path],
-    bannerPath: Option[os.Path],
-    dialogPath: Option[os.Path],
-    licensePath: os.Path,
-    exitDialog: Option[String],
-    productName: String,
-    version: String,
-    maintainer: String,
-    launcherAppName: String,
-    extraConfigs: List[String],
-    is64Bits: Boolean,
-    installerVersion: Option[String],
-    wixUpgradeCodeGuid: Option[String]
+  packageName: String,
+  sourcePath: os.Path,
+  iconPath: Option[os.Path],
+  bannerPath: Option[os.Path],
+  dialogPath: Option[os.Path],
+  licensePath: os.Path,
+  exitDialog: Option[String],
+  productName: String,
+  version: String,
+  maintainer: String,
+  launcherAppName: String,
+  extraConfigs: List[String],
+  is64Bits: Boolean,
+  installerVersion: Option[String],
+  wixUpgradeCodeGuid: Option[String]
 ) {
 
   lazy val extraConfig: Option[String] =
@@ -76,8 +76,8 @@ case class WindowsWixConfig(
     <Product Id="*" UpgradeCode="${wixUpgradeCodeGuid.getOrElse(randomGuid)}"
              Name="$productName" Version="$version" Manufacturer="$maintainer" Language="1033">
       <Package $extraPackage InstallerVersion="${installerVersion.getOrElse(
-      "200"
-    )}" Compressed="yes" Comments="Windows Installer Package"/>
+        "200"
+      )}" Compressed="yes" Comments="Windows Installer Package"/>
       <Media Id="1" Cabinet="product.cab" EmbedCab="yes"/>
 
 
@@ -85,7 +85,8 @@ case class WindowsWixConfig(
         <Directory Id="$programFiles">
           <Directory Id="INSTALLDIR" Name="$packageName">
             <Component Id="ApplicationFiles" Guid="$randomGuid">
-              <File Id="ApplicationFile1" Source="$sourcePath" Name="$launcherAppName.${sourcePath.ext}"/>
+              <File Id="ApplicationFile1" Source="$sourcePath" Name="$launcherAppName.${sourcePath
+        .ext}"/>
             </Component>
           </Directory>
         </Directory>

@@ -5,11 +5,11 @@ import packager.config.RedHatSettings
 
 case class RedHatPackage(buildSettings: RedHatSettings) extends NativePackager {
 
-  private val redHatBasePath = basePath / "rpmbuild"
+  private val redHatBasePath   = basePath / "rpmbuild"
   private val sourcesDirectory = redHatBasePath / "SOURCES"
-  private val specsDirectory = redHatBasePath / "SPECS"
-  private val rpmsDirectory = redHatBasePath / "RPMS"
-  private val redHatSpec = buildRedHatSpec()
+  private val specsDirectory   = redHatBasePath / "SPECS"
+  private val rpmsDirectory    = redHatBasePath / "RPMS"
+  private val redHatSpec       = buildRedHatSpec()
 
   override def build(): Unit = {
     createRedHatDir()
@@ -40,7 +40,7 @@ case class RedHatPackage(buildSettings: RedHatSettings) extends NativePackager {
   }
 
   private def createSpecFile(): Unit = {
-    val content = redHatSpec.generateContent
+    val content      = redHatSpec.generateContent
     val specFilePath = specsDirectory / s"$packageName.spec"
     FileUtils.write(specFilePath, content)
   }

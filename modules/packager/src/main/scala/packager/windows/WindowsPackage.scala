@@ -4,12 +4,12 @@ import packager.{FileUtils, NativePackager}
 import packager.config.WindowsSettings
 
 case class WindowsPackage(
-    buildSettings: WindowsSettings,
-    imageResizerOpt: Option[ImageResizer] = None
+  buildSettings: WindowsSettings,
+  imageResizerOpt: Option[ImageResizer] = None
 ) extends NativePackager {
 
   private val wixConfigPath: os.Path = basePath / s"$packageName.wxs"
-  private val licensePath: os.Path = basePath / s"license.rtf"
+  private val licensePath: os.Path   = basePath / s"license.rtf"
 
   override def build(): Unit = {
 
@@ -50,9 +50,9 @@ case class WindowsPackage(
     createConfFile(wixConfig)
     copyLicenseToBasePath()
 
-    val wixBin = Option(System.getenv("WIX")).getOrElse("\"%WIX%bin\"")
+    val wixBin        = Option(System.getenv("WIX")).getOrElse("\"%WIX%bin\"")
     val candleBinPath = os.Path(wixBin) / "bin" / "candle.exe"
-    val lightBinPath = os.Path(wixBin) / "bin" / "light.exe"
+    val lightBinPath  = os.Path(wixBin) / "bin" / "light.exe"
 
     val lightExtraArguments =
       if (buildSettings.suppressValidation) Seq("-sval")

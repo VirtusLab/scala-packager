@@ -49,7 +49,7 @@ class DmgPackageTests extends munit.FunSuite with NativePackageHelper {
 
     test("size dmg package should be similar to the app") {
 
-      val dmgPackage = DmgPackage(buildSettings)
+      val dmgPackage       = DmgPackage(buildSettings)
       val echoLauncherSize = os.size(echoLauncherPath)
 
       // create dmg package

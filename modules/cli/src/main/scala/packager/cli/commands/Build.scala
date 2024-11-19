@@ -14,16 +14,16 @@ import packager.windows.{DefaultImageResizer, WindowsPackage}
 
 object Build extends Command[BuildOptions] {
   override def run(
-      options: BuildOptions,
-      remainingArgs: RemainingArgs
+    options: BuildOptions,
+    remainingArgs: RemainingArgs
   ): Unit = {
 
-    val pwd = os.pwd
+    val pwd                 = os.pwd
     val destinationFileName = options.output.getOrElse(options.defaultName)
 
-    val sourceAppPath: os.Path = os.Path(options.sourceAppPath, pwd)
+    val sourceAppPath: os.Path   = os.Path(options.sourceAppPath, pwd)
     val destinationPath: os.Path = os.Path(destinationFileName, pwd)
-    val workingDirectoryPath = options.workingDirectory.map(os.Path(_, pwd))
+    val workingDirectoryPath     = options.workingDirectory.map(os.Path(_, pwd))
 
     val sharedSettings: SharedSettings = SharedSettings(
       sourceAppPath = sourceAppPath,
