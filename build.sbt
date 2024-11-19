@@ -13,6 +13,18 @@ inThisBuild(
         "Łukasz Wroński",
         "",
         url("https://github.com/lwronski")
+      ),
+      Developer(
+        "Gedochao",
+        "Piotr Chabelski",
+        "pchabelski@virtuslab.com",
+        url("https://github.com/Gedochao")
+      ),
+      Developer(
+        "tgodzik",
+        "Tomasz Godzik",
+        "tgodzik@virtuslab.com",
+        url("https://github.com/tgodzik")
       )
     )
   )
