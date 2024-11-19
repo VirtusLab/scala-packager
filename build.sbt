@@ -3,7 +3,7 @@ import Settings.project
 inThisBuild(
   List(
     organization := "org.virtuslab",
-    homepage     := Some(url("https://github.com/VirtuslabRnD/scala-packager")),
+    homepage     := Some(url("https://github.com/VirtusLab/scala-packager")),
     licenses := List(
       "Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")
     ),
@@ -13,6 +13,18 @@ inThisBuild(
         "Łukasz Wroński",
         "",
         url("https://github.com/lwronski")
+      ),
+      Developer(
+        "Gedochao",
+        "Piotr Chabelski",
+        "pchabelski@virtuslab.com",
+        url("https://github.com/Gedochao")
+      ),
+      Developer(
+        "tgodzik",
+        "Tomasz Godzik",
+        "tgodzik@virtuslab.com",
+        url("https://github.com/tgodzik")
       )
     )
   )
