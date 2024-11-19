@@ -5,10 +5,10 @@ import packager.config.DebianSettings
 
 case class DebianPackage(buildSettings: DebianSettings) extends NativePackager {
 
-  private val debianBasePath = basePath / "debian"
-  private val usrDirectory = debianBasePath / "usr"
-  private val packageInfo = buildDebianInfo()
-  private val metaData = buildDebianMetaData(packageInfo)
+  private val debianBasePath      = basePath / "debian"
+  private val usrDirectory        = debianBasePath / "usr"
+  private val packageInfo         = buildDebianInfo()
+  private val metaData            = buildDebianMetaData(packageInfo)
   private val mainDebianDirectory = debianBasePath / "DEBIAN"
 
   override def build(): Unit = {
@@ -67,8 +67,8 @@ case class DebianPackage(buildSettings: DebianSettings) extends NativePackager {
     os.makeDir.all(binDirectory)
     val launchScriptFile = binDirectory / launcherApp
     val content = s"""#!/bin/bash
-                      |/usr/share/scala/$launcherApp \"$$@\"
-                      |""".stripMargin
+                     |/usr/share/scala/$launcherApp \"$$@\"
+                     |""".stripMargin
     FileUtils.write(launchScriptFile, content, FileUtils.executablePerms)
   }
 

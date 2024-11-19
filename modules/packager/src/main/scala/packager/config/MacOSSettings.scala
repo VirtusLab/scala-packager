@@ -1,6 +1,6 @@
 package packager.config
 
 case class MacOSSettings(
-    shared: SharedSettings,
-    identifier: String
+  shared: SharedSettings,
+  identifier: String
 ) extends NativeSettings

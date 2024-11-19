@@ -106,7 +106,7 @@ class PkgPackageTests extends munit.FunSuite with NativePackageHelper {
       val outPath = tmpDir / "out"
       os.proc("pkgutil", "--expand", outputPackagePath, outPath).call()
 
-      val scriptsPath = outPath / "Scripts"
+      val scriptsPath           = outPath / "Scripts"
       val postInstallScriptPath = scriptsPath / "postinstall"
 
       expect(os.isDir(scriptsPath))

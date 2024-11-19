@@ -8,39 +8,38 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 final case class DockerOptions(
-    @Group("Docker")
-    @HelpMessage(
-      "Building the container from base image"
-    )
-    @ValueDescription("ubuntu|ubuntu:latest|adoptopenjdk/openjdk8:debian-jre|…")
-    from: Option[String] = None,
-    @Group("Docker")
-    @HelpMessage(
-      "The image registry, if empty the default registry will be used (Docker Hub)"
-    )
-    registry: Option[String] = None,
-    @Group("Docker")
-    @HelpMessage(
-      "The image repository"
-    )
-    repository: Option[String] = None,
-    @Group("Docker")
-    @HelpMessage(
-      "The image tag, the default tag is latest"
-    )
-    tag: Option[String] = None,
-    @Group("Docker")
-    @HelpMessage(
-      "Executable that will run an application, default sh"
-    )
-    exec: Option[String] = Some("sh"),
-
-    @Group("Docker")
-    @HelpMessage(
-      "docker executable that will be used. ex. docker, podman"
-    )
-    @ValueDescription("docker")
-    dockerExecutable: Option[Path] = Some(Paths.get("docker"))
+  @Group("Docker")
+  @HelpMessage(
+    "Building the container from base image"
+  )
+  @ValueDescription("ubuntu|ubuntu:latest|adoptopenjdk/openjdk8:debian-jre|…")
+  from: Option[String] = None,
+  @Group("Docker")
+  @HelpMessage(
+    "The image registry, if empty the default registry will be used (Docker Hub)"
+  )
+  registry: Option[String] = None,
+  @Group("Docker")
+  @HelpMessage(
+    "The image repository"
+  )
+  repository: Option[String] = None,
+  @Group("Docker")
+  @HelpMessage(
+    "The image tag, the default tag is latest"
+  )
+  tag: Option[String] = None,
+  @Group("Docker")
+  @HelpMessage(
+    "Executable that will run an application, default sh"
+  )
+  exec: Option[String] = Some("sh"),
+  @Group("Docker")
+  @HelpMessage(
+    "docker executable that will be used. ex. docker, podman"
+  )
+  @ValueDescription("docker")
+  dockerExecutable: Option[Path] = Some(Paths.get("docker"))
 ) {
   def toDockerSettings: DockerSettings =
     DockerSettings(
@@ -60,6 +59,6 @@ final case class DockerOptions(
 case object DockerOptions {
 
   implicit val parser: Parser[DockerOptions] = Parser[DockerOptions]
-  implicit val help: Help[DockerOptions] = Help[DockerOptions]
+  implicit val help: Help[DockerOptions]     = Help[DockerOptions]
 
 }

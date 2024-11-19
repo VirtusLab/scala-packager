@@ -3,7 +3,7 @@ import Settings.project
 inThisBuild(
   List(
     organization := "org.virtuslab",
-    homepage := Some(url("https://github.com/VirtuslabRnD/scala-packager")),
+    homepage     := Some(url("https://github.com/VirtuslabRnD/scala-packager")),
     licenses := List(
       "Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")
     ),
@@ -46,20 +46,20 @@ lazy val compileOptions: Seq[Setting[_]] = Seq(
 )
 
 lazy val packagerProjectSettings = Seq(
-  name := "scala-packager",
-  scalaVersion := ScalaVersions.scala213,
+  name               := "scala-packager",
+  scalaVersion       := ScalaVersions.scala213,
   crossScalaVersions := ScalaVersions.all
 )
 
 lazy val imageResizerProjectSettings = Seq(
-  name := "scala-packager-image-resizer",
-  scalaVersion := ScalaVersions.scala213,
+  name               := "scala-packager-image-resizer",
+  scalaVersion       := ScalaVersions.scala213,
   crossScalaVersions := ScalaVersions.all
 )
 
 lazy val cliProjectSettings = Seq(
-  name := "scala-packager-cli",
-  scalaVersion := ScalaVersions.scala213,
+  name               := "scala-packager-cli",
+  scalaVersion       := ScalaVersions.scala213,
   crossScalaVersions := ScalaVersions.all,
   libraryDependencies ++= Seq(Deps.caseApp)
 )

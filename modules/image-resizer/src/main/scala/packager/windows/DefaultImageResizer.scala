@@ -13,7 +13,7 @@ import javax.imageio.ImageIO
 case object DefaultImageResizer extends ImageResizer {
 
   def generateIcon(logoPath: os.Path, workDirPath: os.Path): os.Path = {
-    val icoTmpPath = workDirPath / "logo_tmp.ico"
+    val icoTmpPath      = workDirPath / "logo_tmp.ico"
     val resizedLogoPath = resizeLogo(logoPath, 32, 32, workDirPath)
     val iconImage: BufferedImage =
       ImageIO.read(new File(resizedLogoPath.toString()));
@@ -27,10 +27,10 @@ case object DefaultImageResizer extends ImageResizer {
     new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
 
   private def resizeLogo(
-      logoPath: os.Path,
-      width: Int,
-      height: Int,
-      workDir: os.Path
+    logoPath: os.Path,
+    width: Int,
+    height: Int,
+    workDir: os.Path
   ) = {
     val resizedPath = workDir / "resized-logo.png"
     Thumbnails
@@ -44,7 +44,7 @@ case object DefaultImageResizer extends ImageResizer {
   def generateBanner(logoPath: os.Path, workDirPath: os.Path): os.Path = {
     val emptyBanner = generateEmptyImage(493, 58)
 
-    val bannerPath = workDirPath / s"banner.bmp"
+    val bannerPath      = workDirPath / s"banner.bmp"
     val resizedLogoPath = resizeLogo(logoPath, 55, 55, workDirPath)
 
     Thumbnails
@@ -64,7 +64,7 @@ case object DefaultImageResizer extends ImageResizer {
   def generateDialog(logoPath: os.Path, workDirPath: os.Path): os.Path = {
 
     val emptyDialog = generateEmptyImage(493, 312)
-    val dialogPath = workDirPath / s"dialog.bmp"
+    val dialogPath  = workDirPath / s"dialog.bmp"
 
     val resizedLogoPath = resizeLogo(logoPath, 165, 330, workDirPath)
 

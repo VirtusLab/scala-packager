@@ -1,11 +1,6 @@
 package packager.docker
 
-import com.google.cloud.tools.jib.api.{
-  Containerizer,
-  DockerDaemonImage,
-  ImageReference,
-  Jib
-}
+import com.google.cloud.tools.jib.api.{Containerizer, DockerDaemonImage, ImageReference, Jib}
 import com.google.cloud.tools.jib.api.buildplan.{
   AbsoluteUnixPath,
   FileEntriesLayer,
@@ -35,8 +30,8 @@ case class DockerPackage(sourceAppPath: os.Path, buildSettings: DockerSettings)
       .getOrElse(List(s"/$launcherApp"))
 
     def makeFileEntryLayerConfiguration(
-        resourcePath: os.Path,
-        dest: String
+      resourcePath: os.Path,
+      dest: String
     ): FileEntriesLayer = {
       val layerConfigurationBuilder = FileEntriesLayer.builder
       layerConfigurationBuilder.addEntry(
@@ -55,7 +50,9 @@ case class DockerPackage(sourceAppPath: os.Path, buildSettings: DockerSettings)
       .setCreationTime(Instant.now())
       .setEntrypoint(entrypoint: _*)
       .containerize(
-        Containerizer.to(buildSettings.dockerExecutable.map(targetImage.setDockerExecutable).getOrElse(targetImage))
+        Containerizer.to(
+          buildSettings.dockerExecutable.map(targetImage.setDockerExecutable).getOrElse(targetImage)
+        )
       )
   }
 

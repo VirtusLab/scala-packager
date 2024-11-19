@@ -6,11 +6,11 @@ import packager.config.{MacOSSettings, SharedSettings}
 import SettingsHelpers._
 
 final case class MacOSOptions(
-    @Group("MacOS")
-    @HelpMessage(
-      "CF Bundle Identifier"
-    )
-    identifier: Option[String] = None
+  @Group("MacOS")
+  @HelpMessage(
+    "CF Bundle Identifier"
+  )
+  identifier: Option[String] = None
 ) {
   def toMacOSSettings(sharedSettings: SharedSettings): MacOSSettings =
     MacOSSettings(
@@ -24,6 +24,6 @@ final case class MacOSOptions(
 case object MacOSOptions {
 
   implicit val parser: Parser[MacOSOptions] = Parser[MacOSOptions]
-  implicit val help: Help[MacOSOptions] = Help[MacOSOptions]
+  implicit val help: Help[MacOSOptions]     = Help[MacOSOptions]
 
 }
