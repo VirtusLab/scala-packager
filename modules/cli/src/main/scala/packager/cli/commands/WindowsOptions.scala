@@ -62,7 +62,7 @@ final case class WindowsOptions(
 }
 
 case object WindowsOptions {
-
-  implicit val parser: Parser[WindowsOptions] = Parser[WindowsOptions]
-  implicit val help: Help[WindowsOptions]     = Help[WindowsOptions]
+  lazy val parser: Parser[WindowsOptions]                           = Parser.derive
+  implicit lazy val parserAux: Parser.Aux[WindowsOptions, parser.D] = parser
+  implicit lazy val help: Help[WindowsOptions]                      = Help.derive
 }

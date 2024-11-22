@@ -32,7 +32,7 @@ final case class SharedOptions(
   logoPath: Option[String] = None
 )
 case object SharedOptions {
-
-  implicit val parser: Parser[SharedOptions] = Parser[SharedOptions]
-  implicit val help: Help[SharedOptions]     = Help[SharedOptions]
+  lazy val parser: Parser[SharedOptions]                           = Parser.derive
+  implicit lazy val parserAux: Parser.Aux[SharedOptions, parser.D] = parser
+  implicit lazy val help: Help[SharedOptions]                      = Help.derive
 }
