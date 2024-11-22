@@ -40,8 +40,7 @@ final case class RedHatOptions(
 }
 
 case object RedHatOptions {
-
-  implicit val parser: Parser[RedHatOptions] = Parser[RedHatOptions]
-  implicit val help: Help[RedHatOptions]     = Help[RedHatOptions]
-
+  lazy val parser: Parser[RedHatOptions]                           = Parser.derive
+  implicit lazy val parserAux: Parser.Aux[RedHatOptions, parser.D] = parser
+  implicit lazy val help: Help[RedHatOptions]                      = Help.derive
 }
