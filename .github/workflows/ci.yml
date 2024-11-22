@@ -26,6 +26,8 @@ jobs:
         apps: 'sbt'
     - name: Test
       run: sbt +test
+    - name: Print help
+      run: sbt "cli/run --help"
 
   publish:
     needs: test
