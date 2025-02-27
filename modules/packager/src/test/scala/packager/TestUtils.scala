@@ -3,8 +3,12 @@ package packager
 import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
+import scala.annotation.tailrec
+import scala.concurrent.duration.{DurationInt, FiniteDuration}
 
 object TestUtils {
+  lazy val isAarch64: Boolean = sys.props.get("os.arch").contains("aarch64")
+
   def scalafmtVersion = "3.9.1"
 
   def tmpUtilDir: os.Path = os.temp.dir(prefix = "scala-packager-tests")
