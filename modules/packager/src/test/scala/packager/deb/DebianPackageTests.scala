@@ -8,7 +8,7 @@ import scala.util.Properties
 
 class DebianPackageTests extends munit.FunSuite with NativePackageHelper {
 
-  override def outputPackagePath: os.Path = tmpDir / s"echo.deb"
+  override def outputPackagePath: os.Path = tmpDir / s"scalafmt.deb"
 
   if (Properties.isLinux) {
     test("should create DEBIAN directory ") {
@@ -19,10 +19,10 @@ class DebianPackageTests extends munit.FunSuite with NativePackageHelper {
 
       val debianDirectoryPath      = tmpDir / "debian"
       val expectedAppDirectoryPath = debianDirectoryPath / "DEBIAN"
-      val expectedEchoLauncherPath =
+      val expectedLauncherPath =
         debianDirectoryPath / "usr" / "share" / "scala" / packageName
       expect(os.isDir(expectedAppDirectoryPath))
-      expect(os.isFile(expectedEchoLauncherPath))
+      expect(os.isFile(expectedLauncherPath))
     }
 
     test("should generate dep package") {
@@ -38,11 +38,11 @@ class DebianPackageTests extends munit.FunSuite with NativePackageHelper {
       val payloadFiles =
         os.proc("dpkg", "--contents", outputPackagePath).call().out.text().trim
       val expectedScriptPath = os.RelPath("usr") / "bin" / packageName
-      val expectedEchoLauncherPath =
+      val expectedLauncherPath =
         os.RelPath("usr") / "share" / "scala" / packageName
 
       expect(payloadFiles contains s"./$expectedScriptPath")
-      expect(payloadFiles contains s"./$expectedEchoLauncherPath")
+      expect(payloadFiles contains s"./$expectedLauncherPath")
     }
 
     test("should override generated dep package") {
@@ -78,11 +78,11 @@ class DebianPackageTests extends munit.FunSuite with NativePackageHelper {
       val payloadFiles =
         os.proc("dpkg", "--contents", outputPackagePath).call().out.text().trim
       val expectedScriptPath = os.RelPath("usr") / "bin" / launcherApp
-      val expectedEchoLauncherPath =
+      val expectedLauncherPath =
         os.RelPath("usr") / "share" / "scala" / launcherApp
 
       expect(payloadFiles contains s"./$expectedScriptPath")
-      expect(payloadFiles contains s"./$expectedEchoLauncherPath")
+      expect(payloadFiles contains s"./$expectedLauncherPath")
     }
 
     test("should contain priority and section flags") {

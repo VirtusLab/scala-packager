@@ -9,7 +9,7 @@ import scala.util.Properties
 
 class PkgPackageTests extends munit.FunSuite with NativePackageHelper {
 
-  override def outputPackagePath: os.Path = tmpDir / s"echo.pkg"
+  override def outputPackagePath: os.Path = tmpDir / s"scalafmt.pkg"
 
   if (Properties.isMac) {
     test("should create app directory") {
@@ -20,10 +20,9 @@ class PkgPackageTests extends munit.FunSuite with NativePackageHelper {
       pkgPackage.createAppDirectory()
 
       val expectedAppDirectoryPath = tmpDir / s"$packageName.app"
-      val expectedEchoLauncherPath =
-        expectedAppDirectoryPath / "Contents" / "MacOS" / packageName
+      val expectedLauncherPath     = expectedAppDirectoryPath / "Contents" / "MacOS" / packageName
       expect(os.isDir(expectedAppDirectoryPath))
-      expect(os.isFile(expectedEchoLauncherPath))
+      expect(os.isFile(expectedLauncherPath))
     }
 
     test("should generate pkg package") {
@@ -42,12 +41,11 @@ class PkgPackageTests extends munit.FunSuite with NativePackageHelper {
         .out
         .text()
         .trim
-      val expectedAppPath = os.RelPath(s"$packageName.app")
-      val expectedEchoLauncherPath =
-        expectedAppPath / "Contents" / "MacOS" / packageName
+      val expectedAppPath      = os.RelPath(s"$packageName.app")
+      val expectedLauncherPath = expectedAppPath / "Contents" / "MacOS" / packageName
 
       expect(payloadFiles contains s"./$expectedAppPath")
-      expect(payloadFiles contains s"./$expectedEchoLauncherPath")
+      expect(payloadFiles contains s"./$expectedLauncherPath")
 
     }
 
@@ -86,12 +84,11 @@ class PkgPackageTests extends munit.FunSuite with NativePackageHelper {
         .out
         .text()
         .trim
-      val expectedAppPath = os.RelPath(s"$packageName.app")
-      val expectedEchoLauncherPath =
-        expectedAppPath / "Contents" / "MacOS" / launcherApp
+      val expectedAppPath      = os.RelPath(s"$packageName.app")
+      val expectedLauncherPath = expectedAppPath / "Contents" / "MacOS" / launcherApp
 
       expect(payloadFiles contains s"./$expectedAppPath")
-      expect(payloadFiles contains s"./$expectedEchoLauncherPath")
+      expect(payloadFiles contains s"./$expectedLauncherPath")
 
     }
 

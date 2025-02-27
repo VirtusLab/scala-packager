@@ -5,27 +5,30 @@ import java.io.File
 import javax.imageio.ImageIO
 
 object TestUtils {
+  def scalafmtVersion = "3.9.1"
 
   def tmpUtilDir: os.Path = os.temp.dir(prefix = "scala-packager-tests")
 
-  def echoLauncher(tmpDir: os.Path): os.Path = {
-    val dest = tmpDir / "echo"
-    os.proc("cs", "bootstrap", "-o", dest.toString, "echo-java").call()
+  def scalafmtNative(tmpDir: os.Path): os.Path = {
+    val dest = tmpDir / "scalafmt-native"
+    os.proc(
+      "curl",
+      "-L",
+      "-o",
+      dest,
+      s"https://github.com/scalameta/scalafmt/releases/download/v$scalafmtVersion/scalafmt-x86_64-pc-linux"
+    ).call()
     dest
   }
 
-  def echoNative(tmpDir: os.Path): os.Path = {
-    val dest = tmpDir / "echo-native"
+  def scalafmtLauncher(tmpDir: os.Path): os.Path = {
+    val dest = tmpDir / "scalafmt"
     os.proc(
       "cs",
-      "launch",
-      "io.get-coursier:coursier-cli_2.12:2.1.0-M6-53-gb4f448130",
-      "--",
       "bootstrap",
-      "io.get-coursier:echo_native0.4_2.13:1.0.5",
       "-o",
-      dest,
-      "--native"
+      dest.toString,
+      s"org.scalameta:scalafmt-cli_2.13:$scalafmtVersion"
     ).call()
     dest
   }

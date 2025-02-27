@@ -9,7 +9,7 @@ import scala.util.Properties
 
 class DmgPackageTests extends munit.FunSuite with NativePackageHelper {
 
-  override def outputPackagePath: os.Path = tmpDir / s"echo.dmg"
+  override def outputPackagePath: os.Path = tmpDir / s"scalafmt.dmg"
 
   if (Properties.isMac) {
     test("should create app directory for dmg") {
@@ -20,10 +20,10 @@ class DmgPackageTests extends munit.FunSuite with NativePackageHelper {
       dmgPackage.createAppDirectory()
 
       val expectedAppDirectoryPath = tmpDir / s"$packageName.app"
-      val expectedEchoLauncherPath =
+      val expectedLauncherPath =
         expectedAppDirectoryPath / "Contents" / "MacOS" / packageName
       expect(os.isDir(expectedAppDirectoryPath))
-      expect(os.isFile(expectedEchoLauncherPath))
+      expect(os.isFile(expectedLauncherPath))
     }
 
     test("should generate dmg package") {
@@ -49,8 +49,8 @@ class DmgPackageTests extends munit.FunSuite with NativePackageHelper {
 
     test("size dmg package should be similar to the app") {
 
-      val dmgPackage       = DmgPackage(buildSettings)
-      val echoLauncherSize = os.size(echoLauncherPath)
+      val dmgPackage   = DmgPackage(buildSettings)
+      val launcherSize = os.size(scalafmtLauncherPath)
 
       // create dmg package
       dmgPackage.build()
@@ -58,8 +58,8 @@ class DmgPackageTests extends munit.FunSuite with NativePackageHelper {
       expect(os.exists(outputPackagePath))
 
       val dmgPackageSize = os.size(outputPackagePath)
-      // dmgPackageSize < echoLauncherSize +  1Mb
-      expect(dmgPackageSize < echoLauncherSize + (1024 * 1024))
+
+      expect(dmgPackageSize < launcherSize + (1024 * 1024))
     }
   }
 

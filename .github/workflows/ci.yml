@@ -13,7 +13,7 @@ jobs:
     strategy:
         fail-fast: false
         matrix:
-          OS: [ubuntu-22.04, macos-13, macos-latest, windows-latest]
+          OS: [ubuntu-24.04, macos-13, macos-latest, windows-latest]
     steps:
     - uses: actions/checkout@v4
       with:
@@ -32,7 +32,7 @@ jobs:
   publish:
     needs: test
     if: github.event_name == 'push'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
       with:
