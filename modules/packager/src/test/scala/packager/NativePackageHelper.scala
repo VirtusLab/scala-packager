@@ -9,7 +9,7 @@ trait NativePackageHelper extends PackagerHelper {
 
   lazy val sharedSettings: SharedSettings =
     SharedSettings(
-      sourceAppPath = echoLauncherPath,
+      sourceAppPath = scalafmtLauncherPath,
       force = true,
       version = "1.0.0",
       workingDirectoryPath = Some(tmpDir),

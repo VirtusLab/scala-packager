@@ -8,7 +8,7 @@ import scala.util.Properties
 
 class RedHatPackageTests extends munit.FunSuite with NativePackageHelper {
 
-  override def outputPackagePath: os.Path = tmpDir / s"echo.rpm"
+  override def outputPackagePath: os.Path = tmpDir / s"scalafmt.rpm"
 
   if (Properties.isLinux) {
     test("should create rpmbuild directory ") {
@@ -20,10 +20,9 @@ class RedHatPackageTests extends munit.FunSuite with NativePackageHelper {
 
       val rpmDirectoryPath         = tmpDir / "rpmbuild"
       val expectedAppDirectoryPath = rpmDirectoryPath / "SOURCES"
-      val expectedEchoLauncherPath =
-        expectedAppDirectoryPath / packageName
+      val expectedLauncherPath     = expectedAppDirectoryPath / packageName
       expect(os.isDir(expectedAppDirectoryPath))
-      expect(os.isFile(expectedEchoLauncherPath))
+      expect(os.isFile(expectedLauncherPath))
     }
 
     test("should generate rpm package") {
@@ -39,10 +38,9 @@ class RedHatPackageTests extends munit.FunSuite with NativePackageHelper {
       // list files which will be installed
       val payloadFiles =
         os.proc("rpm", "-qpl", expectedRpmPath).call().out.text().trim
-      val expectedEchoLauncherPath =
-        os.RelPath("usr") / "bin" / packageName
+      val expectedLauncherPath = os.RelPath("usr") / "bin" / packageName
 
-      expect(payloadFiles contains s"/$expectedEchoLauncherPath")
+      expect(payloadFiles contains s"/$expectedLauncherPath")
     }
 
     test("should override generated rpm package") {
@@ -75,10 +73,9 @@ class RedHatPackageTests extends munit.FunSuite with NativePackageHelper {
       // list files which will be installed
       val payloadFiles =
         os.proc("rpm", "-qpl", outputPackagePath).call().out.text().trim
-      val expectedEchoLauncherPath =
-        os.RelPath("usr") / "bin" / launcherApp
+      val expectedLauncherPath = os.RelPath("usr") / "bin" / launcherApp
 
-      expect(payloadFiles contains s"/$expectedEchoLauncherPath")
+      expect(payloadFiles contains s"/$expectedLauncherPath")
     }
   }
 

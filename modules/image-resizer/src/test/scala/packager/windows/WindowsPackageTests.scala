@@ -8,7 +8,7 @@ import scala.util.Properties
 
 class WindowsPackageTests extends munit.FunSuite with NativePackageHelper {
 
-  override def outputPackagePath: os.Path = tmpDir / s"echo.msi"
+  override def outputPackagePath: os.Path = tmpDir / s"scalafmt.msi"
 
   if (Properties.isWin) {
 

@@ -10,20 +10,20 @@ import scala.util.Properties
 class DockerPackageTests extends munit.FunSuite with PackagerHelper {
 
   private val qualifier  = "latest"
-  private val repository = "echo-scala-packager"
+  private val repository = "scalafmt-scala-packager"
 
   if (Properties.isLinux) {
     test("should build docker image") {
-      val dockerPackage = DockerPackage(echoLauncherPath, buildSettings)
+      val dockerPackage = DockerPackage(scalafmtLauncherPath, buildSettings)
       // build docker image
       dockerPackage.build()
 
       val expectedImage =
         s"$repository:$qualifier"
-      val expectedOutput = "echo"
+      val expectedOutput = s"scalafmt $scalafmtVersion"
 
       val output = os
-        .proc("docker", "run", expectedImage, expectedOutput)
+        .proc("docker", "run", expectedImage, "--version")
         .call(cwd = os.root)
         .out
         .text()
@@ -36,16 +36,16 @@ class DockerPackageTests extends munit.FunSuite with PackagerHelper {
     }
     test("should build docker image with native application") {
       val nativeAppSettings = buildSettings.copy(exec = None)
-      val dockerPackage     = DockerPackage(echoNativePath, nativeAppSettings)
+      val dockerPackage     = DockerPackage(scalafmtNativePath, nativeAppSettings)
       // build docker image
       dockerPackage.build()
 
       val expectedImage =
         s"$repository:$qualifier"
-      val expectedOutput = "echo"
+      val expectedOutput = s"scalafmt $scalafmtVersion"
 
       val output = os
-        .proc("docker", "run", expectedImage, expectedOutput)
+        .proc("docker", "run", expectedImage, "--version")
         .call(cwd = os.root)
         .out
         .text()
@@ -60,7 +60,7 @@ class DockerPackageTests extends munit.FunSuite with PackagerHelper {
 
   override def buildSettings: DockerSettings =
     DockerSettings(
-      from = "adoptopenjdk/openjdk8",
+      from = "eclipse-temurin:8-jdk",
       registry = None,
       repository = repository,
       tag = Some(qualifier),
