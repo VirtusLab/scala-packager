@@ -37,7 +37,7 @@ class DmgPackageTests extends munit.FunSuite with NativePackageHelper {
     dmgPackage.createAppDirectory()
 
     val expectedAppDirectoryPath = tmpDir / s"$packageName.app"
-    val expectedLauncherPath =
+    val expectedLauncherPath     =
       expectedAppDirectoryPath / "Contents" / "MacOS" / packageName
     expect(os.isDir(expectedAppDirectoryPath))
     expect(os.isFile(expectedLauncherPath))

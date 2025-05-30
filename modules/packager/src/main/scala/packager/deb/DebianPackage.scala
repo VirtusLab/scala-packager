@@ -66,7 +66,7 @@ case class DebianPackage(buildSettings: DebianSettings) extends NativePackager {
     val binDirectory = usrDirectory / "bin"
     os.makeDir.all(binDirectory)
     val launchScriptFile = binDirectory / launcherApp
-    val content = s"""#!/bin/bash
+    val content          = s"""#!/bin/bash
                      |/usr/share/scala/$launcherApp \"$$@\"
                      |""".stripMargin
     FileUtils.write(launchScriptFile, content, FileUtils.executablePerms)
