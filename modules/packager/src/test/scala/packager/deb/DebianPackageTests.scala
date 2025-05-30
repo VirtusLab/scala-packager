@@ -19,7 +19,7 @@ class DebianPackageTests extends munit.FunSuite with NativePackageHelper {
 
       val debianDirectoryPath      = tmpDir / "debian"
       val expectedAppDirectoryPath = debianDirectoryPath / "DEBIAN"
-      val expectedLauncherPath =
+      val expectedLauncherPath     =
         debianDirectoryPath / "usr" / "share" / "scala" / packageName
       expect(os.isDir(expectedAppDirectoryPath))
       expect(os.isFile(expectedLauncherPath))
@@ -37,7 +37,7 @@ class DebianPackageTests extends munit.FunSuite with NativePackageHelper {
       // list files which will be installed
       val payloadFiles =
         os.proc("dpkg", "--contents", outputPackagePath).call().out.text().trim
-      val expectedScriptPath = os.RelPath("usr") / "bin" / packageName
+      val expectedScriptPath   = os.RelPath("usr") / "bin" / packageName
       val expectedLauncherPath =
         os.RelPath("usr") / "share" / "scala" / packageName
 
@@ -77,7 +77,7 @@ class DebianPackageTests extends munit.FunSuite with NativePackageHelper {
       // list files which will be installed
       val payloadFiles =
         os.proc("dpkg", "--contents", outputPackagePath).call().out.text().trim
-      val expectedScriptPath = os.RelPath("usr") / "bin" / launcherApp
+      val expectedScriptPath   = os.RelPath("usr") / "bin" / launcherApp
       val expectedLauncherPath =
         os.RelPath("usr") / "share" / "scala" / launcherApp
 
