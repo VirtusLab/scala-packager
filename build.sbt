@@ -58,25 +58,22 @@ lazy val compileOptions: Seq[Setting[_]] = Seq(
 )
 
 lazy val packagerProjectSettings = Seq(
-  name               := "scala-packager",
-  scalaVersion       := ScalaVersions.scala213,
-  crossScalaVersions := ScalaVersions.all
+  name         := "scala-packager",
+  scalaVersion := ScalaVersions.scala3
 )
 
 lazy val imageResizerProjectSettings = Seq(
-  name               := "scala-packager-image-resizer",
-  scalaVersion       := ScalaVersions.scala213,
-  crossScalaVersions := ScalaVersions.all
+  name         := "scala-packager-image-resizer",
+  scalaVersion := ScalaVersions.scala3
 )
 
 lazy val cliProjectSettings = Seq(
-  name               := "scala-packager-cli",
-  scalaVersion       := ScalaVersions.scala213,
-  crossScalaVersions := ScalaVersions.all,
+  name         := "scala-packager-cli",
+  scalaVersion := ScalaVersions.scala3,
   libraryDependencies ++= Seq(Deps.caseApp)
 )
 
-lazy val utest: Seq[Setting[_]] = Seq(
+lazy val utest: Seq[Setting[?]] = Seq(
   libraryDependencies ++= Seq(Deps.munit % Test, Deps.expecty % Test),
   testFrameworks += new TestFramework("munit.Framework")
 )

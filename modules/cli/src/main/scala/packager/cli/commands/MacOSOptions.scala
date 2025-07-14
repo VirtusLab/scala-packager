@@ -1,6 +1,6 @@
 package packager.cli.commands
 
-import caseapp.{Group, HelpMessage, Parser}
+import caseapp.*
 import caseapp.core.help.Help
 import packager.config.{MacOSSettings, SharedSettings}
 import SettingsHelpers._
@@ -22,7 +22,6 @@ final case class MacOSOptions(
 }
 
 case object MacOSOptions {
-  lazy val parser: Parser[MacOSOptions]                           = Parser.derive
-  implicit lazy val parserAux: Parser.Aux[MacOSOptions, parser.D] = parser
-  implicit lazy val help: Help[MacOSOptions]                      = Help.derive
+  implicit lazy val parser: Parser[MacOSOptions] = Parser.derive
+  implicit lazy val help: Help[MacOSOptions]     = Help.derive
 }

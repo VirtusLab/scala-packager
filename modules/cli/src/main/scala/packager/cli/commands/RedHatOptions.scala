@@ -1,6 +1,6 @@
 package packager.cli.commands
 
-import caseapp.{Group, HelpMessage, Parser}
+import caseapp.*
 import caseapp.core.help.Help
 import packager.config.{RedHatSettings, SharedSettings}
 import SettingsHelpers._
@@ -40,7 +40,6 @@ final case class RedHatOptions(
 }
 
 case object RedHatOptions {
-  lazy val parser: Parser[RedHatOptions]                           = Parser.derive
-  implicit lazy val parserAux: Parser.Aux[RedHatOptions, parser.D] = parser
-  implicit lazy val help: Help[RedHatOptions]                      = Help.derive
+  implicit lazy val parser: Parser[RedHatOptions] = Parser.derive
+  implicit lazy val help: Help[RedHatOptions]     = Help.derive
 }
