@@ -1,7 +1,7 @@
 package packager.cli.commands
 
 import caseapp.core.help.Help
-import caseapp.{Group, HelpMessage, Name, Parser, ValueDescription}
+import caseapp.*
 import SettingsHelpers.{Mandatory, Validate}
 import packager.config.{SharedSettings, WindowsSettings}
 
@@ -62,7 +62,6 @@ final case class WindowsOptions(
 }
 
 case object WindowsOptions {
-  lazy val parser: Parser[WindowsOptions]                           = Parser.derive
-  implicit lazy val parserAux: Parser.Aux[WindowsOptions, parser.D] = parser
-  implicit lazy val help: Help[WindowsOptions]                      = Help.derive
+  implicit lazy val parser: Parser[WindowsOptions] = Parser.derive
+  implicit lazy val help: Help[WindowsOptions]     = Help.derive
 }
