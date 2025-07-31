@@ -1,7 +1,7 @@
 package packager.cli.commands
 
 import caseapp.core.help.Help
-import caseapp.{Group, HelpMessage, Parser, ValueDescription}
+import caseapp.*
 import packager.cli.commands.SettingsHelpers.Mandatory
 import packager.config.DockerSettings
 import java.nio.file.Path;
@@ -57,9 +57,6 @@ final case class DockerOptions(
 }
 
 case object DockerOptions {
-
-  lazy val parser: Parser[DockerOptions]                           = Parser.derive
-  implicit lazy val parserAux: Parser.Aux[DockerOptions, parser.D] = parser
-  implicit lazy val help: Help[DockerOptions]                      = Help.derive
-
+  implicit lazy val parser: Parser[DockerOptions] = Parser.derive
+  implicit lazy val help: Help[DockerOptions]     = Help.derive
 }

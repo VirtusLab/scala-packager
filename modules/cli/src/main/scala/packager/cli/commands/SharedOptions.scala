@@ -1,6 +1,6 @@
 package packager.cli.commands
 
-import caseapp.{Group, HelpMessage, Name, Parser, ValueDescription}
+import caseapp.*
 import caseapp.core.help.Help
 
 final case class SharedOptions(
@@ -32,7 +32,6 @@ final case class SharedOptions(
   logoPath: Option[String] = None
 )
 case object SharedOptions {
-  lazy val parser: Parser[SharedOptions]                           = Parser.derive
-  implicit lazy val parserAux: Parser.Aux[SharedOptions, parser.D] = parser
-  implicit lazy val help: Help[SharedOptions]                      = Help.derive
+  implicit lazy val parser: Parser[SharedOptions] = Parser.derive
+  implicit lazy val help: Help[SharedOptions]     = Help.derive
 }
