@@ -2,8 +2,7 @@ package packager.cli.commands
 
 import caseapp.core.RemainingArgs
 import caseapp.core.app.Command
-import BuildOptions.NativePackagerType._
-import caseapp.core.parser.Parser
+import packager.cli.commands.BuildOptions.NativePackagerType.*
 import packager.cli.commands.BuildOptions.PackagerType.Docker
 import packager.config.SharedSettings
 import packager.deb.DebianPackage

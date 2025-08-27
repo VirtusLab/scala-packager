@@ -3,7 +3,7 @@ package packager.cli.commands
 import caseapp.*
 import caseapp.core.help.Help
 import packager.cli.commands.BuildOptions.PackagerType
-import packager.config._
+import packager.config.*
 
 final case class BuildOptions(
   @Group("Packager")

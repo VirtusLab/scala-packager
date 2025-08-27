@@ -1,7 +1,7 @@
 package packager.windows
 
-import packager.{FileUtils, NativePackager}
 import packager.config.WindowsSettings
+import packager.{FileUtils, NativePackager}
 
 case class WindowsPackage(
   buildSettings: WindowsSettings,

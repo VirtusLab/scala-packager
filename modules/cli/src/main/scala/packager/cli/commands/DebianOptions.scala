@@ -1,7 +1,7 @@
 package packager.cli.commands
 
-import caseapp.core.help.Help
 import caseapp.*
+import caseapp.core.help.Help
 import packager.cli.commands.SettingsHelpers.Mandatory
 import packager.config.{DebianSettings, SharedSettings}
 

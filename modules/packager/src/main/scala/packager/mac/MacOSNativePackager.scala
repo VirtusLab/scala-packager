@@ -1,7 +1,7 @@
 package packager.mac
 
-import packager.{FileUtils, NativePackager}
 import packager.config.MacOSSettings
+import packager.{FileUtils, NativePackager}
 
 trait MacOSNativePackager extends NativePackager {
 

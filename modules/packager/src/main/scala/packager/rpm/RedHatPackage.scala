@@ -1,7 +1,7 @@
 package packager.rpm
 
-import packager.{FileUtils, NativePackager}
 import packager.config.RedHatSettings
+import packager.{FileUtils, NativePackager}
 
 case class RedHatPackage(buildSettings: RedHatSettings) extends NativePackager {
 

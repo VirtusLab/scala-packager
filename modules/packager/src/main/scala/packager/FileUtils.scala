@@ -1,7 +1,7 @@
 package packager
 
 import os.PermSet
-import packager.config.{BuildSettings, NativeSettings}
+import packager.config.NativeSettings
 
 object FileUtils {
 
