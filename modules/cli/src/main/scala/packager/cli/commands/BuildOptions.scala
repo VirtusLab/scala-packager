@@ -1,6 +1,6 @@
 package packager.cli.commands
 
-import caseapp.{Group, HelpMessage, Name, Parser, Recurse}
+import caseapp.*
 import caseapp.core.help.Help
 import packager.cli.commands.BuildOptions.PackagerType
 import packager.config._
@@ -107,7 +107,6 @@ object BuildOptions {
     case object Rpm    extends NativePackagerType
   }
 
-  lazy val parser: Parser[BuildOptions]                           = Parser.derive
-  implicit lazy val parserAux: Parser.Aux[BuildOptions, parser.D] = parser
-  implicit lazy val help: Help[BuildOptions]                      = Help.derive
+  implicit lazy val parser: Parser[BuildOptions] = Parser.derive
+  implicit lazy val help: Help[BuildOptions]     = Help.derive
 }
