@@ -1,8 +1,8 @@
 package packager.cli.commands
 
-import caseapp.core.help.Help
 import caseapp.*
-import SettingsHelpers.{Mandatory, Validate}
+import caseapp.core.help.Help
+import packager.cli.commands.SettingsHelpers.Mandatory
 import packager.config.{SharedSettings, WindowsSettings}
 
 final case class WindowsOptions(

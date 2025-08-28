@@ -2,9 +2,9 @@ package packager.dmg
 
 import com.eed3si9n.expecty.Expecty.expect
 import munit.Tag
-import packager.{NativePackageHelper, TestUtils}
 import packager.config.MacOSSettings
 import packager.mac.dmg.DmgPackage
+import packager.{NativePackageHelper, TestUtils}
 
 import scala.util.Properties
 

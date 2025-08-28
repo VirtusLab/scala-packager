@@ -2,9 +2,12 @@ import Settings.project
 
 inThisBuild(
   List(
-    organization := "org.virtuslab",
-    homepage     := Some(url("https://github.com/VirtusLab/scala-packager")),
-    licenses     := List(
+    scalaVersion      := ScalaVersions.scala3,
+    semanticdbEnabled := true,
+    semanticdbVersion := scalafixSemanticdb.revision,
+    organization      := "org.virtuslab",
+    homepage          := Some(url("https://github.com/VirtusLab/scala-packager")),
+    licenses          := List(
       "Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")
     ),
     developers := List(
@@ -53,8 +56,8 @@ lazy val cliMainClass = Seq(
   Compile / mainClass := Some("packager.cli.PackagerCli")
 )
 
-lazy val compileOptions: Seq[Setting[_]] = Seq(
-  scalacOptions ++= Seq("-Xfatal-warnings", "-deprecation")
+lazy val compileOptions: Seq[Setting[?]] = Seq(
+  scalacOptions ++= Seq("-Xfatal-warnings", "-deprecation", "-Wunused:all")
 )
 
 lazy val packagerProjectSettings = Seq(
@@ -75,7 +78,8 @@ lazy val cliProjectSettings = Seq(
 
 lazy val utest: Seq[Setting[?]] = Seq(
   libraryDependencies ++= Seq(Deps.munit % Test, Deps.expecty % Test),
-  testFrameworks += new TestFramework("munit.Framework")
+  testFrameworks += new TestFramework("munit.Framework"),
+  scalaVersion := ScalaVersions.scala3
 )
 
 lazy val cli = project("cli")

@@ -2,8 +2,8 @@ package packager.cli.commands
 
 import caseapp.*
 import caseapp.core.help.Help
+import packager.cli.commands.SettingsHelpers.*
 import packager.config.{RedHatSettings, SharedSettings}
-import SettingsHelpers._
 
 final case class RedHatOptions(
   @Group("RedHat")

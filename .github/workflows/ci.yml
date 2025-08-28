@@ -8,7 +8,37 @@ on:
   pull_request:
 
 jobs:
+  scalafix:
+    timeout-minutes: 15
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          submodules: true
+      - uses: coursier/cache-action@v6
+      - uses: coursier/setup-action@v1
+        with:
+          jvm: 17
+          apps: 'sbt'
+      - name: Run scalafix
+        run: sbt "scalafixAll --check"
+
+  format:
+    timeout-minutes: 15
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          submodules: true
+      - uses: VirtusLab/scala-cli-setup@v1
+      - run: scala-cli fmt . --check
+
   test:
+    needs:
+      - format
+      - scalafix
     runs-on: ${{ matrix.OS }}
     strategy:
         fail-fast: false
@@ -30,7 +60,10 @@ jobs:
       run: sbt "cli/run --help"
 
   publish:
-    needs: test
+    needs:
+      - test
+      - format
+      - scalafix
     if: github.event_name == 'push'
     runs-on: ubuntu-24.04
     steps:

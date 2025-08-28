@@ -1,8 +1,7 @@
 package packager
 
-import packager.config.NativeSettings
-
 import org.apache.commons.io.FilenameUtils
+import packager.config.NativeSettings
 
 trait NativePackager extends Packager {
 

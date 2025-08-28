@@ -1,11 +1,11 @@
 package packager.docker
 
-import com.google.cloud.tools.jib.api.{Containerizer, DockerDaemonImage, ImageReference, Jib}
 import com.google.cloud.tools.jib.api.buildplan.{
   AbsoluteUnixPath,
   FileEntriesLayer,
   FilePermissions
 }
+import com.google.cloud.tools.jib.api.{Containerizer, DockerDaemonImage, ImageReference, Jib}
 import packager.Packager
 import packager.config.DockerSettings
 

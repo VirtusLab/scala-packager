@@ -1,7 +1,7 @@
 package packager.deb
 
-import packager.{FileUtils, NativePackager}
 import packager.config.DebianSettings
+import packager.{FileUtils, NativePackager}
 
 case class DebianPackage(buildSettings: DebianSettings) extends NativePackager {
 

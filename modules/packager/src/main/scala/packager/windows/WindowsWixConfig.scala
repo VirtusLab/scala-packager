@@ -1,6 +1,7 @@
 package packager.windows
 
-import packager.windows.wix._
+import packager.windows.wix.*
+
 import java.nio.charset.Charset
 
 import scala.io.Codec
