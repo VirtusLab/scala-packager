@@ -5,7 +5,7 @@ import caseapp.core.help.Help
 import packager.cli.commands.SettingsHelpers.Mandatory
 import packager.config.DockerSettings
 
-import java.nio.file.{Path, Paths};
+import java.nio.file.{Path, Paths}
 
 final case class DockerOptions(
   @Group("Docker")

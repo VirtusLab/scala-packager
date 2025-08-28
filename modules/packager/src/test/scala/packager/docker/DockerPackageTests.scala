@@ -1,10 +1,11 @@
 package packager.docker
 
+import com.eed3si9n.expecty.Expecty.expect
 import packager.PackagerHelper
 import packager.config.DockerSettings
-import com.eed3si9n.expecty.Expecty.expect
 
-import java.nio.file.Paths;
+import java.nio.file.Paths
+
 import scala.util.Properties
 
 class DockerPackageTests extends munit.FunSuite with PackagerHelper {

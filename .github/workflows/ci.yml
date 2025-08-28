@@ -22,7 +22,7 @@ jobs:
           jvm: 17
           apps: 'sbt'
       - name: Run scalafix
-        run: sbt "scalafix --check"
+        run: sbt "scalafixAll --check"
 
   format:
     timeout-minutes: 15
