@@ -6,12 +6,12 @@ import com.google.cloud.tools.jib.api.buildplan.{
   FilePermissions
 }
 import com.google.cloud.tools.jib.api.{Containerizer, DockerDaemonImage, ImageReference, Jib}
-
-import java.nio.file.Path
 import packager.Packager
 import packager.config.DockerSettings
 
+import java.nio.file.Path
 import java.time.Instant
+
 import scala.jdk.CollectionConverters.*
 
 case class DockerPackage(sourceAppPath: os.Path, buildSettings: DockerSettings)

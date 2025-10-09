@@ -5,6 +5,7 @@ import packager.PackagerHelper
 import packager.config.DockerSettings
 
 import java.nio.file.Paths
+
 import scala.util.Properties
 
 class DockerPackageTests extends munit.FunSuite with PackagerHelper {
