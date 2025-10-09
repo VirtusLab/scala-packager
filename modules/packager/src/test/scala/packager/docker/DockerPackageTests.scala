@@ -61,7 +61,8 @@ class DockerPackageTests extends munit.FunSuite with PackagerHelper {
       println(extraDir)
       os.write(
         extraFile,
-        s"""@main def main(): Unit = println("Hello World")""".stripMargin
+        s"""@main def main(): Unit = println("Hello World")
+           |""".stripMargin
       )
       val config =
         s"""version = $scalafmtVersion
