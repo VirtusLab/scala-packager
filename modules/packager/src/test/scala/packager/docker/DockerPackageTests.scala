@@ -58,7 +58,6 @@ class DockerPackageTests extends munit.FunSuite with PackagerHelper {
     test("should build docker image with additional directories") {
       val extraDir  = os.temp.dir(prefix = "extra-")
       val extraFile = extraDir / "main.scala"
-      println(extraDir)
       os.write(
         extraFile,
         s"""@main def main(): Unit = println("Hello World")
