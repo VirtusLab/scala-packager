@@ -9,7 +9,10 @@ import com.google.cloud.tools.jib.api.{Containerizer, DockerDaemonImage, ImageRe
 import packager.Packager
 import packager.config.DockerSettings
 
+import java.nio.file.Path
 import java.time.Instant
+
+import scala.jdk.CollectionConverters.*
 
 case class DockerPackage(sourceAppPath: os.Path, buildSettings: DockerSettings)
     extends Packager {
@@ -30,12 +33,12 @@ case class DockerPackage(sourceAppPath: os.Path, buildSettings: DockerSettings)
       .getOrElse(List(s"/$launcherApp"))
 
     def makeFileEntryLayerConfiguration(
-      resourcePath: os.Path,
+      resourcePath: Path,
       dest: String
     ): FileEntriesLayer = {
       val layerConfigurationBuilder = FileEntriesLayer.builder
       layerConfigurationBuilder.addEntry(
-        resourcePath.toNIO,
+        resourcePath,
         AbsoluteUnixPath.get(dest),
         FilePermissions.fromOctalString("755")
       )
@@ -45,8 +48,9 @@ case class DockerPackage(sourceAppPath: os.Path, buildSettings: DockerSettings)
     Jib
       .from(buildSettings.from)
       .setFileEntriesLayers(
-        makeFileEntryLayerConfiguration(sourceAppPath, s"/$launcherApp")
+        makeFileEntryLayerConfiguration(sourceAppPath.toNIO, s"/$launcherApp")
       )
+      .addLayer(buildSettings.extraDirectories.asJava, "/")
       .setCreationTime(Instant.now())
       .setEntrypoint(entrypoint: _*)
       .containerize(

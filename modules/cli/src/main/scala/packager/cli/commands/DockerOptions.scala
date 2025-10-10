@@ -39,7 +39,12 @@ final case class DockerOptions(
     "docker executable that will be used. ex. docker, podman"
   )
   @ValueDescription("docker")
-  dockerExecutable: Option[Path] = Some(Paths.get("docker"))
+  dockerExecutable: Option[Path] = Some(Paths.get("docker")),
+  @Group("Docker")
+  @HelpMessage(
+    "extra directories to be added to the image"
+  )
+  extraDirectories: List[Path] = Nil
 ) {
   def toDockerSettings: DockerSettings =
     DockerSettings(
@@ -52,7 +57,8 @@ final case class DockerOptions(
       ),
       tag = tag,
       exec = exec,
-      dockerExecutable = dockerExecutable
+      dockerExecutable = dockerExecutable,
+      extraDirectories = extraDirectories
     )
 }
 

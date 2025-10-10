@@ -8,5 +8,6 @@ case class DockerSettings(
   repository: String,
   tag: Option[String],
   exec: Option[String],
-  dockerExecutable: Option[Path]
+  dockerExecutable: Option[Path],
+  extraDirectories: Seq[Path]
 ) extends BuildSettings
