@@ -1,3 +1,3 @@
 object ScalaVersions {
-  def scala3 = "3.3.6"
+  def scala3 = "3.3.7"
 }
