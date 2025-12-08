@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0
           submodules: true
       - uses: coursier/cache-action@v7
-      - uses: coursier/setup-action@v1
+      - uses: coursier/setup-action@v2
         with:
           jvm: 17
           apps: 'sbt'
@@ -50,7 +50,7 @@ jobs:
         fetch-depth: 0
         submodules: true
     - uses: coursier/cache-action@v7
-    - uses: coursier/setup-action@v1
+    - uses: coursier/setup-action@v2
       with:
         jvm: 17
         apps: 'sbt'
@@ -72,7 +72,7 @@ jobs:
         fetch-depth: 0
         submodules: true
     - uses: coursier/cache-action@v7
-    - uses: coursier/setup-action@v1
+    - uses: coursier/setup-action@v2
       with:
         jvm: 17
         apps: 'sbt'
