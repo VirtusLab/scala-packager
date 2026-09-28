@@ -57,7 +57,7 @@ lazy val cliMainClass = Seq(
 )
 
 lazy val compileOptions: Seq[Setting[?]] = Seq(
-  scalacOptions ++= Seq("-Xfatal-warnings", "-deprecation", "-Wunused:all")
+  scalacOptions ++= Seq("-Werror", "-deprecation", "-Wunused:all")
 )
 
 lazy val packagerProjectSettings = Seq(

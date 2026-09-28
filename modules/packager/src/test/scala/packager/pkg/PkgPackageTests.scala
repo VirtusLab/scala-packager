@@ -44,8 +44,8 @@ class PkgPackageTests extends munit.FunSuite with NativePackageHelper {
       val expectedAppPath      = os.RelPath(s"$packageName.app")
       val expectedLauncherPath = expectedAppPath / "Contents" / "MacOS" / packageName
 
-      expect(payloadFiles contains s"./$expectedAppPath")
-      expect(payloadFiles contains s"./$expectedLauncherPath")
+      expect(payloadFiles `contains` s"./$expectedAppPath")
+      expect(payloadFiles `contains` s"./$expectedLauncherPath")
 
     }
 
@@ -87,8 +87,8 @@ class PkgPackageTests extends munit.FunSuite with NativePackageHelper {
       val expectedAppPath      = os.RelPath(s"$packageName.app")
       val expectedLauncherPath = expectedAppPath / "Contents" / "MacOS" / launcherApp
 
-      expect(payloadFiles contains s"./$expectedAppPath")
-      expect(payloadFiles contains s"./$expectedLauncherPath")
+      expect(payloadFiles `contains` s"./$expectedAppPath")
+      expect(payloadFiles `contains` s"./$expectedLauncherPath")
 
     }
 

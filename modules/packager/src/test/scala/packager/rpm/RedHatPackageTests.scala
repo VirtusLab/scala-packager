@@ -40,7 +40,7 @@ class RedHatPackageTests extends munit.FunSuite with NativePackageHelper {
         os.proc("rpm", "-qpl", expectedRpmPath).call().out.text().trim
       val expectedLauncherPath = os.RelPath("usr") / "bin" / packageName
 
-      expect(payloadFiles contains s"/$expectedLauncherPath")
+      expect(payloadFiles `contains` s"/$expectedLauncherPath")
     }
 
     test("should override generated rpm package") {
@@ -75,7 +75,7 @@ class RedHatPackageTests extends munit.FunSuite with NativePackageHelper {
         os.proc("rpm", "-qpl", outputPackagePath).call().out.text().trim
       val expectedLauncherPath = os.RelPath("usr") / "bin" / launcherApp
 
-      expect(payloadFiles contains s"/$expectedLauncherPath")
+      expect(payloadFiles `contains` s"/$expectedLauncherPath")
     }
   }
 
