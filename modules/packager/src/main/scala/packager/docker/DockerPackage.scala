@@ -52,7 +52,7 @@ case class DockerPackage(sourceAppPath: os.Path, buildSettings: DockerSettings)
       )
       .addLayer(buildSettings.extraDirectories.asJava, "/")
       .setCreationTime(Instant.now())
-      .setEntrypoint(entrypoint: _*)
+      .setEntrypoint(entrypoint*)
       .containerize(
         Containerizer.to(
           buildSettings.dockerExecutable.map(targetImage.setDockerExecutable).getOrElse(targetImage)

@@ -41,8 +41,8 @@ class DebianPackageTests extends munit.FunSuite with NativePackageHelper {
       val expectedLauncherPath =
         os.RelPath("usr") / "share" / "scala" / packageName
 
-      expect(payloadFiles contains s"./$expectedScriptPath")
-      expect(payloadFiles contains s"./$expectedLauncherPath")
+      expect(payloadFiles `contains` s"./$expectedScriptPath")
+      expect(payloadFiles `contains` s"./$expectedLauncherPath")
     }
 
     test("should override generated dep package") {
@@ -81,8 +81,8 @@ class DebianPackageTests extends munit.FunSuite with NativePackageHelper {
       val expectedLauncherPath =
         os.RelPath("usr") / "share" / "scala" / launcherApp
 
-      expect(payloadFiles contains s"./$expectedScriptPath")
-      expect(payloadFiles contains s"./$expectedLauncherPath")
+      expect(payloadFiles `contains` s"./$expectedScriptPath")
+      expect(payloadFiles `contains` s"./$expectedLauncherPath")
     }
 
     test("should contain priority and section flags") {
@@ -95,8 +95,8 @@ class DebianPackageTests extends munit.FunSuite with NativePackageHelper {
       // list files which will be installed
       val payloadFiles = os.proc("dpkg", "--info", outputPackagePath).call().out.text().trim
 
-      expect(payloadFiles contains "Priority: optional")
-      expect(payloadFiles contains "Section: devel")
+      expect(payloadFiles `contains` "Priority: optional")
+      expect(payloadFiles `contains` "Section: devel")
     }
   }
 
