@@ -6,28 +6,28 @@ inThisBuild(
     semanticdbEnabled := true,
     semanticdbVersion := scalafixSemanticdb.revision,
     organization      := "org.virtuslab",
-    homepage          := Some(url("https://github.com/VirtusLab/scala-packager")),
+    homepage          := Some(uri("https://github.com/VirtusLab/scala-packager")),
     licenses          := List(
-      "Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")
+      "Apache-2.0" -> uri("http://www.apache.org/licenses/LICENSE-2.0")
     ),
     developers := List(
       Developer(
         "lwronski",
         "Łukasz Wroński",
         "",
-        url("https://github.com/lwronski")
+        uri("https://github.com/lwronski")
       ),
       Developer(
         "Gedochao",
         "Piotr Chabelski",
         "pchabelski@virtuslab.com",
-        url("https://github.com/Gedochao")
+        uri("https://github.com/Gedochao")
       ),
       Developer(
         "tgodzik",
         "Tomasz Godzik",
         "tgodzik@virtuslab.com",
-        url("https://github.com/tgodzik")
+        uri("https://github.com/tgodzik")
       )
     )
   )
