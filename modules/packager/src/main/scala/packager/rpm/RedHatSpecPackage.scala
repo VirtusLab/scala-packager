@@ -22,6 +22,8 @@ case class RedHatSpecPackage(
        |Requires:       bash
        |
        |%define _rpmfilename %%{NAME}.rpm
+       |%global debug_package %{nil}
+       |%global _build_id_links none
        |
        |%description
        |RedHat package
