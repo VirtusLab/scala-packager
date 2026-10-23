@@ -77,6 +77,32 @@ class RedHatPackageTests extends munit.FunSuite with NativePackageHelper {
 
       expect(payloadFiles `contains` s"/$expectedLauncherPath")
     }
+
+    test("should generate architecture-specific rpm package") {
+      val hostArch = os.proc("uname", "-m").call().out.trim()
+
+      // a real ELF binary, so that rpmbuild runs its debuginfo processing on it
+      val elfApp = tmpDir / "elf-app"
+      os.copy.over(os.Path("/usr/bin/true"), elfApp)
+
+      val archBuildSettings: RedHatSettings = buildSettings.copy(
+        shared = sharedSettings.copy(sourceAppPath = elfApp, launcherApp = Some(packageName)),
+        rpmArchitecture = hostArch
+      )
+
+      RedHatPackage(archBuildSettings).build()
+
+      expect(os.exists(outputPackagePath))
+
+      val rpmArch =
+        os.proc("rpm", "-qp", "--queryformat", "%{ARCH}", outputPackagePath).call().out.trim()
+      expect(rpmArch == hostArch)
+
+      // list files which will be installed
+      val payloadFiles =
+        os.proc("rpm", "-qpl", outputPackagePath).call().out.lines().map(_.trim).filter(_.nonEmpty)
+      expect(payloadFiles == Seq(s"/usr/bin/$packageName"))
+    }
   }
 
   override def buildSettings: RedHatSettings =
