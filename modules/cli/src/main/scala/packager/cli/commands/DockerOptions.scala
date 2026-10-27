@@ -44,7 +44,13 @@ final case class DockerOptions(
   @HelpMessage(
     "extra directories to be added to the image"
   )
-  extraDirectories: List[Path] = Nil
+  extraDirectories: List[Path] = Nil,
+  @Group("Docker")
+  @HelpMessage(
+    "ports to be exposed by the image, can be passed multiple times"
+  )
+  @ValueDescription("8080|9000-9010|53/udp")
+  exposedPorts: List[String] = Nil
 ) {
   def toDockerSettings: DockerSettings =
     DockerSettings(
@@ -58,7 +64,8 @@ final case class DockerOptions(
       tag = tag,
       exec = exec,
       dockerExecutable = dockerExecutable,
-      extraDirectories = extraDirectories
+      extraDirectories = extraDirectories,
+      exposedPorts = exposedPorts
     )
 }
 

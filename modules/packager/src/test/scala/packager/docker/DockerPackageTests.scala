@@ -89,6 +89,39 @@ class DockerPackageTests extends munit.FunSuite with PackagerHelper {
       // clear
       os.proc("docker", "rmi", "-f", expectedImage).call(cwd = os.root)
     }
+    test("should build docker image with exposed ports") {
+      val appSettings = buildSettings.copy(
+        exposedPorts = List("8080", "9000-9001", "53/udp")
+      )
+      val dockerPackage = DockerPackage(scalafmtLauncherPath, appSettings)
+      // build docker image
+      dockerPackage.build()
+
+      val expectedImage = s"$repository:$qualifier"
+      val expectedPorts = Set("8080/tcp", "9000/tcp", "9001/tcp", "53/udp")
+
+      val exposedPorts = os
+        .proc(
+          "docker",
+          "image",
+          "inspect",
+          "--format",
+          "{{range $port, $_ := .Config.ExposedPorts}}{{$port}} {{end}}",
+          expectedImage
+        )
+        .call(cwd = os.root)
+        .out
+        .text()
+        .trim
+        .split("\\s+")
+        .filter(_.nonEmpty)
+        .toSet
+
+      expect(exposedPorts == expectedPorts)
+
+      // clear
+      os.proc("docker", "rmi", "-f", expectedImage).call(cwd = os.root)
+    }
   }
 
   override def buildSettings: DockerSettings =
@@ -99,7 +132,8 @@ class DockerPackageTests extends munit.FunSuite with PackagerHelper {
       tag = Some(qualifier),
       exec = Some("sh"),
       dockerExecutable = Some(Paths.get("docker")),
-      extraDirectories = Nil
+      extraDirectories = Nil,
+      exposedPorts = Nil
     )
 
 }
