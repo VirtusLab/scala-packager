@@ -5,7 +5,13 @@ import com.google.cloud.tools.jib.api.buildplan.{
   FileEntriesLayer,
   FilePermissions
 }
-import com.google.cloud.tools.jib.api.{Containerizer, DockerDaemonImage, ImageReference, Jib}
+import com.google.cloud.tools.jib.api.{
+  Containerizer,
+  DockerDaemonImage,
+  ImageReference,
+  Jib,
+  Ports
+}
 import packager.Packager
 import packager.config.DockerSettings
 
@@ -53,6 +59,7 @@ case class DockerPackage(sourceAppPath: os.Path, buildSettings: DockerSettings)
       .addLayer(buildSettings.extraDirectories.asJava, "/")
       .setCreationTime(Instant.now())
       .setEntrypoint(entrypoint*)
+      .setExposedPorts(Ports.parse(buildSettings.exposedPorts.asJava))
       .containerize(
         Containerizer.to(
           buildSettings.dockerExecutable.map(targetImage.setDockerExecutable).getOrElse(targetImage)
