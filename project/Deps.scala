@@ -3,7 +3,7 @@ import sbt._
 object Deps {
   def expecty       = "com.eed3si9n.expecty"       %% "expecty"       % "0.17.1"
   def munit         = "org.scalameta"              %% "munit"         % "1.3.6"
-  def osLib         = "com.lihaoyi"                %% "os-lib"        % "0.11.9"
+  def osLib         = "com.lihaoyi"                %% "os-lib"        % "0.11.10"
   def caseApp       = "com.github.alexarchambault" %% "case-app"      % "2.1.1"
   def thumbnailator = "net.coobird"                 % "thumbnailator" % "0.4.21"
   def image4j       = "org.jclarion"                % "image4j"       % "0.7"
